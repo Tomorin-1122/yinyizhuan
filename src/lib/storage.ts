@@ -67,3 +67,58 @@ export function getRecordById(id: string): ConversionRecord | undefined {
 // I'll define them in utils.ts and import here.
 
 import { getCitationTypeName, getFormatName } from './utils';
+
+// ─── 标签组 ───────────────────────────────────────────────────────
+const TAG_GROUP_KEY = 'yinyizhuan_tag_groups';
+
+export function getTagGroups(): import('./types').TagGroup[] {
+  const data = localStorage.getItem(TAG_GROUP_KEY);
+  if (!data) return [];
+  try { return JSON.parse(data); } catch { return []; }
+}
+
+function saveTagGroups(groups: import('./types').TagGroup[]): void {
+  localStorage.setItem(TAG_GROUP_KEY, JSON.stringify(groups));
+}
+
+export function createTagGroup(name: string, description?: string): import('./types').TagGroup {
+  const group: import('./types').TagGroup = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    name,
+    description,
+    recordIds: [],
+    createdAt: Date.now(),
+  };
+  const groups = getTagGroups();
+  saveTagGroups([...groups, group]);
+  return group;
+}
+
+export function deleteTagGroup(groupId: string): void {
+  saveTagGroups(getTagGroups().filter(g => g.id !== groupId));
+}
+
+export function updateTagGroup(groupId: string, patch: Partial<Pick<import('./types').TagGroup, 'name' | 'description'>>): void {
+  saveTagGroups(getTagGroups().map(g => g.id === groupId ? { ...g, ...patch } : g));
+}
+
+export function addRecordToGroup(groupId: string, recordId: string): void {
+  saveTagGroups(getTagGroups().map(g => {
+    if (g.id !== groupId) return g;
+    if (g.recordIds.includes(recordId)) return g;
+    return { ...g, recordIds: [...g.recordIds, recordId] };
+  }));
+}
+
+export function removeRecordFromGroup(groupId: string, recordId: string): void {
+  saveTagGroups(getTagGroups().map(g =>
+    g.id === groupId ? { ...g, recordIds: g.recordIds.filter(id => id !== recordId) } : g
+  ));
+}
+
+// ─── 单条记录备注 ─────────────────────────────────────────────────
+export function updateRecordNote(recordId: string, note: string): void {
+  const history = getHistory();
+  const updated = history.map(r => r.id === recordId ? { ...r, note } : r);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+}

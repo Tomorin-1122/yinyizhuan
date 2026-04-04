@@ -53,6 +53,16 @@ export interface ConversionRecord {
   result: string;
   timestamp: number;
   rawInput?: string;
+  note?: string;
+  tags?: string[];
+}
+
+export interface TagGroup {
+  id: string;
+  name: string;
+  description?: string;
+  recordIds: string[];
+  createdAt: number;
 }
 
 export type TargetFormat = 'lsyj' | 'gbt7714' | 'apa'
