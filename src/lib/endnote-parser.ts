@@ -1,31 +1,39 @@
-// Updated implementation for parsing EndNote XML records using DOMParser
+// Complete EndNote XML parser implementation using DOMParser
 
-interface Citation {
-    title: string;
-    authors: string[];
-    year: number;
-}
+class EndNoteParser {
+    constructor() {}
 
-function parseEndNoteXML(xmlString: string): Citation[] {
-    const parser = new DOMParser();
-    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-    const citations: Citation[] = [];
+    parse(xmlString) {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
 
-    const records = xmlDoc.getElementsByTagName('record');
-    for (let i = 0; i < records.length; i++) {
-        const title = records[i].getElementsByTagName('title')[0]?.textContent || '';
-        const authorsNode = records[i].getElementsByTagName('author');
-        const authors: string[] = [];
-        for (let j = 0; j < authorsNode.length; j++) {
-            authors.push(authorsNode[j].textContent || '');
+        const citations = xmlDoc.getElementsByTagName('reference');
+        const results = [];
+
+        for (let i = 0; i < citations.length; i++) {
+            const citation = citations[i];
+            const entry = this.parseCitation(citation);
+            results.push(entry);
         }
-        const year = parseInt(records[i].getElementsByTagName('year')[0]?.textContent || '0');
-        citations.push({ title, authors, year });
+
+        return results;
     }
 
-    return citations;
+    parseCitation(citation) {
+        const entry = {};
+        const fields = citation.children;
+
+        for (let j = 0; j < fields.length; j++) {
+            const field = fields[j];
+            entry[field.tagName] = field.textContent;
+        }
+
+        return entry;
+    }
 }
 
-// Example usage: 
-// const xmlString = '<records>...</records>';
-// const citations = parseEndNoteXML(xmlString);
+// Example usage:
+const parser = new EndNoteParser();
+const xml = `...`  // provide your EndNote XML string here
+const result = parser.parse(xml);
+console.log(result);
