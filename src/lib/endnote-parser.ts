@@ -1,39 +1,60 @@
-// Complete EndNote XML parser implementation using DOMParser
+function parseEndNoteXML(xmlString: string): EndNoteCitation[] {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
 
-class EndNoteParser {
-    constructor() {}
-
-    parse(xmlString) {
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-
-        const citations = xmlDoc.getElementsByTagName('reference');
-        const results = [];
-
-        for (let i = 0; i < citations.length; i++) {
-            const citation = citations[i];
-            const entry = this.parseCitation(citation);
-            results.push(entry);
-        }
-
-        return results;
+    if (xmlDoc.getElementsByTagName('parsererror').length > 0) {
+        throw new Error('Error parsing XML');
     }
 
-    parseCitation(citation) {
-        const entry = {};
-        const fields = citation.children;
+    const citations: EndNoteCitation[] = [];
+    const recordNodes = xmlDoc.getElementsByTagName('record');
 
-        for (let j = 0; j < fields.length; j++) {
-            const field = fields[j];
-            entry[field.tagName] = field.textContent;
-        }
+    for (let i = 0; i < recordNodes.length; i++) {
+        const record = recordNodes[i];
+        const citation: EndNoteCitation = {} as EndNoteCitation;
 
-        return entry;
+        citation.title = getTextContent(record, 'title');
+        citation.authors = getAuthors(record);
+        citation.journal = getTextContent(record, 'source');
+        citation.publisher = getTextContent(record, 'publisher');
+        citation.publicationYear = getTextContent(record, 'year');
+        citation.volume = getTextContent(record, 'volume');
+        citation.issue = getTextContent(record, 'issue');
+        citation.pages = getTextContent(record, 'pages');
+        citation.url = getTextContent(record, 'url');
+        citation.doi = getTextContent(record, 'doi');
+        citation.notes = getTextContent(record, 'notes');
+
+        citations.push(citation);
     }
+
+    return citations;
 }
 
-// Example usage:
-const parser = new EndNoteParser();
-const xml = `...`  // provide your EndNote XML string here
-const result = parser.parse(xml);
-console.log(result);
+function getTextContent(record: Element, tagName: string): string | undefined {
+    const element = record.getElementsByTagName(tagName)[0];
+    return element ? element.textContent : undefined;
+}
+
+function getAuthors(record: Element): string[] {
+    const authors: string[] = [];
+    const authorNodes = record.getElementsByTagName('author');
+    for (let i = 0; i < authorNodes.length; i++) {
+        authors.push(authorNodes[i].textContent || '');
+    }
+    return authors;
+}
+
+interface EndNoteCitation {
+    title?: string;
+    authors?: string[];
+    journal?: string;
+    publisher?: string;
+    publicationYear?: string;
+    volume?: string;
+    issue?: string;
+    pages?: string;
+    url?: string;
+    doi?: string;
+    notes?: string;
+}
