@@ -113,7 +113,13 @@ export default function ConvertPage() {
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
     setCitation(c)
     setMode('manual')
-    showToast('已解析并填充到表单，请核对后转换')
+    // 豆瓣图书：提示填出版社地址
+    const isDouban = /出版社[:：]/.test(pasteText) && /出版年[:：]/.test(pasteText)
+    if (isDouban) {
+      showToast('已解析豆瓣图书信息，请补充"出版地点"后转换')
+    } else {
+      showToast('已解析并填充到表单，请核对后转换')
+    }
   }
 
   const handleUrlImport = () => {
@@ -372,8 +378,14 @@ export default function ConvertPage() {
                 value={pasteText}
                 onChange={e => setPasteText(e.target.value)}
                 className="input-field h-48 resize-none font-mono text-sm"
-                placeholder={'例如：赵景深：《文坛忆旧》，上海：北新书局，1948年，第43页。'}
+                placeholder={'支持格式：\n• 中文：赵景深：《文坛忆旧》，北新书局，1948年，第43页。\n• GB/T 7714：[1]作者.题名[J].期刊,2020,(3):12-20.\n• APA（外文期刊）：Wang, R., & Tan, R. (2019). Title. Journal, 24(6).\n• 豆瓣图书：多行格式，含"出版社:"、"出版年:"'}
               />
+              {pasteText && !/[\u4e00-\u9fa5]/.test(pasteText) && (
+                <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 p-3 text-xs text-blue-800 dark:text-blue-300 flex items-start gap-2">
+                  <span className="shrink-0 font-bold">i</span>
+                  <span>检测到外文文献，建议使用 <strong>APA 格式</strong>（如 <code className="bg-blue-100 dark:bg-blue-800 px-1">Wang, R. (2019). Title. Journal, 24(6), 1-10.</code>）以提升解析准确率。</span>
+                </div>
+              )}
               <button onClick={handleParse} className="btn-primary w-full">解析并填充表单</button>
             </div>
           )}
@@ -696,22 +708,34 @@ function ManualForm({
         <>
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">期刊名称</label>
-            <input value={c.journalName || ''} onChange={e => updateField('journalName', e.target.value)} className="input-field" placeholder="中国史研究" />
+            <input value={c.journalName || ''} onChange={e => updateField('journalName', e.target.value)} className="input-field" placeholder={c.language === 'en' ? 'Ecology and Society' : '中国史研究'} />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+          <div className={`grid gap-3 sm:gap-4 ${c.language === 'en' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3'}`}>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
               <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
             </div>
+            {c.language === 'en' && (
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">卷号 Volume</label>
+                <input value={c.volumeNumber || ''} onChange={e => updateField('volumeNumber', e.target.value)} className="input-field" placeholder="24" />
+              </div>
+            )}
             <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">期号</label>
+              <label className="block text-sm font-medium text-ink-800 mb-1">{c.language === 'en' ? '期号 Issue' : '期号'}</label>
               <input value={c.issue || ''} onChange={e => updateField('issue', e.target.value)} className="input-field" placeholder="3" />
             </div>
-            <div className="col-span-2 sm:col-span-1">
+            <div className={c.language === 'en' ? '' : 'col-span-2 sm:col-span-1'}>
               <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
               <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="12-20" />
             </div>
           </div>
+          {c.language === 'en' && (
+            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 p-3 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
+              <span className="shrink-0 font-bold">!</span>
+              <span>外文期刊文章题名在《历史研究》格式中需使用<em>斜体</em>，请在粘贴到 Word 后手动对题名部分设置斜体。</span>
+            </div>
+          )}
         </>
       )}
 
@@ -735,19 +759,48 @@ function ManualForm({
         </>
       )}
 
-      {/* Thesis fields */}
+      {/* Thesis / Conference fields */}
       {showThesisFields && (
         <>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">论文类型</label>
-              <input value={c.thesisType || ''} onChange={e => updateField('thesisType', e.target.value)} className="input-field" placeholder="博士学位论文" />
+              <label className="block text-sm font-medium text-ink-800 mb-1">
+                {c.type === 'conference' ? '论文类型' : '论文性质'}
+              </label>
+              {c.type === 'thesis' ? (
+                <select
+                  value={c.thesisType || ''}
+                  onChange={e => updateField('thesisType', e.target.value)}
+                  className="input-field cursor-pointer"
+                >
+                  <option value="">请选择</option>
+                  <option value="博士学位论文">博士学位论文</option>
+                  <option value="硕士学位论文">硕士学位论文</option>
+                  <option value="本科学位论文">本科学位论文</option>
+                  <option value="学位论文">学位论文（类型不详）</option>
+                </select>
+              ) : (
+                <input value={c.thesisType || ''} onChange={e => updateField('thesisType', e.target.value)} className="input-field" placeholder="会议论文" />
+              )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">学校/机构</label>
-              <input value={c.institution || ''} onChange={e => updateField('institution', e.target.value)} className="input-field" placeholder="北京师范大学历史系" />
+              <label className="block text-sm font-medium text-ink-800 mb-1">
+                {c.type === 'conference' ? '主办机构/地点' : '学校/机构'}
+              </label>
+              <input
+                value={c.institution || ''}
+                onChange={e => updateField('institution', e.target.value)}
+                className="input-field"
+                placeholder={c.type === 'conference' ? '中国人民大学清史研究所' : '北京师范大学历史系'}
+              />
             </div>
           </div>
+          {c.type === 'conference' && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">论文集名称</label>
+              <input value={c.bookTitle || ''} onChange={e => updateField('bookTitle', e.target.value)} className="input-field" placeholder="中国地理学会百年庆典学术论文摘要集" />
+            </div>
+          )}
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
@@ -758,6 +811,9 @@ function ManualForm({
               <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="67" />
             </div>
           </div>
+          {c.type === 'thesis' && (
+            <p className="text-xs text-ink-400 dark:text-gray-500">注意：请在"学校/机构"中填写完整学院/系名称，如"东南大学历史系"</p>
+          )}
         </>
       )}
 
