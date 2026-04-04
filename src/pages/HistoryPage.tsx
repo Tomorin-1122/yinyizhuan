@@ -164,7 +164,7 @@ function AddToGroupDropdown({
 }
 
 // 单条备注编辑
-function NoteEditor({ recordId, initialNote, onSave }: { recordId: string; initialNote?: string; onSave: (note: string) => void }) {
+function NoteEditor({ initialNote, onSave }: { initialNote?: string; onSave: (note: string) => void }) {
   const [editing, setEditing] = useState(false)
   const [value, setValue] = useState(initialNote || '')
 
@@ -614,7 +614,6 @@ export default function HistoryPage() {
 
                       {/* 备注 */}
                       <NoteEditor
-                        recordId={r.id}
                         initialNote={r.note}
                         onSave={(note) => handleSaveNote(r.id, note)}
                       />
