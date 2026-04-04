@@ -1,42 +1,34 @@
-import { DOMParser } from 'xmldom';
-import { Citation, EndNoteType } from './types';
+import { Citation, CitationType, Author, CitationLanguage } from './types';
+
+export function parseEndNoteXML(xmlString: string): Partial<Citation>[] {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'application/xml');
+    const records = xmlDoc.getElementsByTagName('record');
+    return Array.from(records).map(parseRecord);
+}
 
 function parseRecord(record: Element): Partial<Citation> {
     const citation: Partial<Citation> = {};
-    citation.title = getTextContent(record, 'title');
-    citation.authors = getTextContent(record, 'authors')?.split('; ');
-    citation.journal = getTextContent(record, 'journal');
-    citation.year = getTextContent(record, 'year');
-    citation.volume = getTextContent(record, 'volume');
-    citation.issue = getTextContent(record, 'issue');
-    citation.pages = getTextContent(record, 'pages');
-    citation.type = mapEndNoteType(getTextContent(record, 'type'));
-    citation.language = detectLanguage(citation);
+    citation.type = mapEndNoteType(record.getElementsByTagName('recordType')[0]?.textContent);
+    citation.language = detectLanguage(record);
+    citation.authors = getTextContent(record.getElementsByTagName('author'));
     return citation;
 }
 
-function getTextContent(element: Element, tagName: string): string | null {
-    const child = element.getElementsByTagName(tagName)[0];
-    return child ? child.textContent : null;
+function getTextContent(elements: NodeListOf<Element>): string[] {
+    return Array.from(elements).map(el => el.textContent || '').filter(Boolean);
 }
 
-function mapEndNoteType(type: string | null): EndNoteType | null {
-    const typeMapping: { [key: string]: EndNoteType } = {
-        'Journal Article': EndNoteType.JournalArticle,
-        'Book': EndNoteType.Book,
-        // additional mappings...
+function mapEndNoteType(type: string | null): CitationType | undefined {
+    const typeMapping: Record<string, CitationType> = {
+        'Journal Article': 'journal',
+        'Book': 'book'
+        // Add mapping for other types as needed
     };
-    return type ? typeMapping[type] || null : null;
+    return type ? typeMapping[type] : undefined;
 }
 
-function detectLanguage(citation: Partial<Citation>): string | null {
-    // Implement language detection logic here
-    return null;
-}
-
-export function parseEndNoteXML(xml: string): Partial<Citation>[] {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(xml, 'application/xml');
-    const records = Array.from(doc.getElementsByTagName('record'));
-    return records.map(record => parseRecord(record as Element));
+function detectLanguage(record: Element): CitationLanguage | undefined {
+    const lang = record.getElementsByTagName('language')[0]?.textContent;
+    return lang ? (lang as CitationLanguage) : undefined;
 }
