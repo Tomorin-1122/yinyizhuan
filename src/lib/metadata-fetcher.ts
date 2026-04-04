@@ -95,13 +95,23 @@ async function fetchFromGoogleBooks(isbn: string): Promise<FetchResult> {
     const res = await fetch(url)
     if (!res.ok) throw new Error(`Google Books API 返回 ${res.status}`)
     const json = await res.json()
-    if (!json.totalItems || json.totalItems === 0) {
-      return { success: false, error: '' } // 空 error 表示"未找到"，让 fallback 继续
+    if (!json.items || json.items.length === 0) {
+      return { success: false, error: '' }
     }
 
-    const book = json.items[0]
-    const info = book.volumeInfo
+    // 严谨校验：查找包含目标 ISBN 的条目
+    const targetIsbn = isbn.replace(/[-\s]/g, '')
+    const book = json.items.find((item: any) => {
+      const identifiers = item.volumeInfo?.industryIdentifiers || []
+      return identifiers.some((id: any) => id.identifier.replace(/[-\s]/g, '') === targetIsbn)
+    })
 
+    if (!book) {
+      // 没搜到匹配的 ISBN，返回失败以便 fallback 到其他源
+      return { success: false, error: '' }
+    }
+
+    const info = book.volumeInfo
     return parseBookInfo(info, 'Google Books')
   } catch (e: any) {
     if (e.message?.includes('Failed to fetch')) {
@@ -164,18 +174,20 @@ async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
 // ============================================================
 
 function parseBookInfo(info: any, sourceName: string): FetchResult {
-  // 解析作者
+  // 解析作者（如果作者列表为空，则置为空数组，避免误填）
   const authors: Author[] = (info.authors || []).map((name: string) => ({ name }))
+
+  // 校验标题（防止搜到乱码结果）
+  const fullTitle = info.title || ''
+  if (!fullTitle || fullTitle.length < 1) {
+    return { success: false, error: '获取到的标题无效' }
+  }
 
   // 尝试从日期中提取年份
   const pubDate = info.publishedDate || ''
   const year = pubDate ? pubDate.substring(0, 4) : ''
 
-  // 智能推断文献类型：如果有 ISBN 且不是学术专著，可能是普通图书
-  // 这里默认保持 book 类型，由用户后续手动修改
-
   // 尝试从副标题中提取信息
-  const fullTitle = info.title || ''
   const subtitle = info.subtitle || ''
 
   return {
