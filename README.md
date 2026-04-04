@@ -1,50 +1,85 @@
-# React + TypeScript + Vite
+# 引易转
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 专为中国历史系学生、学者设计的引用格式转换工具。告别手动调整的繁琐，专注于内容创作。
 
-Currently, two official plugins are available:
+**网址：** https://yinyizhuan.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 关于引易转
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+引易转是一款学术引用格式转换工具，专为历史学研究者设计，支持《历史研究》、GB/T 7714-2015、APA 第7版等主流引用规范的一键转换。
 
-- Configure the top-level `parserOptions` property like this:
+## 核心功能
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- **多种输入方式**：手动填写、粘贴文本智能解析、URL/DOI/ISBN 导入、BibTeX/RIS 文件上传
+- **主流格式覆盖**：《历史研究》格式、GB/T 7714-2015 国标、APA 第7版
+- **12种文献类型**：著作、期刊文章、析出文献、报纸、学位论文、会议论文、档案、古籍、电子文献、日记、转引文献、经典古籍
+- **本地历史记录**：转换结果自动保存于浏览器本地，支持导出 CSV/JSON
+- **批量转换**：支持粘贴多条 GB/T 7714 格式引用，自动逐条转换
+
+## 《历史研究》格式说明
+
+《历史研究》格式采用脚注体例，随文出注，主要规范如下：
+
+- 责任者与题名之间用冒号（：）连接
+- 著作题名加书名号《》，期刊文章题名加引号
+- 出版信息用逗号分隔，末尾标注页码
+- 外文文献保留原文语言格式
+
+**示例：**
+
+```
+赵景深：《文坛忆旧》，北新书局，1948年，第43页。
+王戎笙：《清代前期移民史》，《历史研究》1998年第3期。
+伍强胜：《万斯同哲学思想研究》，博士学位论文，东南大学历史系，2020年。
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 使用说明
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **选择输入方式** — 根据您的需求选择文本粘贴、手动输入、URL导入或文件上传
+2. **选择目标格式** — 从多种引用格式中选择您需要的目标格式
+3. **点击"转换"** — 系统将自动处理并生成转换结果
+4. **复制或下载** — 转换完成后，复制结果到剪贴板或下载保存到本地
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+> 注意：移动端可以使用但没有适配好，推荐在 PC 端打开。
+
+## 常见问题
+
+**Q: 转换结果不准确怎么办？**
+A: 请检查输入信息的完整性和准确性。推荐使用手动填写功能进行校对和修正。
+
+**Q: 支持哪些文件格式上传？**
+A: 目前支持 BibTeX (.bib)、RIS (.ris)、EndNote (.enl) 格式的文件上传。
+
+**Q: 历史记录会保存多久？**
+A: 历史记录默认在浏览器本地存储中保存，除非用户手动清除，否则会长期保存。建议定期导出重要记录进行备份。
+
+**Q: 可以同时转换多个引用吗？**
+A: 是的，批量转换功能支持将多个引用粘贴到批量转换区域，系统会自动识别并转换所有引用。
+
+**Q: 是否支持更多引用格式？如古籍、档案？**
+A: 古籍、档案等特殊文献格式已在开发计划中，敬请期待后续更新。
+
+**Q: 这个项目开源吗？**
+A: 项目已经托管到 GitHub 平台。如需获取源代码或参与贡献，请联系作者获取访问权限。
+
+## 技术栈
+
+| 技术 | 用途 |
+|------|------|
+| React 18 | 前端框架 |
+| TypeScript | 类型安全 |
+| Vite 5 | 构建工具 |
+| Tailwind CSS | 样式系统 |
+| React Router | 前端路由 |
+| Vercel | 部署平台 |
+
+## 联系作者
+
+- GitHub: [@Tomorin-1122](https://github.com/Tomorin-1122)
+- Email: chenwenxuan915@gmail.com
+
+## 版权声明
+
+&copy; 2026 引易转团队 版权所有。本软件及其所有内容受版权法保护，未经许可不得复制、分发或修改。本网站提供的引用格式转换功能基于公开的学术引用标准，我们致力于提供准确的转换结果，但不对因使用本网站而产生的任何直接或间接损失承担责任。
