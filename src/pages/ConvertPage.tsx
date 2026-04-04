@@ -143,7 +143,8 @@ export default function ConvertPage() {
 
       setCitation(c)
       setMode('manual')
-      showToast('已自动填充文献信息，请核对后转换')
+      const sourceTag = result.source ? `（数据来源：${result.source}）` : ''
+      showToast(`已自动填充文献信息${sourceTag}，请核对后转换`)
     } else {
       showToast(`自动获取失败：${result.error}`)
     }

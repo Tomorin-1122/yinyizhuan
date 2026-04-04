@@ -1,6 +1,10 @@
 /**
  * 通过 DOI / ISBN 自动抓取文献元数据
- * 使用免费公开 API：Crossref (DOI) + Google Books (ISBN)
+ * 使用免费公开 API：
+ *   - DOI: Crossref
+ *   - ISBN: Google Books → Open Library（降级 fallback）
+ * 
+ * 所有 API 均支持 CORS，可直接从浏览器前端调用，无需后端代理。
  */
 
 import { Citation, Author } from './types'
@@ -9,7 +13,12 @@ interface FetchResult {
   success: boolean
   data?: Partial<Citation>
   error?: string
+  source?: string  // 标记数据来源（Google Books / Open Library / Crossref）
 }
+
+// ============================================================
+// DOI 抓取：Crossref API
+// ============================================================
 
 /**
  * 通过 DOI 获取文献元数据 (Crossref API)
@@ -20,6 +29,9 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
     const res = await fetch(url, {
       headers: { 'User-Agent': 'yinyizhuan/1.0 (mailto:chenwenxuan915@gmail.com)' },
     })
+    if (res.status === 404) {
+      return { success: false, error: 'Crossref 数据库中未找到该 DOI' }
+    }
     if (!res.ok) throw new Error(`Crossref API 返回 ${res.status}`)
     const json = await res.json()
     const item = json.message
@@ -33,6 +45,16 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
     const issued = item.issued?.['date-parts']?.[0]
     const year = issued ? String(issued[0]) : ''
 
+    // 智能判断文献类型
+    let inferredType: string | undefined
+    if (containerTitle) {
+      inferredType = 'journal' // 有期刊名 → 期刊文章
+    } else if (item['event-name']) {
+      inferredType = 'conference' // 有会议名称 → 会议论文
+    } else if (item['archive-location']) {
+      inferredType = item['type'] === 'dissertation' ? 'thesis' : 'archive'
+    }
+
     return {
       success: true,
       data: {
@@ -45,50 +67,152 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
         issue: item.issue || '',
         pages: item.page || '',
         url: item.URL || '',
+        ...(inferredType && { type: inferredType as any }),
       },
+      source: 'Crossref',
     }
   } catch (e: any) {
+    if (e.message?.includes('Failed to fetch')) {
+      return { success: false, error: '网络异常，请检查网络连接后重试' }
+    }
     return { success: false, error: e.message || '获取失败' }
   }
 }
 
+// ============================================================
+// ISBN 抓取：Google Books API
+// ============================================================
+
 /**
  * 通过 ISBN 获取图书元数据 (Google Books API)
  */
-export async function fetchByISBN(isbn: string): Promise<FetchResult> {
+async function fetchFromGoogleBooks(isbn: string): Promise<FetchResult> {
   const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(isbn)}`
   try {
     const res = await fetch(url)
     if (!res.ok) throw new Error(`Google Books API 返回 ${res.status}`)
     const json = await res.json()
     if (!json.totalItems || json.totalItems === 0) {
-      return { success: false, error: '未找到该 ISBN 对应的图书' }
+      return { success: false, error: '' } // 空 error 表示"未找到"，让 fallback 继续
     }
 
     const book = json.items[0]
     const info = book.volumeInfo
 
-    const authors: Author[] = (info.authors || []).map((name: string) => ({ name }))
+    return parseBookInfo(info, 'Google Books')
+  } catch (e: any) {
+    if (e.message?.includes('Failed to fetch')) {
+      return { success: false, error: '网络异常' }
+    }
+    return { success: false, error: '' } // 让 fallback 继续
+  }
+}
 
-    // 尝试从日期中提取年份
-    const pubDate = info.publishedDate || ''
-    const year = pubDate ? pubDate.substring(0, 4) : ''
+// ============================================================
+// ISBN 抓取：Open Library API（Google Books 无结果时的降级方案）
+// ============================================================
+
+/**
+ * 通过 ISBN 获取图书元数据 (Open Library API)
+ */
+async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
+  // Open Library 的 ISBN API 返回的是单个对象的 bibkeys 映射
+  const url = `https://openlibrary.org/api/books?bibkeys=ISBN:${encodeURIComponent(isbn)}&format=json&jscmd=data`
+  try {
+    const res = await fetch(url)
+    if (!res.ok) return { success: false, error: '' }
+    const json = await res.json()
+    const key = `ISBN:${isbn}`
+    const book = json[key]
+    if (!book) return { success: false, error: '' }
+
+    // 解析作者
+    const authors: Author[] = (book.authors || []).map((a: any) => ({
+      name: typeof a === 'string' ? a : (a.name || a.personal_name || ''),
+    }))
+
+    // 解析出版年份（从 publish_date 中提取）
+    const pubDate = book.publish_date || ''
+    const yearMatch = pubDate.match(/\b(\d{4})\b/)
+    const year = yearMatch ? yearMatch[1] : ''
+
+    // 解析出版社（publishers 是数组）
+    const publisher = (book.publishers || []).map((p: any) => p.name || p).join(', ') || ''
 
     return {
       success: true,
       data: {
-        title: info.title || '',
+        title: book.title || '',
         authors: authors.length > 0 ? authors : [{ name: '' }],
-        publisher: info.publisher || '',
-        publishPlace: '', // Google Books 不提供出版地
+        publisher,
         publishYear: year,
-        url: info.previewLink || info.canonicalVolumeLink || '',
+        publishPlace: '', // Open Library 不提供出版地
+        url: book.url || book.preview_url || `https://openlibrary.org/isbn/${isbn}`,
       },
+      source: 'Open Library',
     }
   } catch (e: any) {
-    return { success: false, error: e.message || '获取失败' }
+    return { success: false, error: '' }
   }
 }
+
+// ============================================================
+// 通用：解析图书信息并映射到表单字段
+// ============================================================
+
+function parseBookInfo(info: any, sourceName: string): FetchResult {
+  // 解析作者
+  const authors: Author[] = (info.authors || []).map((name: string) => ({ name }))
+
+  // 尝试从日期中提取年份
+  const pubDate = info.publishedDate || ''
+  const year = pubDate ? pubDate.substring(0, 4) : ''
+
+  // 智能推断文献类型：如果有 ISBN 且不是学术专著，可能是普通图书
+  // 这里默认保持 book 类型，由用户后续手动修改
+
+  // 尝试从副标题中提取信息
+  const fullTitle = info.title || ''
+  const subtitle = info.subtitle || ''
+
+  return {
+    success: true,
+    data: {
+      title: fullTitle,
+      authors: authors.length > 0 ? authors : [{ name: '' }],
+      publisher: info.publisher || '',
+      publishPlace: '', // 公开 API 一般不提供出版地
+      publishYear: year,
+      url: info.previewLink || info.canonicalVolumeLink || info.infoLink || '',
+      notes: subtitle ? `副标题：${subtitle}` : undefined,
+    },
+    source: sourceName,
+  }
+}
+
+/**
+ * 通过 ISBN 获取图书元数据（多源 fallback 链）
+ * 顺序：Google Books → Open Library
+ */
+export async function fetchByISBN(isbn: string): Promise<FetchResult> {
+  // 第一顺位：Google Books（覆盖面广，返回数据完整）
+  const gbResult = await fetchFromGoogleBooks(isbn)
+  if (gbResult.success) return gbResult
+
+  // 第二顺位：Open Library（非营利项目，中文书覆盖率略低但可作为补充）
+  const olResult = await fetchFromOpenLibrary(isbn)
+  if (olResult.success) return olResult
+
+  // 所有源都失败
+  return {
+    success: false,
+    error: '未找到该 ISBN 对应的图书（已尝试 Google Books 和 Open Library）',
+  }
+}
+
+// ============================================================
+// 类型识别 & 统一入口
+// ============================================================
 
 /**
  * 自动识别输入类型并获取元数据
