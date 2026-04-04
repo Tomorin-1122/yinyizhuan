@@ -194,22 +194,34 @@ function parseBookInfo(info: any, sourceName: string): FetchResult {
 }
 
 /**
- * 通过 ISBN 获取图书元数据（多源 fallback 链）
- * 顺序：Google Books → Open Library
+ * 通过 ISBN 获取图书元数据（并行请求提升韧性）
+ * 逻辑：同时请求 Google Books 和 Open Library，优先使用数据更全的 Google
  */
 export async function fetchByISBN(isbn: string): Promise<FetchResult> {
-  // 第一顺位：Google Books（覆盖面广，返回数据完整）
-  const gbResult = await fetchFromGoogleBooks(isbn)
-  if (gbResult.success) return gbResult
+  const fetchPromises = [
+    fetchFromGoogleBooks(isbn),
+    fetchFromOpenLibrary(isbn)
+  ]
 
-  // 第二顺位：Open Library（非营利项目，中文书覆盖率略低但可作为补充）
-  const olResult = await fetchFromOpenLibrary(isbn)
-  if (olResult.success) return olResult
+  const results = await Promise.allSettled(fetchPromises)
 
-  // 所有源都失败
+  // 第一优先级：Google Books 的成功结果
+  if (results[0].status === 'fulfilled' && results[0].value.success) {
+    return results[0].value
+  }
+
+  // 第二优先级：Open Library 的成功结果
+  if (results[1].status === 'fulfilled' && results[1].value.success) {
+    return results[1].value
+  }
+
+  // 第三优先级：如果都失败，提取第一个非空的错误信息
+  const gbError = results[0].status === 'fulfilled' ? results[0].value.error : ''
+  const olError = results[1].status === 'fulfilled' ? results[1].value.error : ''
+
   return {
     success: false,
-    error: '未找到该 ISBN 对应的图书（已尝试 Google Books 和 Open Library）',
+    error: gbError || olError || '未找到该 ISBN 对应的图书（已尝试多个数据库）',
   }
 }
 
