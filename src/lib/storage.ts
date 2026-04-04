@@ -1,0 +1,69 @@
+import { ConversionRecord } from './types';
+
+const STORAGE_KEY = 'yinyizhuan_history';
+const MAX_RECORDS = 500;
+
+export function getHistory(): ConversionRecord[] {
+  const data = localStorage.getItem(STORAGE_KEY);
+  if (!data) return [];
+  try {
+    const records: ConversionRecord[] = JSON.parse(data);
+    return records.sort((a, b) => b.timestamp - a.timestamp);
+  } catch (e) {
+    console.error('Failed to parse history', e);
+    return [];
+  }
+}
+
+export function addRecord(record: ConversionRecord): void {
+  const history = getHistory();
+  const updatedHistory = [record, ...history].slice(0, MAX_RECORDS);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedHistory));
+}
+
+export function deleteRecord(id: string): void {
+  const history = getHistory();
+  const updatedHistory = history.filter(r => r.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedHistory));
+}
+
+export function clearHistory(): void {
+  localStorage.removeItem(STORAGE_KEY);
+}
+
+export function exportHistoryAsJSON(): string {
+  const history = getHistory();
+  return JSON.stringify(history, null, 2);
+}
+
+export function exportHistoryAsCSV(): string {
+  const history = getHistory();
+  const headers = ['时间', '类型', '标题', '目标格式', '转换结果'];
+  
+  const rows = history.map(record => {
+    const date = new Date(record.timestamp).toLocaleString('zh-CN');
+    const type = getCitationTypeName(record.citation.type);
+    const title = record.citation.title;
+    const format = getFormatName(record.targetFormat);
+    const result = record.result;
+    
+    return [date, type, title, format, result].map(field => {
+      const escaped = String(field).replace(/"/g, '""');
+      return `"${escaped}"`;
+    }).join(',');
+  });
+  
+  return [headers.join(','), ...rows].join('\n');
+}
+
+export function getRecordById(id: string): ConversionRecord | undefined {
+  const history = getHistory();
+  return history.find(r => r.id === id);
+}
+
+// Internal helper functions or moved to utils?
+// I'll put them here for simplicity or import them if I create utils first.
+// The prompt says "import from ./types", but these helper names are in utils.ts as well.
+// I'll define them in utils.ts and import here.
+
+import { getCitationTypeName, getFormatName } from './utils';

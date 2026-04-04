@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-parchment-50 text-ink-950 font-body antialiased;
+  }
+  ::selection {
+    @apply bg-vermilion-100 text-vermilion-900;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 
+           bg-ink-950 text-parchment-50 font-medium
+           rounded-none border-2 border-ink-950
+           transition-all duration-200 cursor-pointer
+           hover:bg-vermilion-600 hover:border-vermilion-600
+           active:bg-vermilion-700
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion-500 focus-visible:ring-offset-2;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           bg-transparent text-ink-950 font-medium
+           rounded-none border-2 border-ink-300
+           transition-all duration-200 cursor-pointer
+           hover:border-ink-950 hover:bg-ink-50
+           active:bg-ink-100
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-500 focus-visible:ring-offset-2;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2
+           bg-transparent text-ink-700 font-medium
+           rounded-none border-none
+           transition-all duration-200 cursor-pointer
+           hover:text-ink-950 hover:bg-ink-100
+           active:bg-ink-200;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 
+           bg-white text-ink-950 font-body
+           border-2 border-ink-200 rounded-none
+           transition-all duration-200
+           placeholder:text-ink-400
+           focus:border-ink-950 focus:outline-none focus:ring-0
+           hover:border-ink-400;
+  }
+  .card {
+    @apply bg-white border-2 border-ink-200
+           transition-all duration-200
+           hover:border-ink-400;
+  }
+}
+
+@layer utilities {
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+}
