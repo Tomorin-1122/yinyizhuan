@@ -1,42 +1,31 @@
-// endnote-parser.ts
+// Updated implementation for parsing EndNote XML records using DOMParser
 
-/**
- * Parses EndNote XML exports to extract bibliographic data.
- */
+interface Citation {
+    title: string;
+    authors: string[];
+    year: number;
+}
 
-import * as fs from 'fs';
-import * as xml2js from 'xml2js';
+function parseEndNoteXML(xmlString: string): Citation[] {
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(xmlString, 'text/xml');
+    const citations: Citation[] = [];
 
-/**
- * Function to parse EndNote XML data.
- * @param {string} xml - The XML string to parse.
- * @returns {Promise<object>} - A promise that resolves with the parsed data.
- */
-export const parseEndNoteXML = (xml: string): Promise<object> => {
-    return new Promise((resolve, reject) => {
-        xml2js.parseString(xml, { explicitArray: false }, (err, result) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve(result);
-        });
-    });
-};
+    const records = xmlDoc.getElementsByTagName('record');
+    for (let i = 0; i < records.length; i++) {
+        const title = records[i].getElementsByTagName('title')[0]?.textContent || '';
+        const authorsNode = records[i].getElementsByTagName('author');
+        const authors: string[] = [];
+        for (let j = 0; j < authorsNode.length; j++) {
+            authors.push(authorsNode[j].textContent || '');
+        }
+        const year = parseInt(records[i].getElementsByTagName('year')[0]?.textContent || '0');
+        citations.push({ title, authors, year });
+    }
 
-/**
- * Function to read and parse an EndNote XML file.
- * @param {string} filePath - The path to the XML file.
- * @returns {Promise<object>} - A promise that resolves with the parsed data.
- */
-export const parseEndNoteFile = (filePath: string): Promise<object> => {
-    return new Promise((resolve, reject) => {
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-                return reject(err);
-            }
-            parseEndNoteXML(data)
-                .then(resolve)
-                .catch(reject);
-        });
-    });
-};
+    return citations;
+}
+
+// Example usage: 
+// const xmlString = '<records>...</records>';
+// const citations = parseEndNoteXML(xmlString);
