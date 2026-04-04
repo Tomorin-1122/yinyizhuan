@@ -6,7 +6,7 @@ import { parseBibTeX } from '../lib/bibtex-parser'
 import { parseRIS } from '../lib/ris-parser'
 import { addRecord } from '../lib/storage'
 import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
-import { canConvert, recordConversion, getRemainingCount, isAdmin, isUnlocked, unlock, getTrialRemaining } from '../lib/access'
+import { canConvert, recordConversion, getRemainingCount, isAdmin, isUnlocked, unlock, getTrialRemaining, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { IconCopy, IconDownload, IconCheck, IconUpload, IconLink, IconPaste, IconEdit, IconPlus, IconMinus, IconX, IconSearch, IconLoader } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
 
@@ -129,11 +129,22 @@ export default function ConvertPage() {
 
   const handleAutoFetch = async () => {
     if (!urlInput.trim()) return
+    
+    // 检查每日限额
+    const fetchStatus = canFetchMetadata()
+    if (fetchStatus === 'isbn_limit_reached') {
+      showToast('因 API 限额原因，每日自动抓取仅限 10 次，明日重置')
+      return
+    }
+
     setFetchLoading(true)
     const result = await fetchMetadata(urlInput)
     setFetchLoading(false)
 
     if (result.success && result.data) {
+      recordMetadataFetch()
+      forceUpdate(n => n + 1)
+
       const c = { ...defaultCitation(), ...result.data, id: generateId() } as Citation
       if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
 
@@ -144,7 +155,9 @@ export default function ConvertPage() {
       setCitation(c)
       setMode('manual')
       const sourceTag = result.source ? `（数据来源：${result.source}）` : ''
-      showToast(`已自动填充文献信息${sourceTag}，请核对后转换`)
+      const remaining = getFetchMetadataRemaining()
+      const quotaTag = !isAdmin() ? `，今日剩余 ${remaining} 次` : ''
+      showToast(`已自动填充文献信息${sourceTag}${quotaTag}，请核对后转换`)
     } else {
       showToast(`自动获取失败：${result.error}`)
     }
@@ -278,22 +291,40 @@ export default function ConvertPage() {
           <p className="text-ink-500 mt-2">输入引用信息，选择目标格式，即刻生成规范引用</p>
         </div>
         {!isAdmin() && (
-          <div className="text-right text-sm mt-1">
+          <div className="text-right text-sm mt-1 space-y-1">
             {!isUnlocked() ? (
               <>
-                <span className="text-ink-400">免费试用剩余</span>
-                <span className={`ml-2 font-mono font-bold text-lg ${getTrialRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
-                  {getTrialRemaining()}
-                </span>
-                <span className="text-ink-400"> / 10</span>
+                <div>
+                  <span className="text-ink-400">免费试用剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getTrialRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                    {getTrialRemaining()}
+                  </span>
+                  <span className="text-ink-400"> / 10</span>
+                </div>
+                <div>
+                  <span className="text-ink-400">自动抓取剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                    {getFetchMetadataRemaining()}
+                  </span>
+                  <span className="text-ink-400"> / 10</span>
+                </div>
               </>
             ) : (
               <>
-                <span className="text-ink-400">今日剩余次数</span>
-                <span className={`ml-2 font-mono font-bold text-lg ${getRemainingCount() <= 10 ? 'text-vermilion-600' : 'text-ink-950'}`}>
-                  {getRemainingCount()}
-                </span>
-                <span className="text-ink-400"> / 100</span>
+                <div>
+                  <span className="text-ink-400">今日转换剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getRemainingCount() <= 10 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                    {getRemainingCount()}
+                  </span>
+                  <span className="text-ink-400"> / 100</span>
+                </div>
+                <div>
+                  <span className="text-ink-400">自动抓取剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                    {getFetchMetadataRemaining()}
+                  </span>
+                  <span className="text-ink-400"> / 10</span>
+                </div>
               </>
             )}
           </div>
@@ -367,6 +398,9 @@ export default function ConvertPage() {
                 <p>• <strong>DOI</strong>（如 <code className="bg-amber-100 px-1 rounded">10.1000/xyz</code>）→ 自动获取期刊/会议论文信息</p>
                 <p>• <strong>ISBN</strong>（如 <code className="bg-amber-100 px-1 rounded">9787108034458</code>）→ 自动获取图书信息</p>
                 <p>• <strong>URL</strong>（如 <code className="bg-amber-100 px-1 rounded">https://doi.org/...</code>）→ 保存链接供手动补充</p>
+                {!isAdmin() && (
+                  <p className="pt-1 border-t border-amber-200 mt-2">⚠️ 因 API 限额原因，DOI/ISBN 自动抓取每日限 <strong>10</strong> 次，明日自动重置</p>
+                )}
               </div>
               <div className="flex gap-2">
                 <button
