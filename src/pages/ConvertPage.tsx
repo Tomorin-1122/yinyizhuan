@@ -248,9 +248,9 @@ export default function ConvertPage() {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 animate-fade-in">
+    <div className="max-w-6xl mx-auto px-6 py-10 animate-fade-in dark:text-gray-100">
       {toast && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-ink-950 text-parchment-50 px-6 py-3 font-body text-sm animate-slide-up">
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-ink-950 dark:bg-gray-100 text-parchment-50 dark:text-gray-900 px-6 py-3 font-body text-sm animate-slide-up">
           {toast}
         </div>
       )}
@@ -287,43 +287,43 @@ export default function ConvertPage() {
 
       <div className="mb-8 flex items-start justify-between">
         <div>
-          <h1 className="font-display font-bold text-3xl text-ink-950">格式转换</h1>
-          <p className="text-ink-500 mt-2">输入引用信息，选择目标格式，即刻生成规范引用</p>
+          <h1 className="font-display font-bold text-3xl text-ink-950 dark:text-gray-100">格式转换</h1>
+          <p className="text-ink-500 dark:text-gray-400 mt-2">输入引用信息，选择目标格式，即刻生成规范引用</p>
         </div>
         {!isAdmin() && (
           <div className="text-right text-sm mt-1 space-y-1">
             {!isUnlocked() ? (
               <>
                 <div>
-                  <span className="text-ink-400">免费试用剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getTrialRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                  <span className="text-ink-400 dark:text-gray-500">免费试用剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getTrialRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
                     {getTrialRemaining()}
                   </span>
-                  <span className="text-ink-400"> / 10</span>
+                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
                 </div>
                 <div>
-                  <span className="text-ink-400">自动抓取剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                  <span className="text-ink-400 dark:text-gray-500">自动抓取剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
                     {getFetchMetadataRemaining()}
                   </span>
-                  <span className="text-ink-400"> / 10</span>
+                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
                 </div>
               </>
             ) : (
               <>
                 <div>
-                  <span className="text-ink-400">今日转换剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getRemainingCount() <= 10 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                  <span className="text-ink-400 dark:text-gray-500">今日转换剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getRemainingCount() <= 10 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
                     {getRemainingCount()}
                   </span>
-                  <span className="text-ink-400"> / 100</span>
+                  <span className="text-ink-400 dark:text-gray-500"> / 100</span>
                 </div>
                 <div>
-                  <span className="text-ink-400">自动抓取剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950'}`}>
+                  <span className="text-ink-400 dark:text-gray-500">自动抓取剩余</span>
+                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
                     {getFetchMetadataRemaining()}
                   </span>
-                  <span className="text-ink-400"> / 10</span>
+                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
                 </div>
               </>
             )}
@@ -342,17 +342,17 @@ export default function ConvertPage() {
       `}</style>
 
       {/* Input Mode Tabs */}
-      <div className="flex border-2 border-ink-200 mb-0">
+      <div className="flex border-2 border-ink-200 dark:border-gray-700 mb-0">
         {modeButtons.map(m => {
           const Icon = m.icon
           return (
             <button
               key={m.mode}
               onClick={() => setMode(m.mode)}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium cursor-pointer transition-all duration-200 border-r-2 border-ink-200 last:border-r-0 ${
+              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium cursor-pointer transition-all duration-200 border-r-2 border-ink-200 dark:border-gray-700 last:border-r-0 ${
                 mode === m.mode
-                  ? 'bg-ink-950 text-parchment-50'
-                  : 'bg-white text-ink-600 hover:bg-ink-50 hover:text-ink-950'
+                  ? 'bg-ink-950 text-parchment-50 dark:bg-vermilion-600'
+                  : 'bg-white dark:bg-gray-800 text-ink-600 dark:text-gray-400 hover:bg-ink-50 dark:hover:bg-gray-700 hover:text-ink-950 dark:hover:text-gray-200'
               }`}
             >
               <Icon className="w-4 h-4" />
@@ -364,7 +364,7 @@ export default function ConvertPage() {
 
       <div className="grid lg:grid-cols-2 gap-0">
         {/* Left: Input */}
-        <div className="border-2 border-ink-200 border-t-0 lg:border-r-0 p-6 bg-white">
+        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 lg:border-r-0 p-6 bg-white dark:bg-gray-800">
           {mode === 'paste' && (
             <div className="space-y-4">
               <label className="block text-sm font-medium text-ink-800">粘贴原始引用文本</label>
@@ -464,9 +464,9 @@ export default function ConvertPage() {
         </div>
 
         {/* Right: Output */}
-        <div className="border-2 border-ink-200 border-t-0 p-6 bg-white flex flex-col">
+        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 p-6 bg-white dark:bg-gray-800 flex flex-col">
           <div className="mb-4">
-            <label className="block text-sm font-medium text-ink-800 mb-2">目标格式</label>
+            <label className="block text-sm font-medium text-ink-800 dark:text-gray-200 mb-2">目标格式</label>
             <div className="grid grid-cols-3 gap-0">
               {FORMAT_LIST.map(f => (
                 <button
@@ -475,7 +475,7 @@ export default function ConvertPage() {
                   className={`px-3 py-2.5 text-sm font-medium cursor-pointer transition-all duration-200 border-2 -ml-[2px] first:ml-0 ${
                     targetFormat === f.id
                       ? 'bg-ink-950 text-parchment-50 border-ink-950 z-10'
-                      : 'bg-white text-ink-600 border-ink-200 hover:border-ink-400'
+                      : 'bg-white text-ink-600 border-ink-200 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 hover:border-ink-400 dark:hover:border-gray-400'
                   }`}
                 >
                   {f.name}

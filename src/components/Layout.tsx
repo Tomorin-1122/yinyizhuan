@@ -1,5 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
-import { IconHome, IconEdit, IconHistory } from './Icons'
+import { IconHome, IconEdit, IconHistory, IconMoon, IconSun } from './Icons'
+import { getTheme, toggleTheme } from '../lib/theme'
+import { useEffect, useState } from 'react'
 
 const navItems = [
   { path: '/', label: '首页', icon: IconHome },
@@ -9,38 +11,58 @@ const navItems = [
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
+  const [dark, setDark] = useState(getTheme() === 'dark')
+
+  useEffect(() => {
+    setDark(getTheme() === 'dark')
+  }, [])
+
+  const handleToggleTheme = () => {
+    toggleTheme()
+    setDark(!dark)
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b-2 border-ink-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b-2 border-ink-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 cursor-pointer group">
-            <div className="w-8 h-8 bg-ink-950 flex items-center justify-center transition-colors duration-200 group-hover:bg-vermilion-600">
+            <div className="w-8 h-8 bg-ink-950 dark:bg-vermilion-600 flex items-center justify-center transition-colors duration-200 group-hover:bg-vermilion-600">
               <span className="text-parchment-50 font-display font-bold text-sm">引</span>
             </div>
-            <span className="font-display font-bold text-xl text-ink-950 tracking-wider">引易转</span>
+            <span className="font-display font-bold text-xl text-ink-950 dark:text-gray-100 tracking-wider">引易转</span>
           </Link>
 
-          <nav className="flex items-center gap-1">
-            {navItems.map(item => {
-              const isActive = location.pathname === item.path
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${
-                    isActive
-                      ? 'border-ink-950 text-ink-950'
-                      : 'border-transparent text-ink-500 hover:text-ink-800 hover:border-ink-300'
-                  }`}
-                >
-                  <Icon className="w-4 h-4" />
-                  {item.label}
-                </Link>
-              )
-            })}
-          </nav>
+          <div className="flex items-center gap-2">
+            <nav className="flex items-center gap-1">
+              {navItems.map(item => {
+                const isActive = location.pathname === item.path
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${
+                      isActive
+                        ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100'
+                        : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'
+                    }`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </Link>
+                )
+              })}
+            </nav>
+
+            <button
+              onClick={handleToggleTheme}
+              className="ml-2 p-2 text-ink-500 dark:text-gray-400 hover:text-ink-950 dark:hover:text-gray-100 transition-colors rounded-lg hover:bg-ink-100 dark:hover:bg-gray-800"
+              title={dark ? '切换为亮色模式' : '切换为黑夜模式'}
+            >
+              {dark ? <IconSun className="w-5 h-5" /> : <IconMoon className="w-5 h-5" />}
+            </button>
+          </div>
         </div>
       </header>
 
@@ -48,9 +70,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
 
-      <footer className="border-t-2 border-ink-200 bg-white">
+      <footer className="border-t-2 border-ink-200 dark:border-gray-800 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-6 py-5">
-          <div className="flex items-center justify-between text-sm text-ink-500 mb-3">
+          <div className="flex items-center justify-between text-sm text-ink-500 dark:text-gray-400 mb-3">
             <span className="font-display">引易转 &mdash; 学术引用格式转换工具</span>
             <div className="flex items-center gap-4">
               <span>数据存储于本地浏览器，安全私密</span>
@@ -58,7 +80,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 href="https://github.com/Tomorin-1122"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 text-ink-400 hover:text-ink-950 transition-colors duration-200 cursor-pointer"
+                className="flex items-center gap-1.5 text-ink-400 dark:text-gray-500 hover:text-ink-950 dark:hover:text-gray-100 transition-colors duration-200 cursor-pointer"
                 aria-label="GitHub"
               >
                 <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -68,7 +90,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </a>
             </div>
           </div>
-          <div className="border-t border-ink-100 pt-3 text-xs text-ink-400 text-center">
+          <div className="border-t border-ink-100 dark:border-gray-800 pt-3 text-xs text-ink-400 dark:text-gray-500 text-center">
             MIT License &copy; {new Date().getFullYear()} Tomorin-1122 &nbsp;&mdash;&nbsp; 仅供个人学习科研使用，请勿用于盈利
           </div>
         </div>
