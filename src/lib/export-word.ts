@@ -55,7 +55,7 @@ export function exportSelectedAsWord(
   // 分隔线
   children.push(
     new Paragraph({
-      border: { bottom: { color: 'CCCCCC', space: 1, value: 'single', size: 6 } },
+      border: { bottom: { color: 'CCCCCC', space: 1, style: 'single', size: 6 } },
       spacing: { after: 200 },
       children: [],
     }),
@@ -109,7 +109,7 @@ export function exportSelectedAsWord(
   // 底部说明
   children.push(
     new Paragraph({
-      border: { top: { color: 'CCCCCC', space: 1, value: 'single', size: 6 } },
+      border: { top: { color: 'CCCCCC', space: 1, style: 'single', size: 6 } },
       spacing: { before: 300 },
       children: [],
     }),

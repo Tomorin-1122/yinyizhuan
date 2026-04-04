@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col">
       <header className="border-b-2 border-ink-200 dark:border-gray-800 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 sm:h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 cursor-pointer group">
             <div className="w-8 h-8 bg-ink-950 dark:bg-vermilion-600 flex items-center justify-center transition-colors duration-200 group-hover:bg-vermilion-600">
               <span className="text-parchment-50 font-display font-bold text-sm">引</span>
@@ -42,7 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${
+                    className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${
                       isActive
                         ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100'
                         : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'
@@ -57,7 +57,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
             <button
               onClick={handleToggleTheme}
-              className="ml-2 p-2 text-ink-500 dark:text-gray-400 hover:text-ink-950 dark:hover:text-gray-100 transition-colors rounded-lg hover:bg-ink-100 dark:hover:bg-gray-800"
+              className="p-2 text-ink-500 dark:text-gray-400 hover:text-ink-950 dark:hover:text-gray-100 transition-colors rounded-lg hover:bg-ink-100 dark:hover:bg-gray-800"
               title={dark ? '切换为亮色模式' : '切换为黑夜模式'}
             >
               {dark ? <IconSun className="w-5 h-5" /> : <IconMoon className="w-5 h-5" />}
@@ -72,10 +72,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <footer className="border-t-2 border-ink-200 dark:border-gray-800 bg-white dark:bg-gray-900">
         <div className="max-w-6xl mx-auto px-6 py-5">
-          <div className="flex items-center justify-between text-sm text-ink-500 dark:text-gray-400 mb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-sm text-ink-500 dark:text-gray-400 mb-3">
             <span className="font-display">引易转 &mdash; 学术引用格式转换工具</span>
             <div className="flex items-center gap-4">
-              <span>数据存储于本地浏览器，安全私密</span>
+              <span className="hidden sm:inline">数据存储于本地浏览器，安全私密</span>
               <a
                 href="https://github.com/Tomorin-1122"
                 target="_blank"

@@ -28,7 +28,7 @@ export default function HomePage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-vermilion-50 rounded-full blur-3xl opacity-40 -translate-y-1/2 translate-x-1/4" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-ink-100 rounded-full blur-3xl opacity-30 translate-y-1/2 -translate-x-1/4" />
 
-        <div className="relative max-w-6xl mx-auto px-6 py-24 lg:py-32">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-14 sm:py-24 lg:py-32">
           <div className="max-w-3xl">
             <div className="inline-block mb-6">
               <span className="font-mono text-xs tracking-widest text-ink-500 uppercase border border-ink-300 px-3 py-1">
@@ -36,7 +36,7 @@ export default function HomePage() {
               </span>
             </div>
 
-            <h1 className="font-display font-black text-5xl lg:text-7xl text-ink-950 leading-tight mb-6 tracking-tight">
+            <h1 className="font-display font-black text-4xl sm:text-5xl lg:text-7xl text-ink-950 leading-tight mb-6 tracking-tight">
               <span className="block">引用格式，</span>
               <span className="block text-vermilion-600">一键即转</span>
             </h1>
@@ -60,13 +60,13 @@ export default function HomePage() {
       </section>
 
       {/* Features */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
         <div className="mb-12">
           <span className="font-mono text-xs tracking-widest text-ink-400 uppercase">核心功能</span>
           <h2 className="font-display font-bold text-3xl text-ink-950 mt-2">为什么选择引易转？</h2>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-0">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-0">
           {features.map((f, i) => {
             const Icon = f.icon
             return (
@@ -87,12 +87,12 @@ export default function HomePage() {
 
       {/* Formats */}
       <section className="bg-ink-950 text-parchment-50">
-        <div className="max-w-6xl mx-auto px-6 py-20">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20">
           <div className="mb-12">
             <span className="font-mono text-xs tracking-widest text-ink-400 uppercase">支持格式</span>
             <h2 className="font-display font-bold text-3xl text-parchment-50 mt-2">主流学术引用规范</h2>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-8">
             {[
               { name: '《历史研究》', tag: '首选', desc: '历史研究杂志社引文注释规范，覆盖著作、期刊、报纸、古籍、档案等全部文献类型' },
               { name: 'GB/T 7714-2015', tag: '国标', desc: '信息与文献 参考文献著录规则，国内学术论文最广泛使用的格式' },
@@ -111,7 +111,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA */}
-      <section className="max-w-6xl mx-auto px-6 py-20 text-center">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-20 text-center">
         <h2 className="font-display font-bold text-3xl text-ink-950 mb-4">准备好了吗？</h2>
         <p className="text-ink-600 mb-8 max-w-md mx-auto">无需注册，无需登录，打开即用。所有数据存储在你的浏览器本地。</p>
         <Link to="/convert" className="btn-primary text-base inline-flex group">

@@ -248,7 +248,7 @@ export default function ConvertPage() {
   ]
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-10 animate-fade-in dark:text-gray-100">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-10 animate-fade-in dark:text-gray-100">
       {toast && (
         <div className="fixed top-20 left-1/2 -translate-x-1/2 z-50 bg-ink-950 dark:bg-gray-100 text-parchment-50 dark:text-gray-900 px-6 py-3 font-body text-sm animate-slide-up">
           {toast}
@@ -285,13 +285,13 @@ export default function ConvertPage() {
         </div>
       )}
 
-      <div className="mb-8 flex items-start justify-between">
+      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
-          <h1 className="font-display font-bold text-3xl text-ink-950 dark:text-gray-100">格式转换</h1>
-          <p className="text-ink-500 dark:text-gray-400 mt-2">输入引用信息，选择目标格式，即刻生成规范引用</p>
+          <h1 className="font-display font-bold text-2xl sm:text-3xl text-ink-950 dark:text-gray-100">格式转换</h1>
+          <p className="text-ink-500 dark:text-gray-400 mt-1 text-sm sm:text-base">输入引用信息，选择目标格式，即刻生成规范引用</p>
         </div>
         {!isAdmin() && (
-          <div className="text-right text-sm mt-1 space-y-1">
+          <div className="text-sm space-y-1 sm:text-right">
             {!isUnlocked() ? (
               <>
                 <div>
@@ -349,14 +349,14 @@ export default function ConvertPage() {
             <button
               key={m.mode}
               onClick={() => setMode(m.mode)}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-3 text-sm font-medium cursor-pointer transition-all duration-200 border-r-2 border-ink-200 dark:border-gray-700 last:border-r-0 ${
+              className={`flex-1 flex items-center justify-center gap-1.5 px-2 sm:px-4 py-3 text-xs sm:text-sm font-medium cursor-pointer transition-all duration-200 border-r-2 border-ink-200 dark:border-gray-700 last:border-r-0 ${
                 mode === m.mode
                   ? 'bg-ink-950 text-parchment-50 dark:bg-vermilion-600'
                   : 'bg-white dark:bg-gray-800 text-ink-600 dark:text-gray-400 hover:bg-ink-50 dark:hover:bg-gray-700 hover:text-ink-950 dark:hover:text-gray-200'
               }`}
             >
-              <Icon className="w-4 h-4" />
-              {m.label}
+              <Icon className="w-4 h-4 shrink-0" />
+              <span>{m.label}</span>
             </button>
           )
         })}
@@ -364,7 +364,7 @@ export default function ConvertPage() {
 
       <div className="grid lg:grid-cols-2 gap-0">
         {/* Left: Input */}
-        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 lg:border-r-0 p-6 bg-white dark:bg-gray-800">
+        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 lg:border-r-0 p-4 sm:p-6 bg-white dark:bg-gray-800">
           {mode === 'paste' && (
             <div className="space-y-4">
               <label className="block text-sm font-medium text-ink-800">粘贴原始引用文本</label>
@@ -464,7 +464,7 @@ export default function ConvertPage() {
         </div>
 
         {/* Right: Output */}
-        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 p-6 bg-white dark:bg-gray-800 flex flex-col">
+        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 p-4 sm:p-6 bg-white dark:bg-gray-800 flex flex-col">
           <div className="mb-4">
             <label className="block text-sm font-medium text-ink-800 dark:text-gray-200 mb-2">目标格式</label>
             <div className="grid grid-cols-3 gap-0">
@@ -632,7 +632,7 @@ function ManualForm({
               <input value={c.publisher || ''} onChange={e => updateField('publisher', e.target.value)} className="input-field" placeholder="人民出版社" />
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">出版年份</label>
               <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2020" />
@@ -641,7 +641,7 @@ function ManualForm({
               <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
               <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="43" />
             </div>
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <label className="block text-sm font-medium text-ink-800 mb-1">卷次/册</label>
               <input value={c.volume || ''} onChange={e => updateField('volume', e.target.value)} className="input-field" placeholder="第3卷" />
             </div>
@@ -698,7 +698,7 @@ function ManualForm({
             <label className="block text-sm font-medium text-ink-800 mb-1">期刊名称</label>
             <input value={c.journalName || ''} onChange={e => updateField('journalName', e.target.value)} className="input-field" placeholder="中国史研究" />
           </div>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
               <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
@@ -707,7 +707,7 @@ function ManualForm({
               <label className="block text-sm font-medium text-ink-800 mb-1">期号</label>
               <input value={c.issue || ''} onChange={e => updateField('issue', e.target.value)} className="input-field" placeholder="3" />
             </div>
-            <div>
+            <div className="col-span-2 sm:col-span-1">
               <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
               <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="12-20" />
             </div>
