@@ -133,15 +133,14 @@ export default function AboutPage() {
                 <li>· 责任者与题名之间用冒号（：）连接</li>
                 <li>· 著作题名加书名号《》，期刊文章题名加引号</li>
                 <li>· 出版信息用逗号分隔，末尾标注页码</li>
-                <li>· 外文文献保留原文语言格式</li>
               </ul>
             </div>
             <div className="bg-parchment-50 dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700 p-6">
               <h3 className="font-display font-bold text-ink-950 dark:text-gray-100 mb-3">典型示例</h3>
               <ul className="space-y-3 text-sm text-ink-600 dark:text-gray-400 leading-relaxed font-mono">
-                <li className="border-l-2 border-vermilion-400 pl-3">赵景深：《文坛忆旧》，北新书局，1948年，第43页。</li>
+                <li className="border-l-2 border-vermilion-400 pl-3">赵景深：《文坛忆旧》，上海：北新书局，1948年，第43页。</li>
                 <li className="border-l-2 border-vermilion-400 pl-3">王戎笙：《清代前期移民史》，《历史研究》1998年第3期。</li>
-                <li className="border-l-2 border-vermilion-400 pl-3">伍强胜：《万斯同哲学思想研究》，博士学位论文，东南大学历史系，2020年。</li>
+                <li className="border-l-2 border-vermilion-400 pl-3">方明东：《罗隆基政治思想研究（1913—1949）》，博士学位论文，北京师范大学历史系，2000年，第67页。</li>
               </ul>
             </div>
           </div>
