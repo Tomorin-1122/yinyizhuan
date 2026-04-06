@@ -347,6 +347,15 @@ function parseChineseCitation(text: string, type: CitationType): Partial<Citatio
 export function parseEnglishAPA(text: string): Partial<Citation> {
   const result: Partial<Citation> = {};
 
+  // 提取 DOI（支持 https://doi.org/xxx、https:/doi.org/xxx 或 doi:xxx）
+  const doiMatch = /https?:\/?\/?doi\.org\/([^\s]+)|doi:\s*([^\s]+)/i.exec(text);
+  if (doiMatch) {
+    const doi = doiMatch[1] || doiMatch[2];
+    if (doi) {
+      result.url = `https://doi.org/${doi}`;
+    }
+  }
+
   // 尝试 APA 格式：(Year). 或 (Year, Month). 区分作者和年份
   const apaYearMatch = /\((\d{4})[^)]*\)\./.exec(text);
   if (apaYearMatch) {
@@ -359,24 +368,42 @@ export function parseEnglishAPA(text: string): Partial<Citation> {
 
     // 年份之后的内容
     const afterYear = text.slice(yearPos + apaYearMatch[0].length).trim();
-    // 第一个句子是标题（到第一个 . 为止，但要跳过缩写）
-    const titleMatch = /^([^.]+(?:\.[^.A-Z][^.]*)?)\.\s*(.*)$/.exec(afterYear);
+    
+    // 移除末尾的 DOI/URL 以便更好解析
+    const withoutDOI = afterYear.replace(/\s*(?:https?:\/\/|https?:\/)[^\s]+|\s*doi\.org\/[^\s]+|doi:[^\s]+/gi, '').trim();
+    
+    // 标题：第一个句子（到第一个 . 为止，但需要正确处理期刊名中的缩写）
+    // APA 标题通常只有一个句号，后面是期刊信息
+    // 匹配模式：Title. Journal, Vol(Issue), pages.
+    const titleMatch = /^([^.]+(?:\.[A-Z][a-z]*)?)\.\s+(.+)$/.exec(withoutDOI);
     if (titleMatch) {
       result.title = titleMatch[1].trim();
       const rest = titleMatch[2].trim();
+      
       // 解析期刊信息：Journal, Volume(Issue), pages.
       // 或 Journal, Volume(Issue), startPage-endPage.
-      const journalMatch = /^([^,]+),\s*(\d+)(?:\((\d+)\))?,?\s*([\d\-–]+)?/.exec(rest);
+      // 支持全角逗号
+      const journalMatch = /^([^,，]+)[,，]\s*(\d+)(?:\((\d+)\))?,?\s*([-\d–—~]+)?/.exec(rest);
       if (journalMatch) {
         result.journalName = journalMatch[1].trim();
         result.volumeNumber = journalMatch[2];
         if (journalMatch[3]) result.issue = journalMatch[3];
         if (journalMatch[4]) result.pages = journalMatch[4];
         result.type = 'journal';
+      } else {
+        // 降级：仅提取期刊名
+        const simpleJournalMatch = /^([^,，.]+)/.exec(rest);
+        if (simpleJournalMatch) {
+          result.journalName = simpleJournalMatch[1].trim();
+          result.type = 'journal';
+        }
       }
+    } else {
+      // 没有匹配到标题，整个 afterYear 可能是标题
+      result.title = withoutDOI.trim();
     }
   } else {
-    // 非标准APA，降级处理
+    // 非标准 APA，降级处理
     const authorMatch = text.match(/^(.*?)[,.]/);
     if (authorMatch) {
       const authorStr = authorMatch[1].trim();
