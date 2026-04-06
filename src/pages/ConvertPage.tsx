@@ -9,6 +9,7 @@ import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
 import { canConvert, recordConversion, getRemainingCount, isAdmin, isUnlocked, unlock, getTrialRemaining, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { IconCopy, IconDownload, IconCheck, IconUpload, IconLink, IconPaste, IconEdit, IconPlus, IconMinus, IconX, IconSearch, IconLoader } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
+import { Converter } from 'opencc-js'
 
 type InputMode = 'manual' | 'paste' | 'url' | 'file'
 
@@ -52,6 +53,9 @@ export default function ConvertPage() {
   const [parsedItems, setParsedItems] = useState<Partial<Citation>[]>([])
   const [toast, setToast] = useState('')
   const [fetchLoading, setFetchLoading] = useState(false)
+
+  // 繁简转换：繁体转简体
+  const traditionalToSimplified = Converter({ from: 'trad', to: 'simp' })
 
   const showToast = (msg: string) => {
     setToast(msg)
@@ -111,13 +115,15 @@ export default function ConvertPage() {
 
   const handleParse = () => {
     if (!pasteText.trim()) return
-    const parsed = parseCitationText(pasteText)
+    // 将繁体字转换为简体字（仅影响中文字符）
+    const simplifiedText = traditionalToSimplified(pasteText)
+    const parsed = parseCitationText(simplifiedText)
     const c = { ...defaultCitation(), ...parsed, id: generateId() } as Citation
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
     setCitation(c)
     setMode('manual')
     // 豆瓣图书：提示填出版社地址
-    const isDouban = /出版社[:：]/.test(pasteText) && /出版年[:：]/.test(pasteText)
+    const isDouban = /出版社[:：]/.test(simplifiedText) && /出版年[:：]/.test(simplifiedText)
     if (isDouban) {
       showToast('已解析豆瓣图书信息，请补充"出版地点"后转换')
     } else {
