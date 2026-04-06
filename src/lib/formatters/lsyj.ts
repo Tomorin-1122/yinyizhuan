@@ -72,6 +72,15 @@ function translatorStr(c: Citation): string {
   return c.translators.map(t => t.name).join('、') + '译'
 }
 
+/**
+ * 去除期数的前导零
+ * 例如："04" -> "4", "03" -> "3", "10" -> "10"
+ */
+function removeLeadingZero(num: string | undefined): string {
+  if (!num) return ''
+  return num.replace(/^0+/, '') || '0'
+}
+
 export function formatLSYJ(citation: Citation): string {
   const c = citation
   const isEn = c.language === 'en'
@@ -174,11 +183,11 @@ export function formatLSYJ(citation: Citation): string {
       result += '，'
       if (c.journalName) result += processBookTitleMarks(`《${c.journalName}》`)
       if (c.volumeNumber && c.issue) {
-        result += `第${c.volumeNumber}卷第${c.issue}号`
+        result += `第${c.volumeNumber}卷第${removeLeadingZero(c.issue)}号`
         if (c.publishYear) result += `，${c.publishYear}年`
       } else {
         if (c.publishYear) result += `${c.publishYear}年`
-        if (c.issue) result += `第${c.issue}期`
+        if (c.issue) result += `第${removeLeadingZero(c.issue)}期`
       }
       if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
       return result + '。'
@@ -273,7 +282,7 @@ export function formatLSYJ(citation: Citation): string {
       if (auth) result = auth + '：'
       result += processBookTitleMarks(`《${c.title}》`)
       if (c.journalName) result += `，` + processBookTitleMarks(`《${c.journalName}》`)
-      if (c.issue) result += `${c.publishYear}年第${c.issue}期`
+      if (c.issue) result += `${c.publishYear}年第${removeLeadingZero(c.issue)}期`
       if (c.url) result += `，${c.url}`
       if (c.accessDate) result += `，访问时间：${c.accessDate}`
       return result + '。'
