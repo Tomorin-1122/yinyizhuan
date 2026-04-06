@@ -74,6 +74,14 @@ A: 项目已经托管到 GitHub 平台。如需获取源代码或参与贡献，
 | React Router | 前端路由 |
 | Vercel | 部署平台 |
 
+## AI 贡献者
+  本项目由以下 AI 模型协作完成：
+  - **Claude Opus 4.6** - 核心代码构建、架构设计
+  - **Claude Sonnet 4.6** - 代码优化、功能实现
+  - **Qwen 3.6 Plus** - 参与开发，贡献了关键功能优化
+  
+  > 注：本项目是人与 AI 协作的产物，旨在探索 AI 辅助学术研究工具开发的可能性。
+
 ## 联系作者
 
 - GitHub: [@Tomorin-1122](https://github.com/Tomorin-1122)
