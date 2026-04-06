@@ -176,12 +176,25 @@ export function formatLSYJ(citation: Citation): string {
         if (c.pages) parts.push(pageStr(c.pages, 'en'))
         return parts.filter(Boolean).join(', ') + '.'
       }
+      // 处理期刊名称中的括号版别：将《期刊名 (版别)》转换为《期刊名》（版别）
+      let journalPart = ''
+      if (c.journalName) {
+        // 匹配括号内容，支持英文括号 () 和中文括号（）
+        const match = c.journalName.match(/^(.+?)\(([^()]+)\)$/) || c.journalName.match(/^(.+?)（([^()]+)）$/)
+        if (match) {
+          const [, name, edition] = match
+          // 去除名称末尾可能的空格
+          journalPart = processBookTitleMarks(`《${name.trim()}》`) + `（${edition}）`
+        } else {
+          journalPart = processBookTitleMarks(`《${c.journalName}》`)
+        }
+      }
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
       result += processBookTitleMarks(`《${c.title}》`)
       result += '，'
-      if (c.journalName) result += processBookTitleMarks(`《${c.journalName}》`)
+      result += journalPart
       if (c.volumeNumber && c.issue) {
         result += `第${c.volumeNumber}卷第${removeLeadingZero(c.issue)}号`
         if (c.publishYear) result += `，${c.publishYear}年`
