@@ -1,5 +1,49 @@
 import { Citation } from '../types'
 
+/**
+ * 处理书名号嵌套
+ * 规则：
+ * - 外层使用双书名号《》
+ * - 内层使用单书名号〈〉
+ * - 特殊情况：单书名号内再有书名号时，内层用双书名号
+ * 示例：《读〈石钟山记〉有感》
+ */
+function processBookTitleMarks(text: string): string {
+  if (!text) return text
+  
+  // 首先将文本中可能已有的单书名号统一为临时标记
+  // 然后重新构建正确的嵌套结构
+  
+  let result = ''
+  let depth = 0 // 当前嵌套深度
+  
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i]
+    
+    if (char === '《') {
+      depth++
+      // 奇数层（1,3,5...）使用双书名号，偶数层（2,4,6...）使用单书名号
+      result += depth % 2 === 1 ? '《' : '〈'
+    } else if (char === '》') {
+      // 先输出闭合符号，再减少深度
+      result += depth % 2 === 1 ? '》' : '〉'
+      depth--
+    } else if (char === '〈') {
+      // 处理已有的单书名号开始
+      depth++
+      result += depth % 2 === 1 ? '《' : '〈'
+    } else if (char === '〉') {
+      // 处理已有的单书名号结束
+      result += depth % 2 === 1 ? '》' : '〉'
+      depth--
+    } else {
+      result += char
+    }
+  }
+  
+  return result
+}
+
 function authorStr(c: Citation): string {
   if (!c.authors || c.authors.length === 0) return ''
   if (c.language === 'en') {
@@ -51,7 +95,7 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       if (auth) parts.push(auth + '：')
       else if (c.title) parts.push('')
-      let titlePart = `《${c.title}》`
+      let titlePart = processBookTitleMarks(`《${c.title}》`)
       if (c.volume) titlePart += c.volume
       parts.push(titlePart)
       if (c.translators && c.translators.length > 0) {
@@ -89,7 +133,7 @@ export function formatLSYJ(citation: Citation): string {
       const parts: string[] = []
       const auth = authorStr(c)
       if (auth) parts.push(auth + '：')
-      parts.push(`《${c.title}》`)
+      parts.push(processBookTitleMarks(`《${c.title}》`))
       if (c.bookAuthors && c.bookAuthors.length > 0) {
         const ba = c.bookAuthors.map(a => {
           if (!a.role || a.role === '著') return a.name
@@ -97,7 +141,7 @@ export function formatLSYJ(citation: Citation): string {
         }).join('、')
         parts.push(ba + '：')
       }
-      if (c.bookTitle) parts.push(`《${c.bookTitle}》`)
+      if (c.bookTitle) parts.push(processBookTitleMarks(`《${c.bookTitle}》`))
       if (c.volume) parts.push(c.volume)
       if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
       if (c.publishYear) parts.push(`${c.publishYear}年`)
@@ -126,9 +170,9 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       result += '，'
-      if (c.journalName) result += `《${c.journalName}》`
+      if (c.journalName) result += processBookTitleMarks(`《${c.journalName}》`)
       if (c.volumeNumber && c.issue) {
         result += `第${c.volumeNumber}卷第${c.issue}号`
         if (c.publishYear) result += `，${c.publishYear}年`
@@ -144,8 +188,8 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
-      if (c.newspaperName) result += `，《${c.newspaperName}》`
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.newspaperName) result += `，` + processBookTitleMarks(`《${c.newspaperName}》`)
       if (c.publishDate) result += c.publishDate
       if (c.pageSection) result += `，第${c.pageSection}版`
       return result + '。'
@@ -165,7 +209,7 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       if (c.thesisType) result += `，${c.thesisType}`
       if (c.institution) result += `，${c.institution}`
       if (c.publishYear) result += `，${c.publishYear}年`
@@ -174,7 +218,7 @@ export function formatLSYJ(citation: Citation): string {
     }
 
     case 'archive': {
-      let result = `《${c.title}》`
+      let result = processBookTitleMarks(`《${c.title}》`)
       if (c.archiveDate) result += `，${c.archiveDate}`
       if (c.archiveNumber) result += `，${c.archiveNumber}`
       if (c.archiveLocation) result += `，${c.archiveLocation}`
@@ -185,7 +229,7 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       if (c.volume) result += c.volume
       if (c.publishDate) result += `，${c.publishDate}`
       if (c.translators && c.translators.length > 0) result += `，${translatorStr(c)}`
@@ -199,11 +243,11 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       if (c.volume) result += c.volume
-      if (c.section) result += `《${c.section}》`
+      if (c.section) result += processBookTitleMarks(`《${c.section}》`)
       if (c.ancientEdition) result += `，${c.ancientEdition}`
-      if (c.seriesName) result += `，《${c.seriesName}》`
+      if (c.seriesName) result += `，` + processBookTitleMarks(`《${c.seriesName}》`)
       if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
       if (c.publishYear) result += `，${c.publishYear}年`
       if (c.edition) result += c.edition
@@ -227,8 +271,8 @@ export function formatLSYJ(citation: Citation): string {
         return result + '.'
       }
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
-      if (c.journalName) result += `，《${c.journalName}》`
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.journalName) result += `，` + processBookTitleMarks(`《${c.journalName}》`)
       if (c.issue) result += `${c.publishYear}年第${c.issue}期`
       if (c.url) result += `，${c.url}`
       if (c.accessDate) result += `，访问时间：${c.accessDate}`
@@ -239,7 +283,7 @@ export function formatLSYJ(citation: Citation): string {
       const auth = authorStr(c)
       let result = ''
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       if (c.originalCitation) result += `，${c.originalCitation}`
       if (c.transferredFrom) result += `，转引自${c.transferredFrom}`
       if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
@@ -250,7 +294,7 @@ export function formatLSYJ(citation: Citation): string {
       let result = ''
       const auth = authorStr(c)
       if (auth) result = auth + '：'
-      result += `《${c.title}》`
+      result += processBookTitleMarks(`《${c.title}》`)
       if (c.section) result += `·${c.section}`
       return `（${result}）`
     }
@@ -264,7 +308,7 @@ function formatDefault(c: Citation): string {
   const auth = authorStr(c)
   let result = ''
   if (auth) result = auth + '：'
-  result += `《${c.title}》`
+  result += processBookTitleMarks(`《${c.title}》`)
   if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
   if (c.publishYear) result += `，${c.publishYear}年`
   if (c.pages) result += `，第${c.pages}页`
