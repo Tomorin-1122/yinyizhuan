@@ -5,19 +5,11 @@ node_modules/
 # Build artifacts
 dist/
 build/
-target/
 
-# Temp files
+# Temporary files
 *.tmp
-*.swp
 
-# Logs
-*.log
-
-# Editors
-.vscode/
-.idea/
-
-# Package lock files
-package-lock.json
+# TypeScript build info
+**/.tmp/
+*.tsbuildinfo
 ```
