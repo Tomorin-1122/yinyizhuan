@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
-import { ConversionRecord, TagGroup } from '../lib/types'
+import { ConversionRecord, TagGroup, CitationType } from '../lib/types'
 import {
   getHistory, deleteRecord, clearHistory, exportHistoryAsJSON, exportHistoryAsCSV,
   getTagGroups, createTagGroup, deleteTagGroup, updateTagGroup,
@@ -8,6 +8,30 @@ import {
 import { copyToClipboard, downloadFile, formatTimestamp, getCitationTypeName, getFormatName } from '../lib/utils'
 import { exportSelectedAsWord } from '../lib/export-word'
 import { IconCopy, IconTrash, IconDownload, IconCheck, IconFile } from '../components/Icons'
+
+function IconSearch({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+    </svg>
+  )
+}
+
+function IconCalendar({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  )
+}
+
+function IconFilter({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+    </svg>
+  )
+}
 
 function IconTag({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -234,6 +258,12 @@ export default function HistoryPage() {
   const [editingGroupId, setEditingGroupId] = useState<string | null>(null)
   const [editingGroupName, setEditingGroupName] = useState('')
   const [editingGroupDesc, setEditingGroupDesc] = useState('')
+  
+  // 搜索相关状态
+  const [searchKeyword, setSearchKeyword] = useState('')
+  const [searchType, setSearchType] = useState<CitationType | 'all'>('all')
+  const [searchDateFrom, setSearchDateFrom] = useState('')
+  const [searchDateTo, setSearchDateTo] = useState('')
 
   const showToast = (msg: string) => {
     setToast(msg)
@@ -249,9 +279,52 @@ export default function HistoryPage() {
 
   // 当前展示的记录（按标签组过滤）
   const activeGroup = groups.find(g => g.id === activeGroupId) ?? null
-  const displayedRecords = activeGroup
-    ? activeGroup.recordIds.map(id => records.find(r => r.id === id)).filter(Boolean) as ConversionRecord[]
-    : records
+  
+  // 搜索过滤逻辑
+  const filteredRecords = records.filter(r => {
+    // 标签组过滤
+    if (activeGroup && !activeGroup.recordIds.includes(r.id)) {
+      return false
+    }
+    
+    // 关键词搜索（标题、结果、备注）
+    if (searchKeyword.trim()) {
+      const keyword = searchKeyword.toLowerCase().trim()
+      const matchTitle = r.citation.title?.toLowerCase().includes(keyword)
+      const matchResult = r.result.toLowerCase().includes(keyword)
+      const matchNote = r.note?.toLowerCase().includes(keyword)
+      const matchRawInput = r.rawInput?.toLowerCase().includes(keyword)
+      if (!matchTitle && !matchResult && !matchNote && !matchRawInput) {
+        return false
+      }
+    }
+    
+    // 类型过滤
+    if (searchType !== 'all' && r.citation.type !== searchType) {
+      return false
+    }
+    
+    // 日期范围过滤
+    const recordDate = new Date(r.timestamp)
+    if (searchDateFrom) {
+      const fromDate = new Date(searchDateFrom)
+      fromDate.setHours(0, 0, 0, 0)
+      if (recordDate < fromDate) {
+        return false
+      }
+    }
+    if (searchDateTo) {
+      const toDate = new Date(searchDateTo)
+      toDate.setHours(23, 59, 59, 999)
+      if (recordDate > toDate) {
+        return false
+      }
+    }
+    
+    return true
+  })
+
+  const displayedRecords = filteredRecords
 
   const handleCopy = async (id: string, text: string) => {
     const ok = await copyToClipboard(text)
@@ -432,6 +505,98 @@ export default function HistoryPage() {
         </div>
       </div>
 
+      {/* 搜索栏 */}
+      <div className="mb-6 border-2 border-ink-200 dark:border-gray-700 bg-parchment-50 dark:bg-gray-800 rounded-lg p-4">
+        <div className="flex items-center gap-2 mb-3 text-sm font-display font-bold text-ink-950 dark:text-gray-100">
+          <IconSearch className="w-4 h-4" />
+          搜索历史记录
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          {/* 关键词搜索 */}
+          <div className="sm:col-span-2">
+            <label className="block text-xs text-ink-500 dark:text-gray-400 mb-1">关键词</label>
+            <input
+              type="text"
+              value={searchKeyword}
+              onChange={e => setSearchKeyword(e.target.value)}
+              placeholder="搜索标题、内容、备注..."
+              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+            />
+          </div>
+          
+          {/* 类型筛选 */}
+          <div>
+            <label className="block text-xs text-ink-500 dark:text-gray-400 mb-1">文献类型</label>
+            <select
+              value={searchType}
+              onChange={e => setSearchType(e.target.value as CitationType | 'all')}
+              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+            >
+              <option value="all">全部类型</option>
+              <option value="book">图书</option>
+              <option value="chapter">析出文献</option>
+              <option value="journal">期刊文章</option>
+              <option value="newspaper">报纸文章</option>
+              <option value="thesis">学位论文</option>
+              <option value="archive">档案</option>
+              <option value="ancient">古籍</option>
+              <option value="electronic">电子资源</option>
+              <option value="conference">会议录</option>
+              <option value="diary">日记</option>
+              <option value="transferred">转引文献</option>
+              <option value="classic">经典文献</option>
+            </select>
+          </div>
+          
+          {/* 日期范围 */}
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className="block text-xs text-ink-500 dark:text-gray-400 mb-1 flex items-center gap-1">
+                <IconCalendar className="w-3 h-3" />起始日期
+              </label>
+              <input
+                type="date"
+                value={searchDateFrom}
+                onChange={e => setSearchDateFrom(e.target.value)}
+                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-ink-500 dark:text-gray-400 mb-1 flex items-center gap-1">
+                <IconCalendar className="w-3 h-3" />结束日期
+              </label>
+              <input
+                type="date"
+                value={searchDateTo}
+                onChange={e => setSearchDateTo(e.target.value)}
+                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+              />
+            </div>
+          </div>
+        </div>
+        
+        {/* 清除筛选按钮 */}
+        {(searchKeyword || searchType !== 'all' || searchDateFrom || searchDateTo) && (
+          <div className="mt-3 flex items-center justify-between">
+            <span className="text-xs text-ink-500 dark:text-gray-400">
+              找到 {displayedRecords.length} 条记录
+            </span>
+            <button
+              onClick={() => {
+                setSearchKeyword('')
+                setSearchType('all')
+                setSearchDateFrom('')
+                setSearchDateTo('')
+              }}
+              className="text-xs text-vermilion-600 hover:text-vermilion-700 dark:text-vermilion-400 dark:hover:text-vermilion-300 flex items-center gap-1 transition-colors"
+            >
+              <IconX className="w-3 h-3" />
+              清除筛选条件
+            </button>
+          </div>
+        )}
+      </div>
+
       {/* 标签组管理面板 */}
       {showGroupPanel && (
         <div className="mb-6 border-2 border-ink-200 dark:border-gray-700 bg-parchment-50 dark:bg-gray-800">
@@ -513,7 +678,11 @@ export default function HistoryPage() {
 
       {/* 标签筛选栏 */}
       {groups.length > 0 && (
-        <div className="flex gap-2 mb-5 flex-wrap">
+        <div className="flex gap-2 mb-5 flex-wrap items-center">
+          <span className="text-sm text-ink-500 dark:text-gray-400 mr-1 flex items-center gap-1">
+            <IconFilter className="w-4 h-4" />
+            快速筛选：
+          </span>
           <button
             onClick={() => setActiveGroupId(null)}
             className={`px-3 py-1 text-sm border-2 transition-colors ${
