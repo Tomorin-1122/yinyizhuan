@@ -62,7 +62,8 @@ function authorStr(c: Citation): string {
 function pageStr(pages: string | undefined, lang: string): string {
   if (!pages) return ''
   if (lang === 'en') {
-    return pages.includes('-') || pages.includes('—') ? `pp.${pages}` : `p.${pages}`
+    // 检测页码范围：支持连字符 (-)、en dash (–) 和 em dash (—)
+    return pages.includes('-') || pages.includes('–') || pages.includes('—') ? `pp.${pages}` : `p.${pages}`
   }
   return `第${pages}页`
 }
@@ -168,8 +169,8 @@ export function formatLSYJ(citation: Citation): string {
       if (isEn) {
         const parts: string[] = []
         parts.push(authorStr(c))
-        parts.push(`"${c.title}"`)
-        if (c.journalName) parts.push(`*${c.journalName}*`)
+        parts.push(c.title)
+        if (c.journalName) parts.push(c.journalName)
         if (c.volumeNumber) parts.push(`Vol. ${c.volumeNumber}`)
         if (c.issue) parts.push(`No. ${c.issue}`)
         if (c.publishYear) parts.push(c.publishYear)
