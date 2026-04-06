@@ -55,6 +55,11 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
       inferredType = item['type'] === 'dissertation' ? 'thesis' : 'archive'
     }
 
+    // 判断语言：根据标题和作者名是否为英文
+    const title = item.title?.[0] || ''
+    const hasChinese = /[\u4e00-\u9fa5]/.test(title)
+    const language: 'zh' | 'en' = hasChinese ? 'zh' : 'en'
+
     return {
       success: true,
       data: {
@@ -67,6 +72,7 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
         issue: item.issue || '',
         pages: item.page || '',
         url: item.URL || '',
+        language,
         ...(inferredType && { type: inferredType as any }),
       },
       source: 'Crossref',
@@ -183,6 +189,10 @@ function parseBookInfo(info: any, sourceName: string): FetchResult {
     return { success: false, error: '获取到的标题无效' }
   }
 
+  // 判断语言：根据标题是否包含中文字符
+  const hasChinese = /[\u4e00-\u9fa5]/.test(fullTitle)
+  const language: 'zh' | 'en' = hasChinese ? 'zh' : 'en'
+
   // 尝试从日期中提取年份
   const pubDate = info.publishedDate || ''
   const year = pubDate ? pubDate.substring(0, 4) : ''
@@ -199,6 +209,7 @@ function parseBookInfo(info: any, sourceName: string): FetchResult {
       publishPlace: '', // 公开 API 一般不提供出版地
       publishYear: year,
       url: info.previewLink || info.canonicalVolumeLink || info.infoLink || '',
+      language,
       notes: subtitle ? `副标题：${subtitle}` : undefined,
     },
     source: sourceName,
