@@ -55,7 +55,7 @@ export default function ConvertPage() {
   const [fetchLoading, setFetchLoading] = useState(false)
 
   // 繁简转换：繁体转简体
-  const traditionalToSimplified = Converter({ from: 'trad', to: 'simp' })
+  const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
 
   const showToast = (msg: string) => {
     setToast(msg)
