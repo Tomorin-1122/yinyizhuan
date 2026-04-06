@@ -187,7 +187,13 @@ export default function ConvertPage() {
       let items: Partial<Citation>[] = []
       if (file.name.endsWith('.bib')) items = parseBibTeX(content)
       else if (file.name.endsWith('.ris')) items = parseRIS(content)
-      else { showToast('仅支持 .bib 和 .ris 文件'); return }
+      else if (file.name.endsWith('.txt')) {
+        const parsed = parseCitationText(content)
+        if (parsed.title || parsed.authors?.length) {
+          items = [parsed]
+        }
+      }
+      else { showToast('仅支持 .bib、.ris 和 .txt 文件'); return }
       if (items.length === 0) { showToast('未解析到引用条目'); return }
       setParsedItems(items)
       if (items.length === 1) {
@@ -444,12 +450,12 @@ export default function ConvertPage() {
 
           {mode === 'file' && (
             <div className="space-y-4">
-              <label className="block text-sm font-medium text-ink-800">上传 BibTeX (.bib) 或 RIS (.ris) 文件</label>
+              <label className="block text-sm font-medium text-ink-800">上传 BibTeX (.bib)、RIS (.ris) 或文本 (.txt) 文件</label>
               <label className="flex flex-col items-center justify-center h-48 border-2 border-dashed border-ink-300 bg-parchment-50 cursor-pointer hover:border-ink-500 hover:bg-parchment-100 transition-all duration-200">
                 <IconUpload className="w-10 h-10 text-ink-400 mb-3" />
                 <span className="text-ink-600 text-sm">点击或拖拽文件到此处</span>
-                <span className="text-ink-400 text-xs mt-1">支持 .bib / .ris 格式</span>
-                <input type="file" accept=".bib,.ris" onChange={handleFileUpload} className="hidden" />
+                <span className="text-ink-400 text-xs mt-1">支持 .bib / .ris / .txt 格式</span>
+                <input type="file" accept=".bib,.ris,.txt" onChange={handleFileUpload} className="hidden" />
               </label>
               {parsedItems.length > 1 && (
                 <div className="space-y-2">
