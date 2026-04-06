@@ -11,6 +11,9 @@ import { Citation } from '../types'
 function processBookTitleMarks(text: string): string {
   if (!text) return text
   
+  // 首先将文本中可能已有的单书名号统一为临时标记
+  // 然后重新构建正确的嵌套结构
+  
   let result = ''
   let depth = 0 // 当前嵌套深度
   
@@ -19,14 +22,18 @@ function processBookTitleMarks(text: string): string {
     
     if (char === '《') {
       depth++
+      // 奇数层（1,3,5...）使用双书名号，偶数层（2,4,6...）使用单书名号
       result += depth % 2 === 1 ? '《' : '〈'
     } else if (char === '》') {
+      // 先输出闭合符号，再减少深度
       result += depth % 2 === 1 ? '》' : '〉'
       depth--
     } else if (char === '〈') {
+      // 处理已有的单书名号开始
       depth++
       result += depth % 2 === 1 ? '《' : '〈'
     } else if (char === '〉') {
+      // 处理已有的单书名号结束
       result += depth % 2 === 1 ? '》' : '〉'
       depth--
     } else {
@@ -69,8 +76,6 @@ export function formatLSYJ(citation: Citation): string {
   const c = citation
   const isEn = c.language === 'en'
 
-  let result: string
-
   switch (c.type) {
     case 'book': {
       if (isEn) {
@@ -88,7 +93,7 @@ export function formatLSYJ(citation: Citation): string {
       }
       const parts: string[] = []
       const auth = authorStr(c)
-      if (auth) parts.push(auth + ':')
+      if (auth) parts.push(auth + '：')
       else if (c.title) parts.push('')
       let titlePart = processBookTitleMarks(`《${c.title}》`)
       if (c.volume) titlePart += c.volume
@@ -96,18 +101,17 @@ export function formatLSYJ(citation: Citation): string {
       if (c.translators && c.translators.length > 0) {
         parts.push(translatorStr(c))
       }
-      if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}:${c.publisher}`)
+      if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
       else if (c.publisher) parts.push(c.publisher)
       if (c.publishYear) parts.push(`${c.publishYear}年`)
       if (c.pages) parts.push(pageStr(c.pages, 'zh'))
-      let res = parts[0]
+      let result = parts[0]
       for (let i = 1; i < parts.length; i++) {
-        if (i === 1 && !auth) res = parts[i]
-        else if (i === 1) res += parts[i]
-        else res += ',' + parts[i]
+        if (i === 1 && !auth) result = parts[i]
+        else if (i === 1) result += parts[i]
+        else result += '，' + parts[i]
       }
-      result = res + '。'
-      break
+      return result + '。'
     }
 
     case 'chapter': {
@@ -128,28 +132,27 @@ export function formatLSYJ(citation: Citation): string {
       }
       const parts: string[] = []
       const auth = authorStr(c)
-      if (auth) parts.push(auth + ':')
+      if (auth) parts.push(auth + '：')
       parts.push(processBookTitleMarks(`《${c.title}》`))
       if (c.bookAuthors && c.bookAuthors.length > 0) {
         const ba = c.bookAuthors.map(a => {
           if (!a.role || a.role === '著') return a.name
           return a.name + a.role
-        }).join(',')
-        parts.push(ba + ':')
+        }).join('、')
+        parts.push(ba + '：')
       }
       if (c.bookTitle) parts.push(processBookTitleMarks(`《${c.bookTitle}》`))
       if (c.volume) parts.push(c.volume)
-      if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}:${c.publisher}`)
+      if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
       if (c.publishYear) parts.push(`${c.publishYear}年`)
       if (c.pages) parts.push(pageStr(c.pages, 'zh'))
-      let res = ''
+      let result = ''
       for (let i = 0; i < parts.length; i++) {
-        if (i === 0) res = parts[i]
-        else if (parts[i - 1].endsWith(':')) res += parts[i]
-        else res += ',' + parts[i]
+        if (i === 0) result = parts[i]
+        else if (parts[i - 1].endsWith('：')) result += parts[i]
+        else result += '，' + parts[i]
       }
-      result = res + '。'
-      break
+      return result + '。'
     }
 
     case 'journal': {
@@ -165,33 +168,31 @@ export function formatLSYJ(citation: Citation): string {
         return parts.filter(Boolean).join(', ') + '.'
       }
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      res += ','
-      if (c.journalName) res += processBookTitleMarks(`《${c.journalName}》`)
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      result += '，'
+      if (c.journalName) result += processBookTitleMarks(`《${c.journalName}》`)
       if (c.volumeNumber && c.issue) {
-        res += `，第${c.volumeNumber}卷第${c.issue}号`
-        if (c.publishYear) res += `，${c.publishYear}年`
+        result += `第${c.volumeNumber}卷第${c.issue}号`
+        if (c.publishYear) result += `，${c.publishYear}年`
       } else {
-        if (c.publishYear) res += `，${c.publishYear}年`
-        if (c.issue) res += `，第${c.issue}期`
+        if (c.publishYear) result += `${c.publishYear}年`
+        if (c.issue) result += `第${c.issue}期`
       }
-      if (c.pages) res += `，${pageStr(c.pages, 'zh')}`
-      result = res + '。'
-      break
+      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
+      return result + '。'
     }
 
     case 'newspaper': {
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.newspaperName) res += `,` + processBookTitleMarks(`《${c.newspaperName}》`)
-      if (c.publishDate) res += `，${c.publishDate}`
-      if (c.pageSection) res += `，第${c.pageSection}版`
-      result = res + '。'
-      break
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.newspaperName) result += `，` + processBookTitleMarks(`《${c.newspaperName}》`)
+      if (c.publishDate) result += c.publishDate
+      if (c.pageSection) result += `，第${c.pageSection}版`
+      return result + '。'
     }
 
     case 'thesis':
@@ -206,125 +207,109 @@ export function formatLSYJ(citation: Citation): string {
         return parts.filter(Boolean).join(', ') + '.'
       }
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.thesisType) res += `，${c.thesisType}`
-      if (c.institution) res += `，${c.institution}`
-      if (c.publishYear) res += `，${c.publishYear}年`
-      if (c.pages) res += `，${pageStr(c.pages, 'zh')}`
-      result = res + '。'
-      break
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.thesisType) result += `，${c.thesisType}`
+      if (c.institution) result += `，${c.institution}`
+      if (c.publishYear) result += `，${c.publishYear}年`
+      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
+      return result + '。'
     }
 
     case 'archive': {
-      let res = processBookTitleMarks(`《${c.title}》`)
-      if (c.archiveDate) res += `，${c.archiveDate}`
-      if (c.archiveNumber) res += `，${c.archiveNumber}`
-      if (c.archiveLocation) res += `，${c.archiveLocation}`
-      result = res + '。'
-      break
+      let result = processBookTitleMarks(`《${c.title}》`)
+      if (c.archiveDate) result += `，${c.archiveDate}`
+      if (c.archiveNumber) result += `，${c.archiveNumber}`
+      if (c.archiveLocation) result += `，${c.archiveLocation}`
+      return result + '。'
     }
 
     case 'diary': {
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.volume) res += `，${c.volume}`
-      if (c.publishDate) res += `，${c.publishDate}`
-      if (c.translators && c.translators.length > 0) res += `，${translatorStr(c)}`
-      if (c.publishPlace && c.publisher) res += `，${c.publishPlace}:${c.publisher}`
-      if (c.publishYear) res += `，${c.publishYear}年`
-      if (c.pages) res += `，${pageStr(c.pages, 'zh')}`
-      result = res + '。'
-      break
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.volume) result += c.volume
+      if (c.publishDate) result += `，${c.publishDate}`
+      if (c.translators && c.translators.length > 0) result += `，${translatorStr(c)}`
+      if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
+      if (c.publishYear) result += `，${c.publishYear}年`
+      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
+      return result + '。'
     }
 
     case 'ancient': {
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.volume) res += `，${c.volume}`
-      if (c.section) res += `，` + processBookTitleMarks(`《${c.section}》`)
-      if (c.ancientEdition) res += `，${c.ancientEdition}`
-      if (c.seriesName) res += `，` + processBookTitleMarks(`《${c.seriesName}》`)
-      if (c.publishPlace && c.publisher) res += `，${c.publishPlace}:${c.publisher}`
-      if (c.publishYear) res += `，${c.publishYear}年`
-      if (c.edition) res += `，${c.edition}`
-      if (c.seriesVolume) res += `，${c.seriesVolume}`
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.volume) result += c.volume
+      if (c.section) result += processBookTitleMarks(`《${c.section}》`)
+      if (c.ancientEdition) result += `，${c.ancientEdition}`
+      if (c.seriesName) result += `，` + processBookTitleMarks(`《${c.seriesName}》`)
+      if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
+      if (c.publishYear) result += `，${c.publishYear}年`
+      if (c.edition) result += c.edition
+      if (c.seriesVolume) result += `，${c.seriesVolume}`
       if (c.pages) {
         const p = c.pageAB ? `${c.pages}页${c.pageAB}` : pageStr(c.pages, 'zh')
-        res += `，${p}`
+        result += `，${p}`
       }
-      result = res + '。'
-      break
+      return result + '。'
     }
 
     case 'electronic': {
       const auth = authorStr(c)
-      let res = ''
+      let result = ''
       if (isEn) {
-        if (auth) res = auth + ', '
-        res += `"${c.title}"`
-        if (c.journalName) res += `, *${c.journalName}*`
-        if (c.url) res += `, ${c.url}`
-        if (c.accessDate) res += `, accessed ${c.accessDate}`
-        return res + '.'
+        if (auth) result = auth + ', '
+        result += `"${c.title}"`
+        if (c.journalName) result += `, *${c.journalName}*`
+        if (c.url) result += `, ${c.url}`
+        if (c.accessDate) result += `, accessed ${c.accessDate}`
+        return result + '.'
       }
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.journalName) res += `,` + processBookTitleMarks(`《${c.journalName}》`)
-      if (c.issue) res += `，${c.publishYear}年第${c.issue}期`
-      if (c.url) res += `，${c.url}`
-      if (c.accessDate) res += `，访问时间：${c.accessDate}`
-      result = res + '。'
-      break
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.journalName) result += `，` + processBookTitleMarks(`《${c.journalName}》`)
+      if (c.issue) result += `${c.publishYear}年第${c.issue}期`
+      if (c.url) result += `，${c.url}`
+      if (c.accessDate) result += `，访问时间：${c.accessDate}`
+      return result + '。'
     }
 
     case 'transferred': {
       const auth = authorStr(c)
-      let res = ''
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.originalCitation) res += `，${c.originalCitation}`
-      if (c.transferredFrom) res += `，转引自${c.transferredFrom}`
-      if (c.pages) res += `，${pageStr(c.pages, 'zh')}`
-      result = res + '。'
-      break
+      let result = ''
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.originalCitation) result += `，${c.originalCitation}`
+      if (c.transferredFrom) result += `，转引自${c.transferredFrom}`
+      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
+      return result + '。'
     }
 
     case 'classic': {
-      let res = ''
+      let result = ''
       const auth = authorStr(c)
-      if (auth) res = auth + ':'
-      res += processBookTitleMarks(`《${c.title}》`)
-      if (c.section) res += `，·${c.section}`
-      return `（${res}）`
+      if (auth) result = auth + '：'
+      result += processBookTitleMarks(`《${c.title}》`)
+      if (c.section) result += `·${c.section}`
+      return `（${result}）`
     }
 
     default:
-      result = formatDefault(c)
+      return formatDefault(c)
   }
-
-  // 对中文类型文献（除电子文献外）进行额外审查
-  if (!isEn && c.type !== 'electronic') {
-    // 将英文逗号改为中文逗号
-    result = result.replace(/,/g, ',')
-    // 去除期数的前导零，如"第03期"改为"第3期"，"第04号"改为"第4号"
-    result = result.replace(/第0+(\d+)(期|号)/g, '第$1$2')
-  }
-
-  return result
 }
 
 function formatDefault(c: Citation): string {
   const auth = authorStr(c)
   let result = ''
-  if (auth) result = auth + ':'
+  if (auth) result = auth + '：'
   result += processBookTitleMarks(`《${c.title}》`)
-  if (c.publishPlace && c.publisher) result += `，${c.publishPlace}:${c.publisher}`
+  if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
   if (c.publishYear) result += `，${c.publishYear}年`
   if (c.pages) result += `，第${c.pages}页`
   return result + '。'
