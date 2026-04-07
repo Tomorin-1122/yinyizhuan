@@ -49,7 +49,10 @@ export function getCitationTypeName(type: CitationType): string {
     conference: '会议论文',
     diary: '日记',
     transferred: '转引',
-    classic: '经典'
+    classic: '经典',
+    ancient_unpublished: '未出版古籍',
+    ancient_published: '已出版古籍',
+    ancient_local_gazetteer: '地方志'
   };
   return names[type] || '其他';
 }

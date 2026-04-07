@@ -1,8 +1,15 @@
 import { Citation, CitationType, CitationLanguage } from './types';
+import { parseAncientText } from './ancient-parser';
 
 export function parseCitationText(text: string): Partial<Citation> {
   const normalizedText = text.trim();
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+  // 古籍普查数据库格式（优先检测）
+  const ancientResult = parseAncientText(normalizedText);
+  if (ancientResult.type === 'ancient_unpublished' && ancientResult.title) {
+    return { id, rawText: normalizedText, language: 'zh', ...ancientResult };
+  }
 
   // 豆瓣图书多行格式（优先检测，避免被 GB/T 误判）
   const douban = parseDoubanBook(normalizedText);

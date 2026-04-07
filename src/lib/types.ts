@@ -1,4 +1,4 @@
-export type CitationType = 'book' | 'chapter' | 'journal' | 'newspaper' | 'thesis' | 'archive' | 'ancient' | 'electronic' | 'conference' | 'diary' | 'transferred' | 'classic'
+export type CitationType = 'book' | 'chapter' | 'journal' | 'newspaper' | 'thesis' | 'archive' | 'ancient' | 'electronic' | 'conference' | 'diary' | 'transferred' | 'classic' | 'ancient_unpublished' | 'ancient_published' | 'ancient_local_gazetteer'
 export type CitationLanguage = 'zh' | 'en' | 'ja'
 
 export interface Author {
@@ -44,6 +44,12 @@ export interface Citation {
   translators?: Author[];
   notes?: string;
   rawText?: string;
+  // 未出版古籍字段
+  collectionInfo?: string; // 藏所
+  volumeNumberStr?: string; // 卷次（如"三十卷"）
+  // 已出版地方志字段
+  eraName?: string; // 年号（如"万历"）
+  seriesBookNumber?: string; // 丛书册数（如"第300册"）
 }
 
 export interface ConversionRecord {
