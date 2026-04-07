@@ -363,7 +363,7 @@ export default function ConvertPage() {
       `}</style>
 
       {/* Input Mode Tabs */}
-      <div className="flex border-2 border-ink-200 dark:border-gray-700 mb-0 border-b-0">
+      <div className="flex border-2 border-ink-200 dark:border-gray-700 mb-0">
         {modeButtons.map(m => {
           const Icon = m.icon
           return (
