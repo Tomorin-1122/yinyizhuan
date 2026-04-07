@@ -10,8 +10,8 @@ export type ThemeMode = 'light' | 'dark'
 export function getTheme(): ThemeMode {
   const stored = localStorage.getItem(THEME_KEY)
   if (stored === 'dark' || stored === 'light') return stored
-  // 默认跟随系统
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  // 默认第一次打开时开启日光模式（浅色模式）
+  return 'light'
 }
 
 /** 设置主题 */
