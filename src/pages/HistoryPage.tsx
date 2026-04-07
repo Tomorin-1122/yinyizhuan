@@ -506,7 +506,7 @@ export default function HistoryPage() {
       </div>
 
       {/* 搜索栏 */}
-      <div className="mb-6 border-2 border-ink-200 dark:border-gray-700 bg-parchment-50 dark:bg-gray-800 rounded-lg p-4">
+      <div className="mb-6 border-2 border-ink-200 dark:border-gray-700 bg-parchment-50 dark:bg-gray-800 p-4">
         <div className="flex items-center gap-2 mb-3 text-sm font-display font-bold text-ink-950 dark:text-gray-100">
           <IconSearch className="w-4 h-4" />
           搜索历史记录
@@ -520,7 +520,7 @@ export default function HistoryPage() {
               value={searchKeyword}
               onChange={e => setSearchKeyword(e.target.value)}
               placeholder="搜索标题、内容、备注..."
-              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600"
             />
           </div>
           
@@ -530,7 +530,7 @@ export default function HistoryPage() {
             <select
               value={searchType}
               onChange={e => setSearchType(e.target.value as CitationType | 'all')}
-              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+              className="w-full text-sm border border-ink-300 dark:border-gray-600 px-3 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600"
             >
               <option value="all">全部类型</option>
               <option value="book">图书</option>
@@ -558,7 +558,7 @@ export default function HistoryPage() {
                 type="date"
                 value={searchDateFrom}
                 onChange={e => setSearchDateFrom(e.target.value)}
-                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600"
               />
             </div>
             <div>
@@ -569,7 +569,7 @@ export default function HistoryPage() {
                 type="date"
                 value={searchDateTo}
                 onChange={e => setSearchDateTo(e.target.value)}
-                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600 rounded-md"
+                className="w-full text-sm border border-ink-300 dark:border-gray-600 px-2 py-2 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600"
               />
             </div>
           </div>
