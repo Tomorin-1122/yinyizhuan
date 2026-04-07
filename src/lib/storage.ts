@@ -36,6 +36,21 @@ export function exportHistoryAsJSON(): string {
   return JSON.stringify(history, null, 2);
 }
 
+// 防止 Excel 公式注入的危险字符前缀
+const DANGEROUS_PREFIXES = ['=', '+', '-', '@'];
+
+/**
+ * 净化字段以防止 Excel 公式注入
+ * 如果字段以危险字符开头，则在前面添加单引号使其成为文本
+ */
+function sanitizeForCSV(field: string): string {
+  const trimmed = field.trim();
+  if (DANGEROUS_PREFIXES.some(prefix => trimmed.startsWith(prefix))) {
+    return "'" + field;
+  }
+  return field;
+}
+
 export function exportHistoryAsCSV(): string {
   const history = getHistory();
   const headers = ['时间', '类型', '标题', '目标格式', '转换结果'];
@@ -48,7 +63,8 @@ export function exportHistoryAsCSV(): string {
     const result = record.result;
     
     return [date, type, title, format, result].map(field => {
-      const escaped = String(field).replace(/"/g, '""');
+      const sanitized = sanitizeForCSV(String(field));
+      const escaped = sanitized.replace(/"/g, '""');
       return `"${escaped}"`;
     }).join(',');
   });
