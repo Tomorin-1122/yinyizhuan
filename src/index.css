@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  body {
+    @apply bg-parchment-50 text-ink-950 font-body antialiased;
+  }
+  .dark body {
+    @apply bg-gray-950 text-gray-100;
+  }
+  .dark ::selection {
+    @apply bg-vermilion-700 text-parchment-50;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3 
+           bg-ink-950 text-parchment-50 font-medium dark:bg-gray-100 dark:text-gray-900
+           rounded-none border-2 border-ink-950 dark:border-gray-100
+           transition-all duration-200 cursor-pointer
+           hover:bg-vermilion-600 hover:border-vermilion-600 dark:hover:bg-vermilion-600 dark:hover:border-vermilion-600 dark:hover:text-white
+           active:bg-vermilion-700
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-vermilion-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-950;
+  }
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 px-6 py-3
+           bg-transparent text-ink-950 dark:text-gray-100 font-medium
+           rounded-none border-2 border-ink-300 dark:border-gray-600
+           transition-all duration-200 cursor-pointer
+           hover:border-ink-950 dark:hover:border-gray-300 hover:bg-ink-50 dark:hover:bg-gray-800
+           active:bg-ink-100 dark:active:bg-gray-700
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ink-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-950;
+  }
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2
+           bg-transparent text-ink-700 dark:text-gray-300 font-medium
+           rounded-none border-none
+           transition-all duration-200 cursor-pointer
+           hover:text-ink-950 dark:hover:text-gray-100 hover:bg-ink-100 dark:hover:bg-gray-800
+           active:bg-ink-200 dark:active:bg-gray-700;
+  }
+  .input-field {
+    @apply w-full px-4 py-3 
+           bg-white dark:bg-gray-800 text-ink-950 dark:text-gray-100 font-body
+           border-2 border-ink-200 dark:border-gray-700 rounded-none
+           transition-all duration-200
+           placeholder:text-ink-400 dark:placeholder:text-gray-500
+           focus:border-ink-950 dark:focus:border-gray-400 focus:outline-none focus:ring-0
+           hover:border-ink-400 dark:hover:border-gray-500;
+  }
+  .card {
+    @apply bg-white dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700
+           transition-all duration-200
+           hover:border-ink-400 dark:hover:border-gray-500;
+  }
+}
+
+@layer utilities {
+  .stagger-1 { animation-delay: 0.1s; }
+  .stagger-2 { animation-delay: 0.2s; }
+  .stagger-3 { animation-delay: 0.3s; }
+  .stagger-4 { animation-delay: 0.4s; }
+  .stagger-5 { animation-delay: 0.5s; }
+}
