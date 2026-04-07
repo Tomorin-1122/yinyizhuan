@@ -12,7 +12,6 @@ import { fetchMetadata } from '../lib/metadata-fetcher'
 import { Converter } from 'opencc-js'
 
 type InputMode = 'manual' | 'paste' | 'url' | 'file'
-const ANCIENT_DB_URL = 'http://cwdb.cw160.com:8042/#/'
 
 const CITATION_TYPES: { value: CitationType; label: string }[] = [
   { value: 'book', label: '著作' },
@@ -54,92 +53,9 @@ export default function ConvertPage() {
   const [parsedItems, setParsedItems] = useState<Partial<Citation>[]>([])
   const [toast, setToast] = useState('')
   const [fetchLoading, setFetchLoading] = useState(false)
-  const [ancientSearchTerm, setAncientSearchTerm] = useState('')
 
   // 繁简转换：繁体转简体
   const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
-
-  // 生成古籍数据库搜索链接
-  const handleAncientSearch = () => {
-    if (!ancientSearchTerm.trim()) {
-      showToast('请输入搜索关键词')
-      return
-    }
-    const encodedTerm = encodeURIComponent(ancientSearchTerm.trim())
-    const searchUrl = `${ANCIENT_DB_URL}?term=${encodedTerm}`
-    window.open(searchUrl, '_blank')
-    showToast('已打开古籍数据库，请复制信息后返回粘贴')
-  }
-
-  // 解析古籍数据库复制的文本（制表符分隔格式）
-  const parseAncientDBText = (text: string): Partial<Citation> | null => {
-    const lines = text.trim().split(/\r?\n/).filter(l => l.trim())
-    if (lines.length === 0) return null
-
-    // 尝试解析制表符分隔的单行格式
-    // 示例：4	明清賦役全書第一編	国家图书馆出版社辑	明清赋役全书第一编，国家图书馆出版社辑，2010	10003_中國古籍影印叢書查詢系統
-    for (const line of lines) {
-      const parts = line.split(/\t+/)
-      if (parts.length >= 4) {
-        const result: Partial<Citation> = { type: 'ancient' }
-        
-        // parts[0]: ID, parts[1]: 书名（繁体）, parts[2]: 作者, parts[3]: 出版信息，parts[4]: 来源
-        const idPart = parts[0]?.trim()
-        const titleTraditional = parts[1]?.trim() || ''
-        const authorPart = parts[2]?.trim() || ''
-        const pubInfo = parts[3]?.trim() || ''
-        const sourcePart = parts[4]?.trim() || ''
-
-        // 繁简转换
-        const titleSimplified = traditionalToSimplified(titleTraditional)
-        
-        result.title = titleSimplified
-        
-        // 解析作者
-        if (authorPart) {
-          const cleanAuthor = authorPart.replace(/[（(][^)）)]*[)）]/g, '').trim()
-          if (cleanAuthor) {
-            result.authors = cleanAuthor.split(/[,，、；;]/).map(n => ({ name: n.trim(), role: '辑' })).filter(a => a.name)
-          }
-        }
-
-        // 解析出版信息（可能包含出版社和年份）
-        if (pubInfo) {
-          const pubParts = pubInfo.split(/[,，]/)
-          if (pubParts.length >= 2) {
-            result.publisher = pubParts[0].trim()
-            const yearMatch = /(\d{4})/.exec(pubParts[1])
-            if (yearMatch) result.publishYear = yearMatch[1]
-          } else {
-            // 尝试从整个出版信息中提取年份
-            const yearMatch = /(\d{4})/.exec(pubInfo)
-            if (yearMatch) result.publishYear = yearMatch[1]
-            result.publisher = pubInfo.replace(/\d{4}/, '').trim().replace(/[,，]$/, '')
-          }
-        }
-
-        // 来源存入 notes
-        if (sourcePart) {
-          result.notes = `来源：${sourcePart}`
-          // 尝试提取来源 ID
-          const sourceIdMatch = /^(\d+)/.exec(sourcePart)
-          if (sourceIdMatch) {
-            result.archiveNumber = sourceIdMatch[1]
-          }
-        }
-
-        // ID 存入 archiveNumber 或 notes
-        if (idPart && idPart !== result.archiveNumber) {
-          result.archiveNumber = result.archiveNumber ? `${result.archiveNumber} (${idPart})` : idPart
-        }
-
-        return result
-      }
-    }
-
-    // 如果没有制表符分隔格式，尝试普通解析
-    return null
-  }
 
   const showToast = (msg: string) => {
     setToast(msg)
@@ -201,25 +117,13 @@ export default function ConvertPage() {
     if (!pasteText.trim()) return
     // 将繁体字转换为简体字（仅影响中文字符）
     const simplifiedText = traditionalToSimplified(pasteText)
-    
-    // 优先尝试解析古籍数据库格式
-    const ancientParsed = parseAncientDBText(pasteText)
-    if (ancientParsed) {
-      const c = { ...defaultCitation(), ...ancientParsed, id: generateId() } as Citation
-      if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
-      setCitation(c)
-      setMode('manual')
-      showToast('已解析古籍数据库信息，请核对后转换')
-      return
-    }
-    
     const parsed = parseCitationText(simplifiedText)
     const c = { ...defaultCitation(), ...parsed, id: generateId() } as Citation
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
     setCitation(c)
     setMode('manual')
     // 豆瓣图书：提示填出版社地址
-    const isDouban = /出版社 [:：]/.test(simplifiedText) && /出版年 [:：]/.test(simplifiedText)
+    const isDouban = /出版社[:：]/.test(simplifiedText) && /出版年[:：]/.test(simplifiedText)
     if (isDouban) {
       showToast('已解析豆瓣图书信息，请补充"出版地点"后转换')
     } else {
@@ -484,45 +388,12 @@ export default function ConvertPage() {
         <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 lg:border-r-0 p-4 sm:p-6 bg-white dark:bg-gray-800">
           {mode === 'paste' && (
             <div className="space-y-4">
-              {/* 古籍数据库搜索入口 */}
-              <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg p-4">
-                <h3 className="font-display font-semibold text-sm text-amber-900 dark:text-amber-100 mb-2">📚 古籍数据库快速搜索</h3>
-                <p className="text-xs text-amber-800 dark:text-amber-200 mb-3">
-                  从古籍数据库检索文献，复制信息后返回粘贴解析
-                </p>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={ancientSearchTerm}
-                    onChange={e => setAncientSearchTerm(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleAncientSearch()}
-                    className="input-field flex-1 text-sm py-2"
-                    placeholder="输入书名，如：赋役全书"
-                  />
-                  <button onClick={handleAncientSearch} className="btn-primary px-4 whitespace-nowrap">
-                    🔍 搜索古籍
-                  </button>
-                </div>
-                <p className="text-xs text-amber-700 dark:text-amber-300 mt-2">
-                  💡 提示：在新窗口打开古籍数据库 → 复制表格行 → 返回此处粘贴
-                </p>
-              </div>
-
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                  <div className="w-full border-t border-ink-200 dark:border-gray-700"></div>
-                </div>
-                <div className="relative flex justify-center">
-                  <span className="px-3 bg-white dark:bg-gray-800 text-sm text-ink-500">或粘贴其他引用文本</span>
-                </div>
-              </div>
-
               <label className="block text-sm font-medium text-ink-800">粘贴原始引用文本</label>
               <textarea
                 value={pasteText}
                 onChange={e => setPasteText(e.target.value)}
                 className="input-field h-48 resize-none font-mono text-sm"
-                placeholder={'支持格式：\n• 古籍数据库：复制表格行（制表符分隔）\n• 中文：赵景深：《文坛忆旧》，北新书局，1948 年，第 43 页。\n• GB/T 7714：[1] 作者。题名 [J].期刊，2020,(3):12-20.\n• APA（外文期刊）：Wang, R., & Tan, R. (2019). Title. Journal, 24(6).\n• 豆瓣图书：多行格式，含"出版社:"、"出版年:"'}
+                placeholder={'支持格式：\n• 中文：赵景深：《文坛忆旧》，北新书局，1948年，第43页。\n• GB/T 7714：[1]作者.题名[J].期刊,2020,(3):12-20.\n• APA（外文期刊）：Wang, R., & Tan, R. (2019). Title. Journal, 24(6).\n• 豆瓣图书：多行格式，含"出版社:"、"出版年:"'}
               />
               {pasteText && !/[\u4e00-\u9fa5]/.test(pasteText) && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 p-3 text-xs text-blue-800 dark:text-blue-300 flex items-start gap-2">
@@ -533,6 +404,7 @@ export default function ConvertPage() {
               <button onClick={handleParse} className="btn-primary w-full">解析并填充表单</button>
             </div>
           )}
+
           {mode === 'url' && (
             <div className="space-y-4">
               <div>
