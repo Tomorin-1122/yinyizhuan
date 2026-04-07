@@ -27,7 +27,7 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
   const url = `https://api.crossref.org/works/${encodeURIComponent(doi)}`
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'yinyizhuan/1.0 (mailto:chenwenxuan915@gmail.com)' },
+      headers: { 'User-Agent': 'yinyizhuan/1.0 (mailto:273319688+Tomorin-1122@users.noreply.github.com)' },
     })
     if (res.status === 404) {
       return { success: false, error: 'Crossref 数据库中未找到该 DOI' }
