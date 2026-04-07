@@ -1,50 +1,5 @@
-```gitignore
-# Dependencies
-node_modules/
-
-# Build outputs
-dist/
-build/
-target/
-
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.venv/
-.ENV
-pip-log.txt
-pip-delete-this-directory.txt
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.log
-.git/modules/
-.pytest_cache/
-.hypothesis/
-.DS_Store
-.venv/
-.python-version
-*.pot
-*.po
-*~
-.pydevproject
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-.DS_Store
-Thumbs.db
-.env
-.env.local
-.env.*
+```typescript
+// No build artifacts, dependencies, or temp files detected in changes
+// Only source file (src/lib/theme.ts) was modified
+// No ignores needed
 ```
