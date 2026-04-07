@@ -1,4 +1,6 @@
 import { useState, useCallback } from 'react'
+// @ts-ignore - opencc-js/t2cn 没有类型声明
+import { Converter } from 'opencc-js/t2cn'
 import { Citation, Author } from '../lib/types'
 import { formatUnpublishedAncient, formatPublishedAncient, formatLocalGazetteer } from '../lib/formatters/ancient'
 import { parseAncientText } from '../lib/ancient-parser'
@@ -30,8 +32,8 @@ export default function AncientConvertPage() {
   const [toast, setToast] = useState('')
   const [showAuthorForGazetteer, setShowAuthorForGazetteer] = useState(false)
 
-  // 繁简转换
-  const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
+  // 繁简转换 - 使用 t2cn 预设（繁体到简体）
+  const traditionalToSimplified = Converter()
 
   const showToast = (msg: string) => {
     setToast(msg)
