@@ -229,13 +229,6 @@ export default function AboutPage() {
               <IconGitHub className="w-5 h-5" />
               GitHub 仓库
             </a>
-            <a
-              href="mailto:chenwenxuan915@gmail.com"
-              className="btn-ghost inline-flex items-center gap-2"
-            >
-              <IconMail className="w-5 h-5" />
-              chenwenxuan915@gmail.com
-            </a>
           </div>
         </section>
 
