@@ -383,9 +383,9 @@ export default function ConvertPage() {
         })}
       </div>
 
-      <div className="grid lg:grid-cols-2 gap-0">
+      <div className="flex flex-col lg:flex-row border-2 border-t-0 border-ink-200 dark:border-gray-700">
         {/* Left: Input */}
-        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 lg:border-r-0 p-4 sm:p-6 bg-white dark:bg-gray-800">
+        <div className="flex-1 border-r-2 border-ink-200 dark:border-gray-700 border-t-0 border-l-0 border-b-0 p-4 sm:p-6 bg-white dark:bg-gray-800">
           {mode === 'paste' && (
             <div className="space-y-4">
               <label className="block text-sm font-medium text-ink-800">粘贴原始引用文本</label>
@@ -491,7 +491,7 @@ export default function ConvertPage() {
         </div>
 
         {/* Right: Output */}
-        <div className="border-2 border-ink-200 dark:border-gray-700 border-t-0 p-4 sm:p-6 bg-white dark:bg-gray-800 flex flex-col">
+        <div className="flex-1 p-4 sm:p-6 bg-white dark:bg-gray-800 flex flex-col">
           <div className="mb-4">
             <label className="block text-sm font-medium text-ink-800 dark:text-gray-200 mb-2">目标格式</label>
             <div className="grid grid-cols-3 gap-0">

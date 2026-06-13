@@ -1,5 +1,13 @@
-```typescript
-// No build artifacts, dependencies, or temp files detected in changes
-// Only source file (src/lib/theme.ts) was modified
-// No ignores needed
-```
+# Dependencies
+node_modules/
+dist/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+
+# External cloned repos
+CSL-Chinese-IR-CSSCI-Journals/
