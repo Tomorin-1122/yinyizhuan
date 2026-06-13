@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      'opencc-js': path.resolve(__dirname, 'node_modules/opencc-js/dist/esm/full.js'),
+      'opencc-js': path.resolve(__dirname, 'node_modules/opencc-js/dist/umd/full.js'),
     },
   },
 })
