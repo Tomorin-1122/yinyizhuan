@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { ConversionRecord, TagGroup, CitationType } from '../lib/types'
 import {
   getHistory, deleteRecord, clearHistory, exportHistoryAsJSON, exportHistoryAsCSV,
@@ -88,31 +89,61 @@ function AddToGroupDropdown({
   recordId,
   groups,
   onAdd,
+  onRemove,
   onCreateAndAdd,
 }: {
   recordId: string
   groups: TagGroup[]
   onAdd: (groupId: string) => void
+  onRemove: (groupId: string) => void
   onCreateAndAdd: (name: string) => void
 }) {
   const [open, setOpen] = useState(false)
   const [creating, setCreating] = useState(false)
   const [newName, setNewName] = useState('')
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
+  const containerRef = useRef<HTMLDivElement>(null)
+  const btnRef = useRef<HTMLButtonElement>(null)
+  const panelRef = useRef<HTMLDivElement>(null)
+  const [pos, setPos] = useState<{ top: number; left: number }>({ top: 0, left: 0 })
 
   const alreadyInGroups = groups.filter(g => g.recordIds.includes(recordId))
 
+  // 点击外部关闭
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: MouseEvent) => {
+      if (containerRef.current && !containerRef.current.contains(e.target as Node) &&
+          panelRef.current && !panelRef.current.contains(e.target as Node)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handler)
+    const closeOnScroll = () => setOpen(false)
+    window.addEventListener('scroll', closeOnScroll, true)
+    return () => {
+      document.removeEventListener('mousedown', handler)
+      window.removeEventListener('scroll', closeOnScroll, true)
+    }
+  }, [open])
+
+  // 计算位置
+  const calcPos = useCallback(() => {
+    if (!btnRef.current) return
+    const rect = btnRef.current.getBoundingClientRect()
+    setPos({
+      top: rect.bottom + 4,
+      left: Math.max(8, rect.right - 240),
+    })
+  }, [])
+
+  useEffect(() => {
+    if (open) calcPos()
+  }, [open, calcPos])
+
   return (
-    <div className="relative" ref={ref}>
+    <div className="relative" ref={containerRef}>
       <button
+        ref={btnRef}
         onClick={() => setOpen(!open)}
         className="btn-ghost px-2 py-1 text-xs flex items-center gap-1"
         title="添加到标签组"
@@ -120,15 +151,25 @@ function AddToGroupDropdown({
         <IconTag className="w-3.5 h-3.5" />
         标签
       </button>
-      {open && (
-        <div className="absolute right-0 top-full mt-1 z-30 bg-white dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700 shadow-lg min-w-48 max-w-64">
+      {open && createPortal(
+        <div
+          ref={panelRef}
+          className="fixed z-[999] bg-white dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700 shadow-lg min-w-48 max-w-64 max-h-64 overflow-y-auto"
+          style={{ top: pos.top, left: pos.left }}
+        >
           {alreadyInGroups.length > 0 && (
             <div className="p-2 border-b border-ink-100 dark:border-gray-700">
               <p className="text-xs text-ink-400 dark:text-gray-500 mb-1">已加入</p>
               {alreadyInGroups.map(g => (
                 <div key={g.id} className="flex items-center justify-between text-xs py-0.5">
                   <span className="text-ink-700 dark:text-gray-300 truncate">{g.name}</span>
-                  <span className="text-green-600 ml-2">✓</span>
+                  <button
+                    onClick={(e) => { e.stopPropagation(); onRemove(g.id) }}
+                    className="ml-2 text-ink-400 hover:text-vermilion-600 transition-colors flex-shrink-0"
+                    title="移出标签组"
+                  >
+                    <IconX className="w-3 h-3" />
+                  </button>
                 </div>
               ))}
             </div>
@@ -181,7 +222,8 @@ function AddToGroupDropdown({
               </button>
             )}
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   )
@@ -801,6 +843,7 @@ export default function HistoryPage() {
                         recordId={r.id}
                         groups={groups}
                         onAdd={(groupId) => handleAddToGroup(r.id, groupId)}
+                        onRemove={(groupId) => handleRemoveFromGroup(r.id, groupId)}
                         onCreateAndAdd={(name) => handleCreateAndAddToGroup(r.id, name)}
                       />
                       {activeGroup && (
