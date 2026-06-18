@@ -82,7 +82,32 @@ function removeLeadingZero(num: string | undefined): string {
   return num.replace(/^0+/, '') || '0'
 }
 
+/**
+ * 将英文括号 () 转换为中文括号 （）
+ * 跳过 URL 中的括号（http:// 或 https:// 开头的段落）
+ */
+function convertToChineseParens(text: string): string {
+  // 按 URL 分割：奇数段是 URL（保留原样），偶数段做替换
+  const parts = text.split(/(https?:\/\/[^\s，。、；：]+)/)
+  return parts.map((part, i) => {
+    if (i % 2 === 1) return part // URL 段，不转换
+    return part.replace(/\(/g, '（').replace(/\)/g, '）')
+  }).join('')
+}
+
+/**
+ * 《历史研究》格式化（公开接口）
+ * 对中文引文，在输出后统一将英文括号 () 转为中文括号 （）
+ */
 export function formatLSYJ(citation: Citation): string {
+  const raw = formatLSYJRaw(citation)
+  if (citation.language !== 'en') {
+    return convertToChineseParens(raw)
+  }
+  return raw
+}
+
+function formatLSYJRaw(citation: Citation): string {
   const c = citation
   const isEn = c.language === 'en'
 
@@ -337,3 +362,6 @@ function formatDefault(c: Citation): string {
   if (c.pages) result += `，第${c.pages}页`
   return result + '。'
 }
+
+// 供 formatLSYJ 内部调用，formatDefault 也需要经过括号转换
+// 但因为它在 switch default 分支被直接 return，已由外层 convertToChineseParens 统一处理
