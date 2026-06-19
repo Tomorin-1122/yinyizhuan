@@ -74,7 +74,7 @@ export interface FormatInfo {
 }
 
 export const FORMAT_LIST: FormatInfo[] = [
-  { id: 'lsyj', name: '\u300A\u5386\u53F2\u7814\u7A76\u300B\u683C\u5F0F', description: '\u5386\u53F2\u7814\u7A76\u6742\u5FD7\u793E\u5F15\u6587\u6CE8\u91CA\u89C4\u8303' },
-  { id: 'gbt7714', name: 'GB/T 7714-2015', description: '\u4FE1\u606F\u4E0E\u6587\u732E \u53C2\u8003\u6587\u732E\u8457\u5F55\u89C4\u5219' },
-  { id: 'apa', name: 'APA \u7B2C7\u7248', description: '\u7F8E\u56FD\u5FC3\u7406\u5B66\u4F1A\u5F15\u7528\u683C\u5F0F' },
+  { id: 'lsyj', name: '《历史研究》格式', description: '历史研究杂志社引文注释规范' },
+  { id: 'gbt7714', name: 'GB/T 7714-2015', description: '信息与文献 参考文献著录规则' },
+  { id: 'apa', name: 'APA 第7版', description: '美国心理学会引用格式' },
 ]
