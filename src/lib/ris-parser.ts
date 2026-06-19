@@ -1,5 +1,5 @@
 import { Citation, CitationType, Author } from './types';
-import { detectLanguage } from './utils';
+import { detectLanguage, generateId } from './utils';
 
 export function parseRIS(content: string): Partial<Citation>[] {
   const citations: Partial<Citation>[] = [];
@@ -30,7 +30,7 @@ export function parseRIS(content: string): Partial<Citation>[] {
     const language = detectLanguage(title + (fields['AU']?.[0] || ''));
 
     const citation: Partial<Citation> = {
-      id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+      id: generateId(),
       type,
       language,
       authors,

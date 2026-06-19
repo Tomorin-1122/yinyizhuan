@@ -1,4 +1,5 @@
 import { ConversionRecord } from './types';
+import { generateId } from './utils';
 
 const STORAGE_KEY = 'yinyizhuan_history';
 const MAX_RECORDS = 500;
@@ -99,7 +100,7 @@ function saveTagGroups(groups: import('./types').TagGroup[]): void {
 
 export function createTagGroup(name: string, description?: string): import('./types').TagGroup {
   const group: import('./types').TagGroup = {
-    id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6),
+    id: generateId(),
     name,
     description,
     recordIds: [],

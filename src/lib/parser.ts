@@ -1,9 +1,9 @@
 import { Citation, CitationType, CitationLanguage } from './types';
-import { detectLanguage } from './utils';
+import { detectLanguage, generateId } from './utils';
 
 export function parseCitationText(text: string): Partial<Citation> {
   const normalizedText = text.trim();
-  const id = Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  const id = generateId();
 
   // 豆瓣图书多行格式（优先检测，避免被 GB/T 误判）
   const douban = parseDoubanBook(normalizedText);
