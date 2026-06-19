@@ -1,32 +1,23 @@
-import { useState, useCallback, useRef, useEffect } from 'react'
-import { Citation, CitationType, TargetFormat, FORMAT_LIST, Author, TagGroup } from '../lib/types'
+import { useState, useCallback } from 'react'
+import { Citation, TargetFormat, FORMAT_LIST, Author } from '../lib/types'
 import { formatCitation } from '../lib/formatters'
 import { parseCitationText } from '../lib/parser'
 import { parseBibTeX } from '../lib/bibtex-parser'
 import { parseRIS } from '../lib/ris-parser'
-import { addRecord, getTagGroups, createTagGroup, addRecordToGroup } from '../lib/storage'
+import { addRecord } from '../lib/storage'
 import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
-import { canConvert, recordConversion, getRemainingCount, isAdmin, isUnlocked, unlock, getTrialRemaining, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
-import { IconCopy, IconDownload, IconCheck, IconUpload, IconLink, IconPaste, IconEdit, IconPlus, IconMinus, IconX, IconSearch, IconLoader } from '../components/Icons'
+import { canConvert, recordConversion, isAdmin, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
+import { useAccessState } from '../lib/use-access'
+import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
 import { Converter } from 'opencc-js'
+import ManualForm from '../components/ManualForm'
+import InviteModal from '../components/InviteModal'
+import FileUploadArea from '../components/FileUploadArea'
+import AddToGroupButton from '../components/AddToGroupButton'
+import AccessQuotaDisplay from '../components/AccessQuotaDisplay'
 
 type InputMode = 'manual' | 'paste' | 'url' | 'file'
-
-const CITATION_TYPES: { value: CitationType; label: string }[] = [
-  { value: 'book', label: '著作' },
-  { value: 'chapter', label: '析出文献(论文集)' },
-  { value: 'journal', label: '期刊文章' },
-  { value: 'newspaper', label: '报纸' },
-  { value: 'thesis', label: '学位论文' },
-  { value: 'conference', label: '会议论文' },
-  { value: 'archive', label: '档案' },
-  { value: 'ancient', label: '古籍' },
-  { value: 'electronic', label: '电子文献' },
-  { value: 'diary', label: '日记' },
-  { value: 'transferred', label: '转引文献' },
-  { value: 'classic', label: '经典古籍' },
-]
 
 const defaultCitation = (): Citation => ({
   id: generateId(),
@@ -36,6 +27,9 @@ const defaultCitation = (): Citation => ({
   title: '',
 })
 
+// 繁简转换：繁体转简体（模块级，无状态纯转换器，无需每次 render 重建）
+const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
+
 export default function ConvertPage() {
   const [mode, setMode] = useState<InputMode>('manual')
   const [citation, setCitation] = useState<Citation>(defaultCitation())
@@ -44,38 +38,16 @@ export default function ConvertPage() {
   const [lastRecordId, setLastRecordId] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
   const [showInvite, setShowInvite] = useState(false)
-  const [inviteCode, setInviteCode] = useState('')
-  const [inviteError, setInviteError] = useState('')
-  const [inviteShaking, setInviteShaking] = useState(false)
-  const [, forceUpdate] = useState(0)
   const [pasteText, setPasteText] = useState('')
   const [urlInput, setUrlInput] = useState('')
   const [parsedItems, setParsedItems] = useState<Partial<Citation>[]>([])
   const [toast, setToast] = useState('')
   const [fetchLoading, setFetchLoading] = useState(false)
-  const [dragOver, setDragOver] = useState(false)
-
-  // 繁简转换：繁体转简体
-  const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
+  const { refresh: refreshAccess } = useAccessState()
 
   const showToast = (msg: string) => {
     setToast(msg)
     setTimeout(() => setToast(''), 2000)
-  }
-
-  const handleInviteSubmit = () => {
-    if (unlock(inviteCode)) {
-      setShowInvite(false)
-      setInviteCode('')
-      setInviteError('')
-      forceUpdate(n => n + 1)
-      showToast('邀请码验证成功，已解锁每日100次！')
-    } else {
-      setInviteError('邀请码错误，请重试')
-      setInviteShaking(true)
-      setTimeout(() => setInviteShaking(false), 500)
-      setInviteCode('')
-    }
   }
 
   const handleConvert = useCallback(() => {
@@ -91,7 +63,7 @@ export default function ConvertPage() {
     const output = formatCitation(citation, targetFormat)
     setResult(output)
     recordConversion()
-    forceUpdate(n => n + 1)
+    refreshAccess()
     const newId = generateId()
     setLastRecordId(newId)
     addRecord({
@@ -103,7 +75,7 @@ export default function ConvertPage() {
       rawInput: citation.rawText || '',
     })
     showToast('转换成功，已保存到历史记录')
-  }, [citation, targetFormat])
+  }, [citation, targetFormat, refreshAccess])
 
   const handleCopy = async () => {
     const ok = await copyToClipboard(result)
@@ -116,14 +88,12 @@ export default function ConvertPage() {
 
   const handleParse = () => {
     if (!pasteText.trim()) return
-    // 将繁体字转换为简体字（仅影响中文字符）
     const simplifiedText = traditionalToSimplified(pasteText)
     const parsed = parseCitationText(simplifiedText)
     const c = { ...defaultCitation(), ...parsed, id: generateId() } as Citation
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
     setCitation(c)
     setMode('manual')
-    // 豆瓣图书：提示填出版社地址
     const isDouban = /出版社[:：]/.test(simplifiedText) && /出版年[:：]/.test(simplifiedText)
     if (isDouban) {
       showToast('已解析豆瓣图书信息，请补充"出版地点"后转换')
@@ -145,8 +115,7 @@ export default function ConvertPage() {
 
   const handleAutoFetch = async () => {
     if (!urlInput.trim()) return
-    
-    // 检查每日限额
+
     const fetchStatus = canFetchMetadata()
     if (fetchStatus === 'isbn_limit_reached') {
       showToast('因 API 限额原因，每日自动抓取仅限 10 次，明日重置')
@@ -159,12 +128,11 @@ export default function ConvertPage() {
 
     if (result.success && result.data) {
       recordMetadataFetch()
-      forceUpdate(n => n + 1)
+      refreshAccess()
 
       const c = { ...defaultCitation(), ...result.data, id: generateId() } as Citation
       if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
 
-      // 智能判断文献类型
       if (result.data.journalName) c.type = 'journal'
       else if (result.data.publisher) c.type = 'book'
 
@@ -206,20 +174,6 @@ export default function ConvertPage() {
       }
     }
     reader.readAsText(file)
-  }
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-    processFile(file)
-    e.target.value = ''
-  }
-
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault()
-    setDragOver(false)
-    const file = e.dataTransfer.files?.[0]
-    if (file) processFile(file)
   }
 
   const selectParsedItem = (item: Partial<Citation>) => {
@@ -288,35 +242,12 @@ export default function ConvertPage() {
         </div>
       )}
 
-      {/* 邀请码弹窗 */}
-      {showInvite && (
-        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-6">
-          <div className="bg-white border-2 border-ink-200 p-8 w-full max-w-sm animate-slide-up">
-            <div className="flex items-center justify-between mb-1">
-              <h3 className="font-display font-bold text-lg text-ink-950">输入邀请码解锁</h3>
-              <button onClick={() => { setShowInvite(false); setInviteCode(''); setInviteError('') }} className="btn-ghost px-2 py-1">
-                <IconX className="w-4 h-4" />
-              </button>
-            </div>
-            <p className="text-ink-500 text-sm mb-6">你已用完 10 次免费试用，输入邀请码后每日可转换 100 次</p>
-            <div className={inviteShaking ? 'animate-[shake_0.4s_ease]' : ''}>
-              <input
-                type="text"
-                value={inviteCode}
-                onChange={e => { setInviteCode(e.target.value); setInviteError('') }}
-                onKeyDown={e => e.key === 'Enter' && handleInviteSubmit()}
-                className="input-field text-center text-xl font-mono tracking-[0.5em] mb-2"
-                placeholder="- - - -"
-                autoFocus
-              />
-              {inviteError && <p className="text-vermilion-600 text-sm text-center mb-2">{inviteError}</p>}
-            </div>
-            <button onClick={handleInviteSubmit} className="btn-primary w-full mt-2" disabled={!inviteCode.trim()}>
-              确认
-            </button>
-          </div>
-        </div>
-      )}
+      <InviteModal
+        open={showInvite}
+        onClose={() => setShowInvite(false)}
+        onSuccess={refreshAccess}
+        onToast={showToast}
+      />
 
       <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
@@ -325,41 +256,7 @@ export default function ConvertPage() {
         </div>
         {!isAdmin() && (
           <div className="text-sm space-y-1 sm:text-right">
-            {!isUnlocked() ? (
-              <>
-                <div>
-                  <span className="text-ink-400 dark:text-gray-500">免费试用剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getTrialRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
-                    {getTrialRemaining()}
-                  </span>
-                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
-                </div>
-                <div>
-                  <span className="text-ink-400 dark:text-gray-500">自动抓取剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
-                    {getFetchMetadataRemaining()}
-                  </span>
-                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
-                </div>
-              </>
-            ) : (
-              <>
-                <div>
-                  <span className="text-ink-400 dark:text-gray-500">今日转换剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getRemainingCount() <= 10 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
-                    {getRemainingCount()}
-                  </span>
-                  <span className="text-ink-400 dark:text-gray-500"> / 100</span>
-                </div>
-                <div>
-                  <span className="text-ink-400 dark:text-gray-500">自动抓取剩余</span>
-                  <span className={`ml-2 font-mono font-bold text-lg ${getFetchMetadataRemaining() <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
-                    {getFetchMetadataRemaining()}
-                  </span>
-                  <span className="text-ink-400 dark:text-gray-500"> / 10</span>
-                </div>
-              </>
-            )}
+            <AccessQuotaDisplay />
           </div>
         )}
       </div>
@@ -461,39 +358,11 @@ export default function ConvertPage() {
           )}
 
           {mode === 'file' && (
-            <div className="space-y-4">
-              <label className="block text-sm font-medium text-ink-800">上传 BibTeX (.bib)、RIS (.ris) 或文本 (.txt) 文件</label>
-              <label
-                onDragOver={e => { e.preventDefault(); setDragOver(true) }}
-                onDragLeave={() => setDragOver(false)}
-                onDrop={handleDrop}
-                className={`flex flex-col items-center justify-center h-48 border-2 border-dashed transition-all duration-200 cursor-pointer ${
-                  dragOver
-                    ? 'border-ink-600 bg-parchment-200'
-                    : 'border-ink-300 bg-parchment-50 hover:border-ink-500 hover:bg-parchment-100'
-                }`}
-              >
-                <IconUpload className="w-10 h-10 text-ink-400 mb-3" />
-                <span className="text-ink-600 text-sm">点击或拖拽文件到此处</span>
-                <span className="text-ink-400 text-xs mt-1">支持 .bib / .ris / .txt 格式</span>
-                <input type="file" accept=".bib,.ris,.txt" onChange={handleFileUpload} className="hidden" />
-              </label>
-              {parsedItems.length > 1 && (
-                <div className="space-y-2">
-                  <span className="text-sm font-medium text-ink-800">解析到 {parsedItems.length} 条引用，点击选择：</span>
-                  {parsedItems.map((item, i) => (
-                    <button
-                      key={i}
-                      onClick={() => selectParsedItem(item)}
-                      className="w-full text-left p-3 border border-ink-200 hover:border-ink-400 hover:bg-ink-50 transition-all duration-200 cursor-pointer text-sm"
-                    >
-                      <span className="font-medium">{item.title || '未命名'}</span>
-                      {item.authors?.[0]?.name && <span className="text-ink-500 ml-2">- {item.authors[0].name}</span>}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+            <FileUploadArea
+              onProcessFile={processFile}
+              parsedItems={parsedItems}
+              onSelectItem={selectParsedItem}
+            />
           )}
 
           {mode === 'manual' && (
@@ -566,475 +435,6 @@ export default function ConvertPage() {
           )}
         </div>
       </div>
-    </div>
-  )
-}
-
-/* ---------- AddToGroupButton ---------- */
-
-function IconTag({ className = 'w-4 h-4' }: { className?: string }) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
-      <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" /><line x1="7" y1="7" x2="7.01" y2="7" />
-    </svg>
-  )
-}
-
-function AddToGroupButton({ recordId, onToast }: { recordId: string; onToast: (msg: string) => void }) {
-  const [open, setOpen] = useState(false)
-  const [groups, setGroups] = useState<TagGroup[]>([])
-  const [creating, setCreating] = useState(false)
-  const [newName, setNewName] = useState('')
-  const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (open) setGroups(getTagGroups())
-  }, [open])
-
-  useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) { setOpen(false); setCreating(false) }
-    }
-    document.addEventListener('mousedown', handler)
-    return () => document.removeEventListener('mousedown', handler)
-  }, [])
-
-  const handleAdd = (groupId: string, groupName: string) => {
-    addRecordToGroup(groupId, recordId)
-    setOpen(false)
-    onToast(`已加入"${groupName}"`)
-  }
-
-  const handleCreate = () => {
-    if (!newName.trim()) return
-    const g = createTagGroup(newName.trim())
-    addRecordToGroup(g.id, recordId)
-    setNewName('')
-    setCreating(false)
-    setOpen(false)
-    onToast(`已创建标签组"${g.name}"并加入`)
-  }
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setOpen(!open)}
-        className="btn-ghost text-sm flex items-center gap-1.5"
-        title="添加到标签组"
-      >
-        <IconTag className="w-4 h-4" />
-        标签组
-      </button>
-      {open && (
-        <div className="absolute right-0 bottom-full mb-1 z-30 bg-white dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700 shadow-lg min-w-52">
-          {groups.length === 0 && !creating && (
-            <p className="px-4 py-3 text-xs text-ink-400 dark:text-gray-500">暂无标签组</p>
-          )}
-          {groups.length > 0 && (
-            <div className="p-1 border-b border-ink-100 dark:border-gray-700">
-              {groups.map(g => (
-                <button
-                  key={g.id}
-                  onClick={() => handleAdd(g.id, g.name)}
-                  className="w-full text-left px-3 py-1.5 text-sm text-ink-800 dark:text-gray-200 hover:bg-parchment-100 dark:hover:bg-gray-700 transition-colors flex items-center justify-between gap-2"
-                >
-                  <span className="truncate">{g.name}</span>
-                  <span className="text-xs text-ink-400 shrink-0">{g.recordIds.length}条</span>
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="p-2">
-            {creating ? (
-              <div className="flex gap-1">
-                <input
-                  autoFocus
-                  value={newName}
-                  onChange={e => setNewName(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') handleCreate(); if (e.key === 'Escape') setCreating(false) }}
-                  className="flex-1 text-xs border border-ink-300 dark:border-gray-600 px-2 py-1 bg-white dark:bg-gray-700 text-ink-950 dark:text-gray-100 outline-none focus:border-ink-600"
-                  placeholder="标签组名称，回车确认"
-                />
-              </div>
-            ) : (
-              <button
-                onClick={() => { setCreating(true) }}
-                className="w-full text-left text-xs text-ink-500 dark:text-gray-400 hover:text-ink-950 dark:hover:text-gray-100 flex items-center gap-1.5 px-1 py-1 transition-colors"
-              >
-                + 新建标签组
-              </button>
-            )}
-          </div>
-        </div>
-      )}
-    </div>
-  )
-}
-
-/* ---------- Manual Form Sub-Component ---------- */
-
-interface ManualFormProps {
-  citation: Citation
-  updateField: <K extends keyof Citation>(field: K, value: Citation[K]) => void
-  updateAuthor: (index: number, field: keyof Author, value: string) => void
-  addAuthor: () => void
-  removeAuthor: (i: number) => void
-  updateBookAuthor: (index: number, field: keyof Author, value: string) => void
-  addBookAuthor: () => void
-  removeBookAuthor: (i: number) => void
-  updateTranslator: (index: number, value: string) => void
-}
-
-function ManualForm({
-  citation, updateField,
-  updateAuthor, addAuthor, removeAuthor,
-  updateBookAuthor, addBookAuthor, removeBookAuthor,
-  updateTranslator,
-}: ManualFormProps) {
-  const c = citation
-  const showBookFields = ['book', 'ancient', 'diary', 'classic'].includes(c.type)
-  const showChapterFields = c.type === 'chapter'
-  const showJournalFields = c.type === 'journal'
-  const showNewspaperFields = c.type === 'newspaper'
-  const showThesisFields = ['thesis', 'conference'].includes(c.type)
-  const showArchiveFields = c.type === 'archive'
-  const showElectronicFields = c.type === 'electronic'
-  const showAncientFields = c.type === 'ancient'
-  const showTransferredFields = c.type === 'transferred'
-
-  return (
-    <div className="space-y-5">
-      {/* Type & Language */}
-      <div className="grid grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-ink-800 mb-1">文献类型</label>
-          <select
-            value={c.type}
-            onChange={e => updateField('type', e.target.value as CitationType)}
-            className="input-field cursor-pointer"
-          >
-            {CITATION_TYPES.map(t => (
-              <option key={t.value} value={t.value}>{t.label}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-ink-800 mb-1">语言</label>
-          <select
-            value={c.language}
-            onChange={e => updateField('language', e.target.value as 'zh' | 'en' | 'ja')}
-            className="input-field cursor-pointer"
-          >
-            <option value="zh">中文</option>
-            <option value="en">英文</option>
-            <option value="ja">日文</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Authors */}
-      <div>
-        <div className="flex items-center justify-between mb-1">
-          <label className="text-sm font-medium text-ink-800">责任者(作者)</label>
-          <button onClick={addAuthor} className="btn-ghost text-xs py-1 px-2">
-            <IconPlus className="w-3 h-3" />添加
-          </button>
-        </div>
-        {c.authors.map((a, i) => (
-          <div key={i} className="flex gap-2 mb-2">
-            <input
-              value={a.name}
-              onChange={e => updateAuthor(i, 'name', e.target.value)}
-              className="input-field flex-1"
-              placeholder={c.language === 'zh' ? '姓名' : 'Full Name'}
-            />
-            <input
-              value={a.role || ''}
-              onChange={e => updateAuthor(i, 'role', e.target.value)}
-              className="input-field w-20"
-              placeholder="著"
-            />
-            {c.authors.length > 1 && (
-              <button onClick={() => removeAuthor(i)} className="btn-ghost text-vermilion-600 px-2">
-                <IconMinus className="w-4 h-4" />
-              </button>
-            )}
-          </div>
-        ))}
-      </div>
-
-      {/* Title */}
-      <div>
-        <label className="block text-sm font-medium text-ink-800 mb-1">文献题名</label>
-        <input
-          value={c.title}
-          onChange={e => updateField('title', e.target.value)}
-          className="input-field"
-          placeholder={c.language === 'zh' ? '如：中国古代史研究' : 'Title of the Work'}
-        />
-      </div>
-
-      {/* Book fields */}
-      {(showBookFields || showChapterFields) && (
-        <>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">出版地点</label>
-              <input value={c.publishPlace || ''} onChange={e => updateField('publishPlace', e.target.value)} className="input-field" placeholder="北京" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">出版社</label>
-              <input value={c.publisher || ''} onChange={e => updateField('publisher', e.target.value)} className="input-field" placeholder="人民出版社" />
-            </div>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">出版年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2020" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
-              <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="43" />
-            </div>
-            <div className="col-span-2 sm:col-span-1">
-              <label className="block text-sm font-medium text-ink-800 mb-1">卷次/册</label>
-              <input value={c.volume || ''} onChange={e => updateField('volume', e.target.value)} className="input-field" placeholder="第3卷" />
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* Translator */}
-      {(showBookFields || showChapterFields) && (
-        <div>
-          <label className="block text-sm font-medium text-ink-800 mb-1">译者(可选)</label>
-          {(c.translators || []).map((t, i) => (
-            <input key={i} value={t.name} onChange={e => updateTranslator(i, e.target.value)} className="input-field mb-2" placeholder="译者姓名" />
-          ))}
-          {(!c.translators || c.translators.length === 0) && (
-            <button onClick={() => updateField('translators', [{ name: '' }])} className="btn-ghost text-xs py-1 px-2">
-              <IconPlus className="w-3 h-3" />添加译者
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* Chapter fields */}
-      {showChapterFields && (
-        <>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">文集题名</label>
-            <input value={c.bookTitle || ''} onChange={e => updateField('bookTitle', e.target.value)} className="input-field" placeholder="文集名称" />
-          </div>
-          <div>
-            <div className="flex items-center justify-between mb-1">
-              <label className="text-sm font-medium text-ink-800">文集责任者</label>
-              <button onClick={addBookAuthor} className="btn-ghost text-xs py-1 px-2">
-                <IconPlus className="w-3 h-3" />添加
-              </button>
-            </div>
-            {(c.bookAuthors || [{ name: '' }]).map((a, i) => (
-              <div key={i} className="flex gap-2 mb-2">
-                <input value={a.name} onChange={e => updateBookAuthor(i, 'name', e.target.value)} className="input-field flex-1" placeholder="姓名" />
-                <input value={a.role || ''} onChange={e => updateBookAuthor(i, 'role', e.target.value)} className="input-field w-20" placeholder="编" />
-                {(c.bookAuthors || []).length > 1 && (
-                  <button onClick={() => removeBookAuthor(i)} className="btn-ghost text-vermilion-600 px-2"><IconMinus className="w-4 h-4" /></button>
-                )}
-              </div>
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* Journal fields */}
-      {showJournalFields && (
-        <>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">期刊名称</label>
-            <input value={c.journalName || ''} onChange={e => updateField('journalName', e.target.value)} className="input-field" placeholder={c.language === 'en' ? 'Ecology and Society' : '中国史研究'} />
-          </div>
-          <div className={`grid gap-3 sm:gap-4 ${c.language === 'en' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3'}`}>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
-            </div>
-            {c.language === 'en' && (
-              <div>
-                <label className="block text-sm font-medium text-ink-800 mb-1">卷号 Volume</label>
-                <input value={c.volumeNumber || ''} onChange={e => updateField('volumeNumber', e.target.value)} className="input-field" placeholder="24" />
-              </div>
-            )}
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">{c.language === 'en' ? '期号 Issue' : '期号'}</label>
-              <input value={c.issue || ''} onChange={e => updateField('issue', e.target.value)} className="input-field" placeholder="3" />
-            </div>
-            <div className={c.language === 'en' ? '' : 'col-span-2 sm:col-span-1'}>
-              <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
-              <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="12-20" />
-            </div>
-          </div>
-          {c.language === 'en' && (
-            <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 p-3 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">
-              <span className="shrink-0 font-bold">!</span>
-              <span>外文期刊文章题名在《历史研究》格式中需使用<em>斜体</em>，请在粘贴到 Word 后手动对题名部分设置斜体。</span>
-            </div>
-          )}
-        </>
-      )}
-
-      {/* Newspaper fields */}
-      {showNewspaperFields && (
-        <>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">报纸名称</label>
-            <input value={c.newspaperName || ''} onChange={e => updateField('newspaperName', e.target.value)} className="input-field" placeholder="四川工人日报" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">出版日期</label>
-              <input value={c.publishDate || ''} onChange={e => updateField('publishDate', e.target.value)} className="input-field" placeholder="1986年8月22日" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">版次</label>
-              <input value={c.pageSection || ''} onChange={e => updateField('pageSection', e.target.value)} className="input-field" placeholder="2" />
-            </div>
-          </div>
-        </>
-      )}
-
-      {/* Thesis / Conference fields */}
-      {showThesisFields && (
-        <>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">
-                {c.type === 'conference' ? '论文类型' : '论文性质'}
-              </label>
-              {c.type === 'thesis' ? (
-                <select
-                  value={c.thesisType || ''}
-                  onChange={e => updateField('thesisType', e.target.value)}
-                  className="input-field cursor-pointer"
-                >
-                  <option value="">请选择</option>
-                  <option value="博士学位论文">博士学位论文</option>
-                  <option value="硕士学位论文">硕士学位论文</option>
-                  <option value="本科学位论文">本科学位论文</option>
-                  <option value="学位论文">学位论文（类型不详）</option>
-                </select>
-              ) : (
-                <input value={c.thesisType || ''} onChange={e => updateField('thesisType', e.target.value)} className="input-field" placeholder="会议论文" />
-              )}
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">
-                {c.type === 'conference' ? '主办机构/地点' : '学校/机构'}
-              </label>
-              <input
-                value={c.institution || ''}
-                onChange={e => updateField('institution', e.target.value)}
-                className="input-field"
-                placeholder={c.type === 'conference' ? '中国人民大学清史研究所' : '北京师范大学历史系'}
-              />
-            </div>
-          </div>
-          {c.type === 'conference' && (
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">论文集名称</label>
-              <input value={c.bookTitle || ''} onChange={e => updateField('bookTitle', e.target.value)} className="input-field" placeholder="中国地理学会百年庆典学术论文摘要集" />
-            </div>
-          )}
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2000" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
-              <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="67" />
-            </div>
-          </div>
-          {c.type === 'thesis' && (
-            <p className="text-xs text-ink-400 dark:text-gray-500">注意：请在"学校/机构"中填写完整学院/系名称，如"东南大学历史系"</p>
-          )}
-        </>
-      )}
-
-      {/* Archive fields */}
-      {showArchiveFields && (
-        <div className="grid grid-cols-1 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">档案日期</label>
-            <input value={c.archiveDate || ''} onChange={e => updateField('archiveDate', e.target.value)} className="input-field" placeholder="1917年9月15日" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">卷宗号</label>
-            <input value={c.archiveNumber || ''} onChange={e => updateField('archiveNumber', e.target.value)} className="input-field" placeholder="北洋档案1011—5961" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">藏所</label>
-            <input value={c.archiveLocation || ''} onChange={e => updateField('archiveLocation', e.target.value)} className="input-field" placeholder="中国第二历史档案馆藏" />
-          </div>
-        </div>
-      )}
-
-      {/* Electronic fields */}
-      {showElectronicFields && (
-        <div className="grid grid-cols-1 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">URL</label>
-            <input value={c.url || ''} onChange={e => updateField('url', e.target.value)} className="input-field font-mono text-sm" placeholder="https://..." />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">访问日期</label>
-              <input value={c.accessDate || ''} onChange={e => updateField('accessDate', e.target.value)} className="input-field" placeholder="1998年10月4日" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Ancient text fields */}
-      {showAncientFields && (
-        <div className="grid grid-cols-1 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">版本信息</label>
-            <input value={c.ancientEdition || ''} onChange={e => updateField('ancientEdition', e.target.value)} className="input-field" placeholder="光绪三年苏州文学山房活字本" />
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">篇名/部类</label>
-              <input value={c.section || ''} onChange={e => updateField('section', e.target.value)} className="input-field" placeholder="首辅志" />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-ink-800 mb-1">a/b面</label>
-              <input value={c.pageAB || ''} onChange={e => updateField('pageAB', e.target.value)} className="input-field" placeholder="a 或 b" />
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Transferred fields */}
-      {showTransferredFields && (
-        <div className="grid grid-cols-1 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">原文献信息</label>
-            <input value={c.originalCitation || ''} onChange={e => updateField('originalCitation', e.target.value)} className="input-field" placeholder="原文献的完整信息" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">转引文献信息</label>
-            <input value={c.transferredFrom || ''} onChange={e => updateField('transferredFrom', e.target.value)} className="input-field" placeholder="转引来源的完整信息" />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
-            <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="56" />
-          </div>
-        </div>
-      )}
     </div>
   )
 }
