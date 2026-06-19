@@ -51,18 +51,10 @@ export default function ConvertPage() {
     setTimeout(() => setToast(''), 2000)
   }
 
-  // P3-1: 实时预览
-  const previewResult = useMemo(() => {
-    if (!citation.title.trim()) return ''
-    try {
-      return formatCitation(citation, targetFormat)
-    } catch {
-      return ''
-    }
-  }, [citation, targetFormat])
-
-  // P3-2: 输入校验
+  // P3-2: 输入校验（点转换后才显示）
+  const [showErrors, setShowErrors] = useState(false)
   const fieldErrors = useMemo(() => validateCitation(citation), [citation])
+  const displayErrors = showErrors ? fieldErrors : []
 
   // P3-3: 重置确认
   const [showResetConfirm, setShowResetConfirm] = useState(false)
@@ -72,9 +64,11 @@ export default function ConvertPage() {
     // P3-2: 转换前校验
     const errors = validateCitation(citation)
     if (errors.length > 0) {
+      setShowErrors(true)
       showToast(`有 ${errors.length} 个字段需要修正`)
       return
     }
+    setShowErrors(false)
     const status = canConvert()
     if (status === 'need_invite') {
       setShowInvite(true)
@@ -258,6 +252,7 @@ export default function ConvertPage() {
     setUrlInput('')
     setParsedItems([])
     setShowResetConfirm(false)
+    setShowErrors(false)
   }
 
   const modeButtons: { mode: InputMode; icon: typeof IconEdit; label: string }[] = [
@@ -401,7 +396,7 @@ export default function ConvertPage() {
           {mode === 'manual' && (
             <ManualForm
               citation={citation}
-              errors={fieldErrors}
+              errors={displayErrors}
               updateField={updateField}
               updateAuthor={updateAuthor}
               addAuthor={addAuthor}
@@ -443,7 +438,7 @@ export default function ConvertPage() {
             </button>
           </div>
 
-          {result ? (
+          {result && (
             <div className="flex-1 flex flex-col animate-slide-up">
               <label className="block text-sm font-medium text-ink-800 mb-2">转换结果</label>
               <div className="flex-1 p-4 bg-parchment-50 border-2 border-ink-200 font-body text-ink-950 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
@@ -464,15 +459,6 @@ export default function ConvertPage() {
                     onToast={showToast}
                   />
                 )}
-              </div>
-            </div>
-          ) : (
-            <div className="flex-1 flex flex-col">
-              <label className="block text-sm font-medium text-ink-400 dark:text-gray-500 mb-2">
-                实时预览（{FORMAT_LIST.find(f => f.id === targetFormat)?.name || targetFormat}）
-              </label>
-              <div className="flex-1 p-4 bg-parchment-50 dark:bg-gray-900 border-2 border-dashed border-ink-200 dark:border-gray-700 font-body text-ink-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
-                {previewResult || <span className="text-ink-300 dark:text-gray-600">填写标题后预览将在此显示</span>}
               </div>
             </div>
           )}

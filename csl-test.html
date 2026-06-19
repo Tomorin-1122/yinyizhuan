@@ -1,0 +1,2431 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSL解析器试验 - 引易转风格</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --ink-950: #2a2520;
+            --ink-900: #50473e;
+            --ink-800: #61564a;
+            --ink-700: #756856;
+            --ink-600: #8d7e66;
+            --ink-500: #9a8d72;
+            --ink-400: #ada28a;
+            --ink-300: #c7c0ad;
+            --ink-200: #ddd9cd;
+            --ink-100: #eeece6;
+            --ink-50: #f7f6f3;
+            --parchment-50: #fdfcf9;
+            --parchment-100: #f9f6ef;
+            --parchment-200: #f3ede0;
+            --parchment-300: #e8ddc8;
+            --parchment-400: #d9c8a6;
+            --parchment-500: #c9b288;
+            --vermilion-600: #d93526;
+            --vermilion-500: #ec5244;
+            --vermilion-400: #f67b70;
+        }
+        
+        body {
+            font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--parchment-100);
+            color: var(--ink-950);
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        .header {
+            background: var(--ink-950);
+            color: var(--parchment-50);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--parchment-50);
+            color: var(--ink-950);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: "Noto Serif SC", serif;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        
+        .logo-text {
+            font-family: "Noto Serif SC", serif;
+            font-weight: bold;
+            font-size: 20px;
+            letter-spacing: 2px;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 24px;
+            font-size: 14px;
+        }
+        
+        .nav-links a {
+            color: var(--parchment-300);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--parchment-50);
+        }
+        
+        /* Main Container */
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        /* Page Title */
+        .page-title {
+            margin-bottom: 24px;
+        }
+        
+        .page-title h1 {
+            font-family: "Noto Serif SC", serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--ink-950);
+            margin-bottom: 8px;
+        }
+        
+        .page-title p {
+            color: var(--ink-500);
+            font-size: 14px;
+        }
+        
+        /* Input Mode Tabs */
+        .input-mode-tabs {
+            display: flex;
+            border: 2px solid var(--ink-200);
+            margin-bottom: 0;
+            background: white;
+        }
+        
+        .mode-tab {
+            flex: 1;
+            padding: 12px 16px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-right: 2px solid var(--ink-200);
+            background: white;
+            color: var(--ink-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .mode-tab:last-child {
+            border-right: none;
+        }
+        
+        .mode-tab:hover {
+            background: var(--ink-50);
+            color: var(--ink-950);
+        }
+        
+        .mode-tab.active {
+            background: var(--ink-950);
+            color: var(--parchment-50);
+        }
+        
+        .mode-tab svg {
+            width: 16px;
+            height: 16px;
+        }
+        
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border: 2px solid var(--ink-200);
+            border-top: none;
+        }
+        
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Input Panel */
+        .input-panel {
+            padding: 24px;
+            background: white;
+            border-right: 2px solid var(--ink-200);
+        }
+        
+        @media (max-width: 1024px) {
+            .input-panel {
+                border-right: none;
+                border-bottom: 2px solid var(--ink-200);
+            }
+        }
+        
+        /* Output Panel */
+        .output-panel {
+            padding: 24px;
+            background: white;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--ink-800);
+            margin-bottom: 8px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        
+        @media (max-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 2px solid var(--ink-200);
+            border-radius: 0;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.2s;
+            background: white;
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--ink-400);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        select {
+            cursor: pointer;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: var(--ink-950);
+            color: var(--parchment-50);
+        }
+        
+        .btn-primary:hover {
+            background: var(--ink-800);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: var(--ink-600);
+            border: 2px solid var(--ink-200);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--ink-400);
+            color: var(--ink-950);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--ink-600);
+            padding: 8px 12px;
+        }
+        
+        .btn-ghost:hover {
+            color: var(--ink-950);
+            background: var(--ink-50);
+        }
+        
+        .btn-vermilion {
+            background: var(--vermilion-600);
+            color: white;
+        }
+        
+        .btn-vermilion:hover {
+            background: var(--vermilion-500);
+        }
+        
+        /* Format Selector */
+        .format-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            margin-bottom: 16px;
+        }
+        
+        .format-btn {
+            padding: 10px 12px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 2px solid var(--ink-200);
+            background: white;
+            color: var(--ink-600);
+            text-align: center;
+        }
+        
+        .format-btn:first-child {
+            margin-left: 0;
+        }
+        
+        .format-btn.active {
+            background: var(--ink-950);
+            color: var(--parchment-50);
+            border-color: var(--ink-950);
+            z-index: 1;
+            position: relative;
+        }
+        
+        .format-btn:not(:first-child) {
+            margin-left: -2px;
+        }
+        
+        /* Output Box */
+        .output-box {
+            flex: 1;
+            padding: 16px;
+            background: var(--parchment-50);
+            border: 2px solid var(--ink-200);
+            font-family: "Noto Serif SC", serif;
+            font-size: 15px;
+            line-height: 1.8;
+            color: var(--ink-950);
+            white-space: pre-wrap;
+            min-height: 120px;
+            margin-bottom: 16px;
+        }
+        
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .action-buttons .btn {
+            flex: 1;
+        }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--ink-950);
+            color: var(--parchment-50);
+            padding: 12px 24px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        /* History Panel */
+        .history-panel {
+            margin-top: 40px;
+            background: white;
+            border: 2px solid var(--ink-200);
+            padding: 24px;
+        }
+        
+        .history-panel h2 {
+            font-family: "Noto Serif SC", serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--ink-950);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .history-item {
+            padding: 12px;
+            border: 1px solid var(--ink-100);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .history-item:hover {
+            border-color: var(--ink-300);
+            background: var(--parchment-50);
+        }
+        
+        .history-item-title {
+            font-weight: 500;
+            color: var(--ink-950);
+            margin-bottom: 4px;
+        }
+        
+        .history-item-meta {
+            font-size: 12px;
+            color: var(--ink-500);
+            display: flex;
+            gap: 16px;
+        }
+        
+        /* Author Row */
+        .author-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .author-row input:first-child {
+            flex: 1;
+        }
+        
+        .author-row input:last-child {
+            width: 80px;
+        }
+        
+        .author-row button {
+            padding: 10px;
+            background: transparent;
+            border: 2px solid var(--ink-200);
+            cursor: pointer;
+            color: var(--vermilion-600);
+            transition: all 0.2s;
+        }
+        
+        .author-row button:hover {
+            border-color: var(--vermilion-400);
+            background: rgba(233, 53, 38, 0.05);
+        }
+        
+        /* Add Button */
+        .add-btn {
+            font-size: 12px;
+            padding: 6px 12px;
+            background: transparent;
+            border: 1px dashed var(--ink-300);
+            cursor: pointer;
+            color: var(--ink-500);
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .add-btn:hover {
+            border-color: var(--ink-500);
+            color: var(--ink-800);
+        }
+        
+        /* Sample Button */
+        .sample-btn {
+            font-size: 12px;
+            padding: 4px 8px;
+            background: var(--ink-100);
+            border: none;
+            cursor: pointer;
+            color: var(--ink-600);
+            margin-left: 8px;
+            transition: all 0.2s;
+        }
+        
+        .sample-btn:hover {
+            background: var(--ink-200);
+            color: var(--ink-950);
+        }
+        
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--ink-400);
+        }
+        
+        .empty-state svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 12px;
+            opacity: 0.5;
+        }
+        
+        /* File Upload */
+        .file-upload {
+            border: 2px dashed var(--ink-300);
+            padding: 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--parchment-50);
+        }
+        
+        .file-upload:hover {
+            border-color: var(--ink-500);
+            background: var(--parchment-100);
+        }
+        
+        .file-upload svg {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 12px;
+            color: var(--ink-400);
+        }
+        
+        .file-upload-text {
+            color: var(--ink-600);
+            font-size: 14px;
+        }
+        
+        .file-upload-hint {
+            color: var(--ink-400);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+        
+        /* Parsed Items */
+        .parsed-items {
+            margin-top: 16px;
+        }
+        
+        .parsed-item {
+            padding: 12px;
+            border: 1px solid var(--ink-200);
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .parsed-item:hover {
+            border-color: var(--ink-400);
+            background: var(--ink-50);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--ink-950);
+            color: var(--parchment-300);
+            padding: 24px;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 40px;
+        }
+        
+        .footer a {
+            color: var(--parchment-400);
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            color: var(--parchment-50);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">引</div>
+            <span class="logo-text">引易转 · CSL试验</span>
+        </div>
+        <nav class="nav-links">
+            <a href="#">首页</a>
+            <a href="#">格式转换</a>
+            <a href="#">历史记录</a>
+            <a href="#">关于</a>
+        </nav>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Page Title -->
+        <div class="page-title">
+            <h1>格式转换</h1>
+            <p>输入引用信息，选择目标格式，即刻生成规范引用</p>
+        </div>
+        
+        <!-- Input Mode Tabs -->
+        <div class="input-mode-tabs">
+            <div class="mode-tab active" data-mode="manual">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                </svg>
+                手动填写
+            </div>
+            <div class="mode-tab" data-mode="paste">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+                    <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+                </svg>
+                粘贴文本
+            </div>
+            <div class="mode-tab" data-mode="url">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+                URL导入
+            </div>
+            <div class="mode-tab" data-mode="file">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                文件上传
+            </div>
+        </div>
+        
+        <!-- Content Grid -->
+        <div class="content-grid">
+            <!-- Input Panel -->
+            <div class="input-panel">
+                <!-- Manual Mode -->
+                <div id="manual-mode">
+                    <div class="form-group">
+                        <label>
+                            文献类型
+                            <button class="sample-btn" onclick="fillSample()">填入示例</button>
+                        </label>
+                        <select id="citation-type">
+                            <option value="journal">期刊文章</option>
+                            <option value="book">著作</option>
+                            <option value="chapter">析出文献（论文集）</option>
+                            <option value="thesis">学位论文</option>
+                            <option value="newspaper">报纸</option>
+                            <option value="conference">会议论文</option>
+                            <option value="archive">档案</option>
+                            <option value="electronic">电子文献</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>语言</label>
+                        <select id="citation-language">
+                            <option value="zh">中文</option>
+                            <option value="en">英文</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>责任者（作者）</label>
+                        <div id="authors-container">
+                            <div class="author-row">
+                                <input type="text" class="author-name" placeholder="姓名">
+                                <input type="text" class="author-role" placeholder="著" value="著">
+                                <button onclick="removeAuthor(this)" title="删除">×</button>
+                            </div>
+                        </div>
+                        <button class="add-btn" onclick="addAuthor()">+ 添加作者</button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>文献题名</label>
+                        <input type="text" id="citation-title" placeholder="如：中国古代史研究">
+                    </div>
+                    
+                    <!-- Journal Fields -->
+                    <div id="journal-fields">
+                        <div class="form-group">
+                            <label>期刊名称</label>
+                            <input type="text" id="journal-name" placeholder="《中国社会科学》">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>年份</label>
+                                <input type="text" id="publish-year" placeholder="2023">
+                            </div>
+                            <div class="form-group">
+                                <label>期号</label>
+                                <input type="text" id="issue" placeholder="3">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>卷号</label>
+                                <input type="text" id="volume" placeholder="10">
+                            </div>
+                            <div class="form-group">
+                                <label>页码</label>
+                                <input type="text" id="pages" placeholder="1-15">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Book Fields -->
+                    <div id="book-fields" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>出版地点</label>
+                                <input type="text" id="publisher-place" placeholder="北京">
+                            </div>
+                            <div class="form-group">
+                                <label>出版社</label>
+                                <input type="text" id="publisher" placeholder="人民出版社">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>出版年份</label>
+                                <input type="text" id="book-year" placeholder="2020">
+                            </div>
+                            <div class="form-group">
+                                <label>页码</label>
+                                <input type="text" id="book-pages" placeholder="43">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Chapter Fields -->
+                    <div id="chapter-fields" style="display:none;">
+                        <div class="form-group">
+                            <label>文集题名</label>
+                            <input type="text" id="book-title" placeholder="文集名称">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>出版地点</label>
+                                <input type="text" id="chapter-publisher-place" placeholder="北京">
+                            </div>
+                            <div class="form-group">
+                                <label>出版社</label>
+                                <input type="text" id="chapter-publisher" placeholder="三联书店">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>出版年份</label>
+                                <input type="text" id="chapter-year" placeholder="2001">
+                            </div>
+                            <div class="form-group">
+                                <label>页码</label>
+                                <input type="text" id="chapter-pages" placeholder="45-67">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Thesis Fields -->
+                    <div id="thesis-fields" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>学位类型</label>
+                                <select id="thesis-type">
+                                    <option value="博士学位论文">博士学位论文</option>
+                                    <option value="硕士学位论文">硕士学位论文</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>授予单位</label>
+                                <input type="text" id="institution" placeholder="北京大学">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>年份</label>
+                            <input type="text" id="thesis-year" placeholder="2015">
+                        </div>
+                    </div>
+                    
+                    <!-- Newspaper Fields -->
+                    <div id="newspaper-fields" style="display:none;">
+                        <div class="form-group">
+                            <label>报纸名称</label>
+                            <input type="text" id="newspaper-name" placeholder="《人民日报》">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>出版日期</label>
+                                <input type="text" id="newspaper-date" placeholder="2023年6月15日">
+                            </div>
+                            <div class="form-group">
+                                <label>版次</label>
+                                <input type="text" id="newspaper-page" placeholder="5">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Conference Fields -->
+                    <div id="conference-fields" style="display:none;">
+                        <div class="form-group">
+                            <label>会议名称</label>
+                            <input type="text" id="conference-name" placeholder="第X届全国XX学术研讨会">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>会议地点</label>
+                                <input type="text" id="conference-place" placeholder="北京">
+                            </div>
+                            <div class="form-group">
+                                <label>年份</label>
+                                <input type="text" id="conference-year" placeholder="2023">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Archive Fields -->
+                    <div id="archive-fields" style="display:none;">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>档案馆名称</label>
+                                <input type="text" id="archive-name" placeholder="中国第一历史档案馆">
+                            </div>
+                            <div class="form-group">
+                                <label>档案编号</label>
+                                <input type="text" id="archive-number" placeholder="ZXX-1234">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>年份</label>
+                            <input type="text" id="archive-year" placeholder="2023">
+                        </div>
+                    </div>
+                    
+                    <!-- Electronic Fields -->
+                    <div id="electronic-fields" style="display:none;">
+                        <div class="form-group">
+                            <label>网址 URL</label>
+                            <input type="text" id="electronic-url" placeholder="https://example.com/article">
+                        </div>
+                        <div class="form-group">
+                            <label>访问日期</label>
+                            <input type="text" id="electronic-access-date" placeholder="2023年6月15日">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Paste Mode -->
+                <div id="paste-mode" style="display:none;">
+                    <div class="form-group">
+                        <label>粘贴原始引用文本</label>
+                        <textarea id="paste-text" placeholder="支持格式：&#10;• 中文：赵景深：《文坛忆旧》，北新书局，1948年，第43页。&#10;• GB/T 7714：[1]作者.题名[J].期刊,2020,(3):12-20.&#10;• 豆瓣图书：多行格式，含"出版社:"、"出版年:""></textarea>
+                    </div>
+                    <button class="btn btn-primary" onclick="parseText()" style="width:100%;">解析并填充表单</button>
+                </div>
+                
+                <!-- URL Mode -->
+                <div id="url-mode" style="display:none;">
+                    <div class="form-group">
+                        <label>输入文献 URL 或 DOI / ISBN</label>
+                        <input type="text" id="url-input" placeholder="10.1000/xyz123 或 9787108034458 或 https://doi.org/...">
+                    </div>
+                    <div style="background:#fff3cd; border:1px solid #ffc107; padding:12px; margin-bottom:16px; font-size:12px; color:#856404;">
+                        <p><strong>💡 支持自动识别并填充：</strong></p>
+                        <p>• <strong>DOI</strong>（如 10.1000/xyz）→ 自动获取期刊/会议论文信息</p>
+                        <p>• <strong>ISBN</strong>（如 9787108034458）→ 自动获取图书信息</p>
+                        <p>• <strong>URL</strong> → 保存链接供手动补充</p>
+                    </div>
+                    <div style="display:flex; gap:8px;">
+                        <button class="btn btn-primary" onclick="fetchMetadata()" style="flex:1;">自动获取</button>
+                        <button class="btn btn-secondary" onclick="importUrl()">仅导入URL</button>
+                    </div>
+                </div>
+                
+                <!-- File Mode -->
+                <div id="file-mode" style="display:none;">
+                    <div class="file-upload" onclick="document.getElementById('file-input').click()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                        <div class="file-upload-text">点击或拖拽文件到此处</div>
+                        <div class="file-upload-hint">支持 .bib / .ris / .txt 格式</div>
+                        <input type="file" id="file-input" accept=".bib,.ris,.txt" style="display:none;" onchange="handleFileUpload(event)">
+                    </div>
+                    <div id="parsed-items" class="parsed-items"></div>
+                </div>
+            </div>
+            
+            <!-- Output Panel -->
+            <div class="output-panel">
+                <div class="form-group">
+                    <label>目标格式</label>
+                    <div class="format-selector">
+                        <div class="format-btn" data-format="lsyj">《历史研究》格式</div>
+                        <div class="format-btn active" data-format="cssn">《中国社会科学》格式</div>
+                        <div class="format-btn" data-format="gbt7714">GB/T 7714</div>
+                    </div>
+                </div>
+                
+                <div style="display:flex; gap:8px; margin-bottom:16px;">
+                    <button class="btn btn-primary" onclick="convertCitation()" style="flex:1;">转换</button>
+                    <button class="btn btn-secondary" onclick="resetForm()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                        重置
+                    </button>
+                </div>
+                
+                <label style="font-size:14px; font-weight:500; color:var(--ink-800); margin-bottom:8px;">转换结果</label>
+                <div class="output-box" id="output">请填写文献信息后点击转换</div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-ghost" onclick="copyOutput()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        复制
+                    </button>
+                    <button class="btn btn-ghost" onclick="downloadOutput()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        下载
+                    </button>
+                    <button class="btn btn-ghost" onclick="addToHistory()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        保存到历史
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- History Panel -->
+        <div class="history-panel">
+            <h2>
+                转换历史
+                <button class="btn btn-ghost" onclick="clearHistory()" style="font-size:12px;">清空历史</button>
+            </h2>
+            <div id="history-list">
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <p>暂无转换历史</p>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2026 引易转团队 版权所有 | CSL解析器试验页面</p>
+        <p style="margin-top:8px;">基于《中国社会科学》CSL文件实现，仅供测试使用</p>
+    </footer>
+    
+    <!-- Toast -->
+    <div id="toast" class="toast" style="display:none;"></div>
+    
+    <script>
+        // CSL规则解析器
+        const CSL_RULES = {
+            journal: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.containerTitle) {
+                        result += `，${data.containerTitle}`;
+                        
+                        if (data.volume) {
+                            result += `第${data.volume}卷`;
+                        }
+                        
+                        if (data.issue) {
+                            result += `第${data.issue}期`;
+                        }
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}年`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `，第${data.pages}页`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.containerTitle) {
+                        result += `, ${data.containerTitle}`;
+                        
+                        if (data.volume) {
+                            result += ` Vol. ${data.volume}`;
+                        }
+                        
+                        if (data.issue) {
+                            result += `, no. ${data.issue}`;
+                        }
+                    }
+                    
+                    if (data.year) {
+                        result += ` (${data.year})`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `: ${data.pages}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            book: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    const pubInfo = [];
+                    if (data.publisherPlace) pubInfo.push(data.publisherPlace);
+                    if (data.publisher) pubInfo.push(data.publisher);
+                    if (data.year) pubInfo.push(`${data.year}年`);
+                    
+                    if (pubInfo.length > 0) {
+                        result += `，${pubInfo.join('：')}`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += `, ${data.title}`;
+                    
+                    const pubInfo = [];
+                    if (data.publisherPlace) pubInfo.push(data.publisherPlace);
+                    if (data.publisher) pubInfo.push(data.publisher);
+                    if (data.year) pubInfo.push(data.year);
+                    
+                    if (pubInfo.length > 0) {
+                        result += `. ${pubInfo.join(': ')}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            chapter: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.containerTitle) {
+                        result += `，载${data.containerTitle}`;
+                    }
+                    
+                    const pubInfo = [];
+                    if (data.publisherPlace) pubInfo.push(data.publisherPlace);
+                    if (data.publisher) pubInfo.push(data.publisher);
+                    if (data.year) pubInfo.push(`${data.year}年`);
+                    
+                    if (pubInfo.length > 0) {
+                        result += `，${pubInfo.join('：')}`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `，第${data.pages}页`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.containerTitle) {
+                        result += `, in ${data.containerTitle}`;
+                    }
+                    
+                    const pubInfo = [];
+                    if (data.publisherPlace) pubInfo.push(data.publisherPlace);
+                    if (data.publisher) pubInfo.push(data.publisher);
+                    if (data.year) pubInfo.push(data.year);
+                    
+                    if (pubInfo.length > 0) {
+                        result += ` (${pubInfo.join(': ')})`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `, ${data.pages}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            thesis: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    result += '，';
+                    result += data.thesisType || '博士学位论文';
+                    
+                    if (data.institution) {
+                        result += `，${data.institution}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}年`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    result += ', Ph.D. diss.';
+                    
+                    if (data.institution) {
+                        result += `, ${data.institution}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            newspaper: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.containerTitle) {
+                        result += `，${data.containerTitle}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `，第${data.pages}版`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.containerTitle) {
+                        result += `, ${data.containerTitle}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    
+                    if (data.pages) {
+                        result += `, p. ${data.pages}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            conference: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.containerTitle) {
+                        result += `，${data.containerTitle}论文`;
+                    }
+                    
+                    if (data.publisherPlace) {
+                        result += `，${data.publisherPlace}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}年`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.containerTitle) {
+                        result += `, in ${data.containerTitle}`;
+                    }
+                    
+                    if (data.publisherPlace) {
+                        result += ` (${data.publisherPlace})`;
+                    }
+                    
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            archive: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.containerTitle) {
+                        result += `，${data.containerTitle}`;
+                    }
+                    
+                    if (data.publisherPlace) {
+                        result += `，${data.publisherPlace}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}年`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.containerTitle) {
+                        result += `, ${data.containerTitle}`;
+                    }
+                    
+                    if (data.publisherPlace) {
+                        result += ` (${data.publisherPlace})`;
+                    }
+                    
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            },
+            electronic: {
+                zh: (data) => {
+                    let result = '';
+                    result += data.author || '佚名';
+                    result += '：';
+                    result += `《${data.title}》`;
+                    
+                    if (data.url) {
+                        result += `，${data.url}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `，${data.year}年`;
+                    }
+                    
+                    result += '。';
+                    return result;
+                },
+                en: (data) => {
+                    let result = '';
+                    result += data.author || 'Anonymous';
+                    result += ', "';
+                    result += data.title;
+                    result += '"';
+                    
+                    if (data.url) {
+                        result += `, ${data.url}`;
+                    }
+                    
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    
+                    result += '.';
+                    return result;
+                }
+            }
+        };
+        
+        // 状态变量
+        let currentMode = 'manual';
+        let currentFormat = 'cssn';
+        let history = JSON.parse(localStorage.getItem('csl-test-history') || '[]');
+        
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 模式切换
+            document.querySelectorAll('.mode-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const mode = this.dataset.mode;
+                    switchMode(mode);
+                });
+            });
+            
+            // 格式切换
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const format = this.dataset.format;
+                    switchFormat(format);
+                });
+            });
+            
+            // 文献类型切换
+            document.getElementById('citation-type').addEventListener('change', function() {
+                const type = this.value;
+                toggleFields(type);
+            });
+            
+            // 加载历史记录
+            renderHistory();
+            
+            // 填入示例
+            fillSample();
+        });
+        
+        // 切换模式
+        function switchMode(mode) {
+            currentMode = mode;
+            
+            // 更新标签样式
+            document.querySelectorAll('.mode-tab').forEach(tab => {
+                tab.classList.toggle('active', tab.dataset.mode === mode);
+            });
+            
+            // 显示对应内容
+            document.getElementById('manual-mode').style.display = mode === 'manual' ? 'block' : 'none';
+            document.getElementById('paste-mode').style.display = mode === 'paste' ? 'block' : 'none';
+            document.getElementById('url-mode').style.display = mode === 'url' ? 'block' : 'none';
+            document.getElementById('file-mode').style.display = mode === 'file' ? 'block' : 'none';
+        }
+        
+        // 切换格式
+        function switchFormat(format) {
+            currentFormat = format;
+            
+            // 更新按钮样式
+            document.querySelectorAll('.format-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.format === format);
+            });
+        }
+        
+        // 切换字段显示
+        function toggleFields(type) {
+            const fields = ['journal-fields', 'book-fields', 'chapter-fields', 'thesis-fields', 'newspaper-fields', 'conference-fields', 'archive-fields', 'electronic-fields'];
+            fields.forEach(field => {
+                document.getElementById(field).style.display = 'none';
+            });
+            
+            switch(type) {
+                case 'journal':
+                    document.getElementById('journal-fields').style.display = 'block';
+                    break;
+                case 'book':
+                    document.getElementById('book-fields').style.display = 'block';
+                    break;
+                case 'chapter':
+                    document.getElementById('chapter-fields').style.display = 'block';
+                    break;
+                case 'thesis':
+                    document.getElementById('thesis-fields').style.display = 'block';
+                    break;
+                case 'newspaper':
+                    document.getElementById('newspaper-fields').style.display = 'block';
+                    break;
+                case 'conference':
+                    document.getElementById('conference-fields').style.display = 'block';
+                    break;
+                case 'archive':
+                    document.getElementById('archive-fields').style.display = 'block';
+                    break;
+                case 'electronic':
+                    document.getElementById('electronic-fields').style.display = 'block';
+                    break;
+            }
+        }
+        
+        // 添加作者
+        function addAuthor() {
+            const container = document.getElementById('authors-container');
+            const row = document.createElement('div');
+            row.className = 'author-row';
+            row.innerHTML = `
+                <input type="text" class="author-name" placeholder="姓名">
+                <input type="text" class="author-role" placeholder="著" value="著">
+                <button onclick="removeAuthor(this)" title="删除">×</button>
+            `;
+            container.appendChild(row);
+        }
+        
+        // 删除作者
+        function removeAuthor(btn) {
+            const container = document.getElementById('authors-container');
+            if (container.children.length > 1) {
+                btn.parentElement.remove();
+            }
+        }
+        
+        // 获取作者列表
+        function getAuthors() {
+            const authors = [];
+            document.querySelectorAll('.author-row').forEach(row => {
+                const name = row.querySelector('.author-name').value.trim();
+                const role = row.querySelector('.author-role').value.trim();
+                if (name) {
+                    authors.push({ name, role: role || '著' });
+                }
+            });
+            return authors;
+        }
+        
+        // 获取输入数据
+        function getInputData() {
+            const type = document.getElementById('citation-type').value;
+            const language = document.getElementById('citation-language').value;
+            const authors = getAuthors();
+            const title = document.getElementById('citation-title').value.trim();
+            
+            let data = {
+                type,
+                language,
+                author: authors.map(a => `${a.name}${a.role}`).join('、'),
+                title
+            };
+            
+            switch(type) {
+                case 'journal':
+                    data.containerTitle = document.getElementById('journal-name').value.trim();
+                    data.year = document.getElementById('publish-year').value.trim();
+                    data.issue = document.getElementById('issue').value.trim();
+                    data.volume = document.getElementById('volume').value.trim();
+                    data.pages = document.getElementById('pages').value.trim();
+                    break;
+                case 'book':
+                    data.publisherPlace = document.getElementById('publisher-place').value.trim();
+                    data.publisher = document.getElementById('publisher').value.trim();
+                    data.year = document.getElementById('book-year').value.trim();
+                    data.pages = document.getElementById('book-pages').value.trim();
+                    break;
+                case 'chapter':
+                    data.containerTitle = document.getElementById('book-title').value.trim();
+                    data.publisherPlace = document.getElementById('chapter-publisher-place').value.trim();
+                    data.publisher = document.getElementById('chapter-publisher').value.trim();
+                    data.year = document.getElementById('chapter-year').value.trim();
+                    data.pages = document.getElementById('chapter-pages').value.trim();
+                    break;
+                case 'thesis':
+                    data.thesisType = document.getElementById('thesis-type').value;
+                    data.institution = document.getElementById('institution').value.trim();
+                    data.year = document.getElementById('thesis-year').value.trim();
+                    break;
+                case 'newspaper':
+                    data.containerTitle = document.getElementById('newspaper-name').value.trim();
+                    data.year = document.getElementById('newspaper-date').value.trim();
+                    data.pages = document.getElementById('newspaper-page').value.trim();
+                    break;
+                case 'conference':
+                    data.containerTitle = document.getElementById('conference-name').value.trim();
+                    data.publisherPlace = document.getElementById('conference-place').value.trim();
+                    data.year = document.getElementById('conference-year').value.trim();
+                    break;
+                case 'archive':
+                    data.containerTitle = document.getElementById('archive-name').value.trim();
+                    data.archiveNumber = document.getElementById('archive-number').value.trim();
+                    data.year = document.getElementById('archive-year').value.trim();
+                    break;
+                case 'electronic':
+                    data.url = document.getElementById('electronic-url').value.trim();
+                    data.accessDate = document.getElementById('electronic-access-date').value.trim();
+                    break;
+            }
+            
+            return data;
+        }
+        
+        // 格式化引用
+        function formatCitation(data, format) {
+            if (format === 'cssn') {
+                const typeRules = CSL_RULES[data.type];
+                if (!typeRules) return '不支持的文献类型';
+                
+                const formatFn = typeRules[data.language];
+                if (!formatFn) return '不支持的语言';
+                
+                return formatFn(data);
+            } else if (format === 'lsyj') {
+                // 《历史研究》格式（简化版）
+                let result = '';
+                result += data.author || '佚名';
+                result += '：';
+                result += `《${data.title}》`;
+                
+                if (data.type === 'journal') {
+                    if (data.containerTitle) {
+                        result += `，${data.containerTitle}`;
+                        if (data.issue) {
+                            result += `${data.year}年第${data.issue}期`;
+                        }
+                    }
+                } else {
+                    if (data.publisherPlace) result += `，${data.publisherPlace}`;
+                    if (data.publisher) result += `：${data.publisher}`;
+                    if (data.year) result += `，${data.year}年`;
+                }
+                
+                if (data.pages) {
+                    result += `，第${data.pages}页`;
+                }
+                
+                result += '。';
+                return result;
+            } else if (format === 'gbt7714') {
+                // GB/T 7714格式（简化版）
+                let result = '';
+                result += data.author || '佚名';
+                result += '. ';
+                result += data.title;
+                
+                if (data.type === 'journal') {
+                    result += '[J]';
+                    if (data.containerTitle) {
+                        result += `. ${data.containerTitle}`;
+                    }
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                    if (data.volume) {
+                        result += `, ${data.volume}`;
+                    }
+                    if (data.issue) {
+                        result += `(${data.issue})`;
+                    }
+                    if (data.pages) {
+                        result += `: ${data.pages}`;
+                    }
+                } else {
+                    result += '[M]';
+                    if (data.publisherPlace) {
+                        result += `. ${data.publisherPlace}`;
+                    }
+                    if (data.publisher) {
+                        result += `: ${data.publisher}`;
+                    }
+                    if (data.year) {
+                        result += `, ${data.year}`;
+                    }
+                }
+                
+                result += '.';
+                return result;
+            }
+            
+            return '未知格式';
+        }
+        
+        // 转换引用
+        function convertCitation() {
+            const data = getInputData();
+            
+            if (!data.title) {
+                showToast('请填写题名');
+                return;
+            }
+            
+            if (!data.author) {
+                showToast('请填写作者');
+                return;
+            }
+            
+            const result = formatCitation(data, currentFormat);
+            document.getElementById('output').textContent = result;
+            showToast('转换成功');
+        }
+        
+        // 复制结果
+        function copyOutput() {
+            const output = document.getElementById('output');
+            const text = output.textContent;
+            
+            if (text === '请填写文献信息后点击转换') {
+                showToast('请先生成格式化结果');
+                return;
+            }
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('已复制到剪贴板');
+            }).catch(err => {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('已复制到剪贴板');
+            });
+        }
+        
+        // 下载结果
+        function downloadOutput() {
+            const output = document.getElementById('output');
+            const text = output.textContent;
+            
+            if (text === '请填写文献信息后点击转换') {
+                showToast('请先生成格式化结果');
+                return;
+            }
+            
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `citation_${Date.now()}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('已下载');
+        }
+        
+        // 添加到历史记录
+        function addToHistory() {
+            const output = document.getElementById('output');
+            const text = output.textContent;
+            
+            if (text === '请填写文献信息后点击转换') {
+                showToast('请先生成格式化结果');
+                return;
+            }
+            
+            const data = getInputData();
+            const record = {
+                id: Date.now().toString(36) + Math.random().toString(36).slice(2, 7),
+                title: data.title,
+                author: data.author,
+                type: data.type,
+                format: currentFormat,
+                result: text,
+                timestamp: Date.now()
+            };
+            
+            history.unshift(record);
+            if (history.length > 50) {
+                history = history.slice(0, 50);
+            }
+            
+            localStorage.setItem('csl-test-history', JSON.stringify(history));
+            renderHistory();
+            showToast('已保存到历史记录');
+        }
+        
+        // 渲染历史记录
+        function renderHistory() {
+            const container = document.getElementById('history-list');
+            
+            if (history.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <p>暂无转换历史</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = history.map(item => `
+                <div class="history-item" onclick="loadFromHistory('${item.id}')">
+                    <div class="history-item-title">${item.title || '未命名'}</div>
+                    <div class="history-item-meta">
+                        <span>${item.author || '佚名'}</span>
+                        <span>${getTypeName(item.type)}</span>
+                        <span>${getFormatName(item.format)}</span>
+                        <span>${new Date(item.timestamp).toLocaleString()}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        // 从历史记录加载
+        function loadFromHistory(id) {
+            const item = history.find(h => h.id === id);
+            if (item) {
+                document.getElementById('output').textContent = item.result;
+                showToast('已加载历史记录');
+            }
+        }
+        
+        // 清空历史记录
+        function clearHistory() {
+            if (confirm('确定要清空所有历史记录吗？')) {
+                history = [];
+                localStorage.removeItem('csl-test-history');
+                renderHistory();
+                showToast('历史记录已清空');
+            }
+        }
+        
+        // 填入示例
+        function fillSample() {
+            const type = document.getElementById('citation-type').value;
+            
+            const examples = {
+                journal: {
+                    authors: [{ name: '王笛', role: '著' }],
+                    title: '茶馆：成都的公共生活和微观世界',
+                    journalName: '《中国社会科学》',
+                    year: '2010',
+                    issue: '3',
+                    volume: '5',
+                    pages: '118-130'
+                },
+                book: {
+                    authors: [{ name: '费孝通', role: '著' }],
+                    title: '乡土中国',
+                    publisherPlace: '北京',
+                    publisher: '人民出版社',
+                    year: '2008'
+                },
+                chapter: {
+                    authors: [{ name: '陈寅恪', role: '著' }],
+                    title: '隋唐制度渊源略论稿',
+                    bookTitle: '《陈寅恪集》',
+                    publisherPlace: '北京',
+                    publisher: '三联书店',
+                    year: '2001',
+                    pages: '45-67'
+                },
+                thesis: {
+                    authors: [{ name: '李泽厚', role: '著' }],
+                    title: '中国古代思想史论',
+                    institution: '北京大学',
+                    year: '2015'
+                },
+                newspaper: {
+                    authors: [{ name: '张明', role: '著' }],
+                    title: '新时代的历史研究',
+                    newspaperName: '《人民日报》',
+                    year: '2023年6月15日',
+                    pages: '5'
+                },
+                conference: {
+                    authors: [{ name: '赵元任', role: '著' }],
+                    title: '汉语方言的声调研究',
+                    conferenceName: '第X届全国语言学研讨会',
+                    conferencePlace: '北京',
+                    conferenceYear: '2022'
+                },
+                archive: {
+                    authors: [{ name: '佚名', role: '著' }],
+                    title: '清代内阁奏折',
+                    archiveName: '中国第一历史档案馆',
+                    archiveNumber: 'ZXX-1234',
+                    archiveYear: '1750'
+                },
+                electronic: {
+                    authors: [{ name: '张三', role: '著' }],
+                    title: '互联网时代的历史研究方法',
+                    url: 'https://example.com/article',
+                    accessDate: '2023年6月15日'
+                }
+            };
+            
+            const example = examples[type];
+            if (example) {
+                // 清空作者
+                const container = document.getElementById('authors-container');
+                container.innerHTML = '';
+                
+                // 添加作者
+                example.authors.forEach(author => {
+                    const row = document.createElement('div');
+                    row.className = 'author-row';
+                    row.innerHTML = `
+                        <input type="text" class="author-name" placeholder="姓名" value="${author.name}">
+                        <input type="text" class="author-role" placeholder="著" value="${author.role}">
+                        <button onclick="removeAuthor(this)" title="删除">×</button>
+                    `;
+                    container.appendChild(row);
+                });
+                
+                // 填充其他字段
+                document.getElementById('citation-title').value = example.title;
+                
+                switch(type) {
+                    case 'journal':
+                        document.getElementById('journal-name').value = example.journalName;
+                        document.getElementById('publish-year').value = example.year;
+                        document.getElementById('issue').value = example.issue;
+                        document.getElementById('volume').value = example.volume;
+                        document.getElementById('pages').value = example.pages;
+                        break;
+                    case 'book':
+                        document.getElementById('publisher-place').value = example.publisherPlace;
+                        document.getElementById('publisher').value = example.publisher;
+                        document.getElementById('book-year').value = example.year;
+                        break;
+                    case 'chapter':
+                        document.getElementById('book-title').value = example.bookTitle;
+                        document.getElementById('chapter-publisher-place').value = example.publisherPlace;
+                        document.getElementById('chapter-publisher').value = example.publisher;
+                        document.getElementById('chapter-year').value = example.year;
+                        document.getElementById('chapter-pages').value = example.pages;
+                        break;
+                    case 'thesis':
+                        document.getElementById('institution').value = example.institution;
+                        document.getElementById('thesis-year').value = example.year;
+                        break;
+                    case 'newspaper':
+                        document.getElementById('newspaper-name').value = example.newspaperName;
+                        document.getElementById('newspaper-date').value = example.year;
+                        document.getElementById('newspaper-page').value = example.pages;
+                        break;
+                    case 'conference':
+                        document.getElementById('conference-name').value = example.conferenceName;
+                        document.getElementById('conference-place').value = example.conferencePlace;
+                        document.getElementById('conference-year').value = example.conferenceYear;
+                        break;
+                    case 'archive':
+                        document.getElementById('archive-name').value = example.archiveName;
+                        document.getElementById('archive-number').value = example.archiveNumber;
+                        document.getElementById('archive-year').value = example.archiveYear;
+                        break;
+                    case 'electronic':
+                        document.getElementById('electronic-url').value = example.url;
+                        document.getElementById('electronic-access-date').value = example.accessDate;
+                        break;
+                }
+            }
+        }
+        
+        // 重置表单
+        function resetForm() {
+            document.getElementById('citation-type').value = 'journal';
+            document.getElementById('citation-language').value = 'zh';
+            document.getElementById('citation-title').value = '';
+            
+            // 清空作者
+            const container = document.getElementById('authors-container');
+            container.innerHTML = `
+                <div class="author-row">
+                    <input type="text" class="author-name" placeholder="姓名">
+                    <input type="text" class="author-role" placeholder="著" value="著">
+                    <button onclick="removeAuthor(this)" title="删除">×</button>
+                </div>
+            `;
+            
+            // 清空所有字段
+            const inputs = document.querySelectorAll('input[type="text"]');
+            inputs.forEach(input => {
+                if (!input.classList.contains('author-role')) {
+                    input.value = '';
+                }
+            });
+            
+            // 重置输出
+            document.getElementById('output').textContent = '请填写文献信息后点击转换';
+            
+            // 切换到手动模式
+            switchMode('manual');
+            toggleFields('journal');
+        }
+        
+        // 解析文本
+        function parseText() {
+            const text = document.getElementById('paste-text').value.trim();
+            if (!text) {
+                showToast('请粘贴文本');
+                return;
+            }
+            
+            // 尝试多种解析方式
+            let data = null;
+            
+            // 1. 尝试解析豆瓣图书格式
+            data = parseDoubanBook(text);
+            if (data) {
+                applyParsedData(data);
+                showToast('已解析豆瓣图书信息，请核对后转换');
+                return;
+            }
+            
+            // 2. 尝试解析GB/T 7714格式
+            data = parseGBT7714(text);
+            if (data) {
+                applyParsedData(data);
+                showToast('已解析GB/T 7714格式，请核对后转换');
+                return;
+            }
+            
+            // 3. 尝试解析中文格式
+            data = parseChineseCitation(text);
+            if (data) {
+                applyParsedData(data);
+                showToast('已解析中文引用格式，请核对后转换');
+                return;
+            }
+            
+            // 4. 尝试解析英文APA格式
+            data = parseEnglishAPA(text);
+            if (data) {
+                applyParsedData(data);
+                showToast('已解析英文APA格式，请核对后转换');
+                return;
+            }
+            
+            // 5. 尝试简单解析
+            data = parseSimple(text);
+            if (data) {
+                applyParsedData(data);
+                showToast('已解析基本信息，请手动补充完整');
+                return;
+            }
+            
+            showToast('无法解析文本，请手动填写');
+        }
+        
+        // 豆瓣图书格式解析
+        function parseDoubanBook(text) {
+            const hasPublisher = /出版社[:：]/.test(text);
+            const hasYear = /出版年[:：]/.test(text);
+            const hasISBN = /ISBN[:：]/.test(text);
+            if (!hasPublisher && !(hasYear && hasISBN)) return null;
+            
+            const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+            const result = { type: 'book' };
+            
+            // 提取结构化字段
+            const fields = {};
+            const structuredIdx = new Set();
+            lines.forEach((line, i) => {
+                const m = /^(.{1,8})[:：](.+)$/.exec(line);
+                if (m) {
+                    fields[m[1].trim()] = m[2].trim();
+                    structuredIdx.add(i);
+                }
+            });
+            
+            // 提取作者
+            const authorField = fields['作者'] || fields['作  者'] || '';
+            if (authorField) {
+                const cleanAuthor = authorField.replace(/^[\[(（【][^)\]）】]+[\]）】)]\s*/, '').trim();
+                result.authors = cleanAuthor.split(/[,，、；;]/).map(n => ({ name: n.trim() })).filter(a => a.name);
+            }
+            
+            // 提取标题
+            const titleLines = lines.filter((_, i) => !structuredIdx.has(i)).slice(0, 2);
+            if (titleLines.length > 0) {
+                let mainTitle = titleLines[0];
+                const authorInTitle = /作者[:：]/.exec(mainTitle);
+                if (authorInTitle) {
+                    mainTitle = mainTitle.slice(0, authorInTitle.index).trim();
+                }
+                if (titleLines.length > 1 && titleLines[1] && !fields[titleLines[1]]) {
+                    result.title = `${mainTitle}——${titleLines[1]}`;
+                } else {
+                    result.title = mainTitle;
+                }
+            }
+            
+            // 提取出版信息
+            if (fields['出版社']) result.publisher = fields['出版社'];
+            if (fields['出版年']) result.year = fields['出版年'].replace(/年$/, '');
+            if (fields['页数']) result.pages = fields['页数'].replace(/页$/, '');
+            if (fields['定价']) result.price = fields['定价'];
+            if (fields['ISBN']) result.isbn = fields['ISBN'];
+            
+            return result.title ? result : null;
+        }
+        
+        // GB/T 7714格式解析
+        function parseGBT7714(text) {
+            // 匹配GB/T 7714格式：[1]作者.题名[J].期刊,2020,(3):12-20.
+            const gbtMatch = /^\[?\d*\]?\s*([^.]+)\.\s*([^.]+)\[([A-Z])\]\.\s*([^,]+),\s*(\d{4})(?:,\s*\((\d+)\))?(?::\s*([\d\-—~]+))?\.?$/.exec(text);
+            if (gbtMatch) {
+                const typeMap = {
+                    'J': 'journal',
+                    'M': 'book',
+                    'D': 'thesis',
+                    'N': 'newspaper',
+                    'C': 'conference',
+                    'EB': 'electronic'
+                };
+                
+                return {
+                    type: typeMap[gbtMatch[3]] || 'book',
+                    authors: gbtMatch[1].split(/[,，]/).map(name => ({ name: name.trim() })),
+                    title: gbtMatch[2].trim(),
+                    containerTitle: gbtMatch[4].trim(),
+                    year: gbtMatch[5],
+                    issue: gbtMatch[6] || '',
+                    pages: gbtMatch[7] || ''
+                };
+            }
+            
+            // 匹配简化格式：作者.题名[J].期刊,2020.
+            const simpleGbtMatch = /^([^.]+)\.\s*([^.]+)\[([A-Z])\]\.\s*([^,]+),\s*(\d{4})\.?$/.exec(text);
+            if (simpleGbtMatch) {
+                const typeMap = {
+                    'J': 'journal',
+                    'M': 'book',
+                    'D': 'thesis',
+                    'N': 'newspaper',
+                    'C': 'conference',
+                    'EB': 'electronic'
+                };
+                
+                return {
+                    type: typeMap[simpleGbtMatch[3]] || 'book',
+                    authors: simpleGbtMatch[1].split(/[,，]/).map(name => ({ name: name.trim() })),
+                    title: simpleGbtMatch[2].trim(),
+                    containerTitle: simpleGbtMatch[4].trim(),
+                    year: simpleGbtMatch[5]
+                };
+            }
+            
+            return null;
+        }
+        
+        // 中文引用格式解析
+        function parseChineseCitation(text) {
+            const result = {};
+            
+            // 检测语言
+            if (!/[\u4e00-\u9fa5]/.test(text)) return null;
+            
+            // 提取作者：冒号或《之前的部分
+            const authorMatch = text.match(/^(.*?)[：《]/);
+            if (authorMatch) {
+                const authorStr = authorMatch[1].trim();
+                if (authorStr && !authorStr.includes('http')) {
+                    result.authors = authorStr.split(/[、,，]/).filter(Boolean).map(name => ({ name: name.trim() }));
+                }
+            }
+            
+            // 提取标题：《》中的内容
+            const titleMatch = text.match(/《([^》]+)》/);
+            if (titleMatch) {
+                result.title = titleMatch[1].trim();
+                
+                // 检查是否有第二个书名号（可能是期刊名或文集名）
+                const secondTitleMatch = text.slice(text.indexOf('》') + 1).match(/《([^》]+)》/);
+                if (secondTitleMatch) {
+                    // 判断类型
+                    if (/报/.test(secondTitleMatch[1])) {
+                        result.type = 'newspaper';
+                        result.containerTitle = secondTitleMatch[1];
+                    } else if (/论|集|刊/.test(secondTitleMatch[1])) {
+                        result.type = 'chapter';
+                        result.containerTitle = secondTitleMatch[1];
+                    } else {
+                        result.type = 'journal';
+                        result.containerTitle = secondTitleMatch[1];
+                    }
+                }
+            }
+            
+            // 提取年份
+            const yearMatch = text.match(/(\d{4})年/);
+            if (yearMatch) {
+                result.year = yearMatch[1];
+            }
+            
+            // 提取期号
+            const issueMatch = text.match(/第(\d+)期/);
+            if (issueMatch) {
+                result.issue = issueMatch[1];
+            }
+            
+            // 提取页码
+            const pageMatch = text.match(/第\s*(\d+[-—～~]?\d*)\s*页/);
+            if (pageMatch) {
+                result.pages = pageMatch[1];
+            }
+            
+            // 提取出版社信息
+            const pubMatch = text.match(/([^\s：，。]+)：([^\s：，。]+)/);
+            if (pubMatch && !text.startsWith(pubMatch[0])) {
+                result.publisherPlace = pubMatch[1];
+                result.publisher = pubMatch[2];
+            }
+            
+            // 检测学位论文
+            if (/学位论文|硕士论文|博士论文/.test(text)) {
+                result.type = 'thesis';
+                const thesisTypeMatch = /博士|硕士|本科/.exec(text);
+                if (thesisTypeMatch) {
+                    result.thesisType = thesisTypeMatch[0] + '学位论文';
+                } else {
+                    result.thesisType = '学位论文';
+                }
+                // 提取学校
+                const instMatch = /[,，]([^,，]+(?:大学|学院|研究所|研究院)[^,，]*)/.exec(text);
+                if (instMatch) result.institution = instMatch[1].trim();
+            }
+            
+            // 检测报纸
+            if (/报.*?\d{4}年\d{1,2}月\d{1,2}日/.test(text)) {
+                result.type = 'newspaper';
+                const dateMatch = /(\d{4}年\d{1,2}月\d{1,2}日)/.exec(text);
+                if (dateMatch) result.publishDate = dateMatch[1];
+                const sectionMatch = /第(\d+)版/.exec(text);
+                if (sectionMatch) result.pageSection = sectionMatch[1];
+            }
+            
+            return result.title ? result : null;
+        }
+        
+        // 英文APA格式解析
+        function parseEnglishAPA(text) {
+            const result = {};
+            
+            // 尝试APA格式：Author, A. A., Author, B. B., & Author, C. C. (Year). Title. Journal, Vol(Issue), pages.
+            const apaYearMatch = /\((\d{4})[^)]*\)\./.exec(text);
+            if (apaYearMatch) {
+                result.year = apaYearMatch[1];
+                const yearPos = apaYearMatch.index;
+                
+                // 提取作者
+                const authorsPart = text.slice(0, yearPos).trim().replace(/,\s*$/, '');
+                result.authors = parseAPAAuthors(authorsPart);
+                
+                // 提取年份之后的内容
+                const afterYear = text.slice(yearPos + apaYearMatch[0].length).trim();
+                
+                // 移除DOI
+                const withoutDOI = afterYear.replace(/\s*(?:https?:\/\/|https?:\/)[^\s]+|\s*doi\.org\/[^\s]+|doi:[^\s]+/gi, '').trim();
+                
+                // 提取标题
+                const titleMatch = /^([^.]+(?:\.[A-Z][a-z]*)?)\.\s+(.+)$/.exec(withoutDOI);
+                if (titleMatch) {
+                    result.title = titleMatch[1].trim();
+                    const rest = titleMatch[2].trim();
+                    
+                    // 提取期刊信息
+                    const journalMatch = /^([^,，]+)[,，]\s*(\d+)(?:\((\d+)\))?,?\s*([-\d–—~]+)?/.exec(rest);
+                    if (journalMatch) {
+                        result.containerTitle = journalMatch[1].trim();
+                        result.volume = journalMatch[2];
+                        if (journalMatch[3]) result.issue = journalMatch[3];
+                        if (journalMatch[4]) result.pages = journalMatch[4];
+                        result.type = 'journal';
+                    }
+                }
+                
+                return result.title ? result : null;
+            }
+            
+            return null;
+        }
+        
+        // 解析APA作者
+        function parseAPAAuthors(text) {
+            if (!text) return [];
+            
+            // 移除&符号
+            const cleaned = text.replace(/&/g, ',').replace(/，/g, ',');
+            
+            // 分割作者
+            const authorParts = cleaned.split(/,(?![^(]*\))/).map(s => s.trim()).filter(Boolean);
+            
+            return authorParts.map(part => {
+                // 格式：Last, F. M. 或 First Last
+                const commaIdx = part.indexOf(',');
+                if (commaIdx > 0) {
+                    const last = part.slice(0, commaIdx).trim();
+                    const initials = part.slice(commaIdx + 1).trim();
+                    return { name: `${initials} ${last}`.trim() };
+                }
+                return { name: part };
+            });
+        }
+        
+        // 简单解析
+        function parseSimple(text) {
+            const result = {};
+            
+            // 尝试提取书名号
+            const titleMatch = text.match(/《([^》]+)》/);
+            if (titleMatch) {
+                result.title = titleMatch[1];
+            }
+            
+            // 尝试提取作者（冒号之前）
+            const authorMatch = text.match(/^(.*?)[：:]/);
+            if (authorMatch) {
+                const authorStr = authorMatch[1].trim();
+                if (authorStr && authorStr.length < 20) {
+                    result.authors = [{ name: authorStr }];
+                }
+            }
+            
+            // 尝试提取年份
+            const yearMatch = text.match(/(\d{4})/);
+            if (yearMatch) {
+                result.year = yearMatch[1];
+            }
+            
+            return result.title ? result : null;
+        }
+        
+        // 应用解析数据
+        function applyParsedData(data) {
+            // 切换到手动模式
+            switchMode('manual');
+            
+            // 设置文献类型
+            if (data.type) {
+                document.getElementById('citation-type').value = data.type;
+                toggleFields(data.type);
+            }
+            
+            // 设置标题
+            if (data.title) {
+                document.getElementById('citation-title').value = data.title;
+            }
+            
+            // 设置作者
+            if (data.authors && data.authors.length > 0) {
+                const container = document.getElementById('authors-container');
+                container.innerHTML = '';
+                data.authors.forEach(author => {
+                    const row = document.createElement('div');
+                    row.className = 'author-row';
+                    row.innerHTML = `
+                        <input type="text" class="author-name" placeholder="姓名" value="${author.name || ''}">
+                        <input type="text" class="author-role" placeholder="著" value="${author.role || '著'}">
+                        <button onclick="removeAuthor(this)" title="删除">×</button>
+                    `;
+                    container.appendChild(row);
+                });
+            }
+            
+            // 根据类型设置字段
+            switch(data.type) {
+                case 'journal':
+                    if (data.containerTitle) document.getElementById('journal-name').value = data.containerTitle;
+                    if (data.year) document.getElementById('publish-year').value = data.year;
+                    if (data.issue) document.getElementById('issue').value = data.issue;
+                    if (data.volume) document.getElementById('volume').value = data.volume;
+                    if (data.pages) document.getElementById('pages').value = data.pages;
+                    break;
+                case 'book':
+                    if (data.publisherPlace) document.getElementById('publisher-place').value = data.publisherPlace;
+                    if (data.publisher) document.getElementById('publisher').value = data.publisher;
+                    if (data.year) document.getElementById('book-year').value = data.year;
+                    if (data.pages) document.getElementById('book-pages').value = data.pages;
+                    break;
+                case 'chapter':
+                    if (data.containerTitle) document.getElementById('book-title').value = data.containerTitle;
+                    if (data.publisherPlace) document.getElementById('chapter-publisher-place').value = data.publisherPlace;
+                    if (data.publisher) document.getElementById('chapter-publisher').value = data.publisher;
+                    if (data.year) document.getElementById('chapter-year').value = data.year;
+                    if (data.pages) document.getElementById('chapter-pages').value = data.pages;
+                    break;
+                case 'thesis':
+                    if (data.thesisType) document.getElementById('thesis-type').value = data.thesisType;
+                    if (data.institution) document.getElementById('institution').value = data.institution;
+                    if (data.year) document.getElementById('thesis-year').value = data.year;
+                    break;
+                case 'newspaper':
+                    if (data.containerTitle) document.getElementById('newspaper-name').value = data.containerTitle;
+                    if (data.publishDate) document.getElementById('newspaper-date').value = data.publishDate;
+                    if (data.pageSection) document.getElementById('newspaper-page').value = data.pageSection;
+                    break;
+                case 'conference':
+                    if (data.containerTitle) document.getElementById('conference-name').value = data.containerTitle;
+                    if (data.publisherPlace) document.getElementById('conference-place').value = data.publisherPlace;
+                    if (data.year) document.getElementById('conference-year').value = data.year;
+                    break;
+                case 'archive':
+                    if (data.containerTitle) document.getElementById('archive-name').value = data.containerTitle;
+                    if (data.archiveNumber) document.getElementById('archive-number').value = data.archiveNumber;
+                    if (data.year) document.getElementById('archive-year').value = data.year;
+                    break;
+                case 'electronic':
+                    if (data.url) document.getElementById('electronic-url').value = data.url;
+                    if (data.accessDate) document.getElementById('electronic-access-date').value = data.accessDate;
+                    break;
+            }
+        }
+        
+        // 获取元数据
+        function fetchMetadata() {
+            const url = document.getElementById('url-input').value.trim();
+            if (!url) {
+                showToast('请输入URL或DOI');
+                return;
+            }
+            
+            showToast('自动获取功能开发中，请手动补充信息');
+        }
+        
+        // 导入URL
+        function importUrl() {
+            const url = document.getElementById('url-input').value.trim();
+            if (!url) {
+                showToast('请输入URL');
+                return;
+            }
+            
+            switchMode('manual');
+            document.getElementById('citation-type').value = 'electronic';
+            toggleFields('electronic');
+            showToast('URL已导入，请手动补充其他信息');
+        }
+        
+        // 文件上传
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const content = e.target.result;
+                showToast(`已上传文件：${file.name}，请手动补充信息`);
+            };
+            reader.readAsText(file);
+        }
+        
+        // 显示提示
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.display = 'block';
+            
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 2000);
+        }
+        
+        // 获取类型名称
+        function getTypeName(type) {
+            const names = {
+                journal: '期刊文章',
+                book: '著作',
+                chapter: '析出文献',
+                thesis: '学位论文',
+                newspaper: '报纸',
+                conference: '会议论文',
+                archive: '档案',
+                electronic: '电子文献'
+            };
+            return names[type] || type;
+        }
+        
+        // 获取格式名称
+        function getFormatName(format) {
+            const names = {
+                lsyj: '《历史研究》',
+                cssn: '《中国社会科学》',
+                gbt7714: 'GB/T 7714'
+            };
+            return names[format] || format;
+        }
+    </script>
+</body>
+</html>

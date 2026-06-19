@@ -1,0 +1,41 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`formatAPA > 中文单作者著作 1`] = `"赵景深（1948）。《文坛忆旧》。北新书局。"`;
+
+exports[`formatAPA > 英文单作者著作 1`] = `"John K. Fairbank (1992). *China: A New History*. Harvard University Press."`;
+
+exports[`formatAPA > 英文双作者著作 1`] = `"Paul A. Cohen & John E. Schrecker (1976). *Reform in Nineteenth-Century China*. Harvard University Press."`;
+
+exports[`formatAPA > 英文期刊 1`] = `"Wang, R. & Tan, R. (2019). Environmental Change and Agricultural Sustainability. *Ecology and Society*, *24*(6)."`;
+
+exports[`formatGBT7714 > 中文单作者著作 1`] = `"赵景深.文坛忆旧[M].北新书局,1948:43."`;
+
+exports[`formatGBT7714 > 中文期刊 1`] = `"王笛.茶馆：成都的公共生活和微观世界[J].历史研究,2018(3):12-20."`;
+
+exports[`formatGBT7714 > 学位论文 1`] = `"李华.清代漕运与社会变迁[D].北京大学历史系,2015."`;
+
+exports[`formatGBT7714 > 英文著作 1`] = `"John K. Fairbank.China: A New History[M].Cambridge:Harvard University Press,1992."`;
+
+exports[`formatLSYJ > 中文单作者著作 1`] = `"赵景深：《文坛忆旧》，北新书局，1948年，第43页。"`;
+
+exports[`formatLSYJ > 中文多作者著作 1`] = `"张岱年主编、方立天编：《中国哲学史》，北京：北京大学出版社，2003年。"`;
+
+exports[`formatLSYJ > 中文期刊 1`] = `"王笛：《茶馆：成都的公共生活和微观世界》，《历史研究》2018年第3期。"`;
+
+exports[`formatLSYJ > 古籍 1`] = `"张廷玉撰：《明史》《首辅志》，光绪三年苏州文学山房活字本，第12页。"`;
+
+exports[`formatLSYJ > 学位论文 1`] = `"李华：《清代漕运与社会变迁》，博士学位论文，北京大学历史系，2015年，第67页。"`;
+
+exports[`formatLSYJ > 报纸 1`] = `"张三：《文化自信与历史研究》，《人民日报》2023年5月10日，第7版。"`;
+
+exports[`formatLSYJ > 档案 1`] = `"《北洋政府外交部档案》，1917年9月15日，北洋档案1011—5961，中国第二历史档案馆藏。"`;
+
+exports[`formatLSYJ > 电子文献 1`] = `"国务院：《关于加强文物保护的若干意见》，https://example.gov.cn/doc/2023，访问时间：2023年10月4日。"`;
+
+exports[`formatLSYJ > 英文多作者著作 1`] = `"Paul A. Cohen and John E. Schrecker, *Reform in Nineteenth-Century China*, Harvard University Press, 1976."`;
+
+exports[`formatLSYJ > 英文期刊 1`] = `"Wang, R. and Tan, R., Environmental Change and Agricultural Sustainability, Ecology and Society, Vol. 24, No. 6, 2019."`;
+
+exports[`formatLSYJ > 英文著作 1`] = `"John K. Fairbank, *China: A New History*, Cambridge: Harvard University Press, 1992."`;
+
+exports[`formatLSYJ > 转引文献 1`] = `"陈寅恪：《隋唐制度渊源略论稿》，陈寅恪：《隋唐制度渊源略论稿》，商务印书馆，1944年，转引自张国刚：《隋唐五代史》，人民出版社，2010年，第56页，第56页。"`;
