@@ -196,7 +196,7 @@ function formatLSYJRaw(citation: Citation): string {
         if (c.volumeNumber) parts.push(`Vol. ${c.volumeNumber}`)
         if (c.issue) parts.push(`No. ${c.issue}`)
         if (c.publishYear) parts.push(c.publishYear)
-        // 期刊默认不输出页码
+        if (c.pages) parts.push(pageStr(c.pages, 'en'))
         return parts.filter(Boolean).join(', ') + '.'
       }
       // 处理期刊名称中的括号版别：将《期刊名 (版别)》转换为《期刊名》（版别）
@@ -225,7 +225,7 @@ function formatLSYJRaw(citation: Citation): string {
         if (c.publishYear) result += `${c.publishYear}年`
         if (c.issue) result += `第${removeLeadingZero(c.issue)}期`
       }
-      // 期刊默认不输出页码
+      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
       return result + '。'
     }
 

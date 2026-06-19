@@ -202,7 +202,7 @@ export default function ManualForm({
             <label className="block text-sm font-medium text-ink-800 mb-1">期刊名称</label>
             <input value={c.journalName || ''} onChange={e => updateField('journalName', e.target.value)} className="input-field" placeholder={c.language === 'en' ? 'Ecology and Society' : '中国史研究'} />
           </div>
-          <div className={`grid gap-3 sm:gap-4 ${c.language === 'en' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3'}`}>
+          <div className={`grid gap-3 sm:gap-4 ${c.language === 'en' ? 'grid-cols-2 sm:grid-cols-3' : 'grid-cols-2'}`}>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
               <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
@@ -216,10 +216,6 @@ export default function ManualForm({
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">{c.language === 'en' ? '期号 Issue' : '期号'}</label>
               <input value={c.issue || ''} onChange={e => updateField('issue', e.target.value)} className="input-field" placeholder="3" />
-            </div>
-            <div className={c.language === 'en' ? '' : 'col-span-2 sm:col-span-1'}>
-              <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
-              <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="12-20" />
             </div>
           </div>
           {c.language === 'en' && (
