@@ -1,5 +1,6 @@
 import { Citation, CitationType, Author } from '../lib/types'
 import { IconPlus, IconMinus } from './Icons'
+import { FieldError } from '../lib/validate'
 
 const CITATION_TYPES: { value: CitationType; label: string }[] = [
   { value: 'book', label: '著作' },
@@ -18,6 +19,7 @@ const CITATION_TYPES: { value: CitationType; label: string }[] = [
 
 export interface ManualFormProps {
   citation: Citation
+  errors?: FieldError[]
   updateField: <K extends keyof Citation>(field: K, value: Citation[K]) => void
   updateAuthor: (index: number, field: keyof Author, value: string) => void
   addAuthor: () => void
@@ -29,12 +31,14 @@ export interface ManualFormProps {
 }
 
 export default function ManualForm({
-  citation, updateField,
+  citation, errors = [], updateField,
   updateAuthor, addAuthor, removeAuthor,
   updateBookAuthor, addBookAuthor, removeBookAuthor,
   updateTranslator,
 }: ManualFormProps) {
   const c = citation
+  const errorMap: Record<string, string> = {}
+  errors.forEach(e => { errorMap[e.field] = e.message })
   const showBookFields = ['book', 'ancient', 'diary', 'classic'].includes(c.type)
   const showChapterFields = c.type === 'chapter'
   const showJournalFields = c.type === 'journal'
@@ -83,12 +87,13 @@ export default function ManualForm({
             <IconPlus className="w-3 h-3" />添加
           </button>
         </div>
+        {errorMap.authors && <p className="text-red-500 text-xs mb-1">{errorMap.authors}</p>}
         {c.authors.map((a, i) => (
           <div key={i} className="flex gap-2 mb-2">
             <input
               value={a.name}
               onChange={e => updateAuthor(i, 'name', e.target.value)}
-              className="input-field flex-1"
+              className={`input-field flex-1 ${errorMap.authors ? 'border-red-500 ring-1 ring-red-500' : ''}`}
               placeholder={c.language === 'zh' ? '姓名' : 'Full Name'}
             />
             <input
@@ -112,9 +117,10 @@ export default function ManualForm({
         <input
           value={c.title}
           onChange={e => updateField('title', e.target.value)}
-          className="input-field"
+          className={`input-field ${errorMap.title ? 'border-red-500 ring-1 ring-red-500' : ''}`}
           placeholder={c.language === 'zh' ? '如：中国古代史研究' : 'Title of the Work'}
         />
+        {errorMap.title && <p className="text-red-500 text-xs mt-1">{errorMap.title}</p>}
       </div>
 
       {/* Book fields */}

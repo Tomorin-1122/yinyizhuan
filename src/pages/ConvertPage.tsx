@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { Citation, TargetFormat, FORMAT_LIST, Author } from '../lib/types'
 import { formatCitation } from '../lib/formatters'
 import { parseCitationText } from '../lib/parser'
@@ -8,6 +8,7 @@ import { addRecord } from '../lib/storage'
 import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
 import { canConvert, recordConversion, isAdmin, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { useAccessState } from '../lib/use-access'
+import { validateCitation } from '../lib/validate'
 import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
 import { Converter } from 'opencc-js'
@@ -50,7 +51,30 @@ export default function ConvertPage() {
     setTimeout(() => setToast(''), 2000)
   }
 
+  // P3-1: 实时预览
+  const previewResult = useMemo(() => {
+    if (!citation.title.trim()) return ''
+    try {
+      return formatCitation(citation, targetFormat)
+    } catch {
+      return ''
+    }
+  }, [citation, targetFormat])
+
+  // P3-2: 输入校验
+  const fieldErrors = useMemo(() => validateCitation(citation), [citation])
+
+  // P3-3: 重置确认
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const isFormEmpty = !citation.title.trim() && citation.authors.every(a => !a.name.trim())
+
   const handleConvert = useCallback(() => {
+    // P3-2: 转换前校验
+    const errors = validateCitation(citation)
+    if (errors.length > 0) {
+      showToast(`有 ${errors.length} 个字段需要修正`)
+      return
+    }
     const status = canConvert()
     if (status === 'need_invite') {
       setShowInvite(true)
@@ -220,11 +244,20 @@ export default function ConvertPage() {
   }
 
   const handleReset = () => {
+    if (isFormEmpty) {
+      doReset()
+      return
+    }
+    setShowResetConfirm(true)
+  }
+
+  const doReset = () => {
     setCitation(defaultCitation())
     setResult('')
     setPasteText('')
     setUrlInput('')
     setParsedItems([])
+    setShowResetConfirm(false)
   }
 
   const modeButtons: { mode: InputMode; icon: typeof IconEdit; label: string }[] = [
@@ -368,6 +401,7 @@ export default function ConvertPage() {
           {mode === 'manual' && (
             <ManualForm
               citation={citation}
+              errors={fieldErrors}
               updateField={updateField}
               updateAuthor={updateAuthor}
               addAuthor={addAuthor}
@@ -409,7 +443,7 @@ export default function ConvertPage() {
             </button>
           </div>
 
-          {result && (
+          {result ? (
             <div className="flex-1 flex flex-col animate-slide-up">
               <label className="block text-sm font-medium text-ink-800 mb-2">转换结果</label>
               <div className="flex-1 p-4 bg-parchment-50 border-2 border-ink-200 font-body text-ink-950 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
@@ -432,9 +466,32 @@ export default function ConvertPage() {
                 )}
               </div>
             </div>
+          ) : (
+            <div className="flex-1 flex flex-col">
+              <label className="block text-sm font-medium text-ink-400 dark:text-gray-500 mb-2">
+                实时预览（{FORMAT_LIST.find(f => f.id === targetFormat)?.name || targetFormat}）
+              </label>
+              <div className="flex-1 p-4 bg-parchment-50 dark:bg-gray-900 border-2 border-dashed border-ink-200 dark:border-gray-700 font-body text-ink-700 dark:text-gray-300 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
+                {previewResult || <span className="text-ink-300 dark:text-gray-600">填写标题后预览将在此显示</span>}
+              </div>
+            </div>
           )}
         </div>
       </div>
+
+      {/* P3-3: 重置确认弹窗 */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 px-6">
+          <div className="bg-white dark:bg-gray-800 border-2 border-ink-200 dark:border-gray-700 p-6 max-w-sm w-full animate-slide-up">
+            <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100 mb-2">确认清空表单？</h3>
+            <p className="text-ink-500 dark:text-gray-400 text-sm mb-6">当前填写的内容将丢失，此操作不可撤销。</p>
+            <div className="flex gap-3 justify-end">
+              <button onClick={() => setShowResetConfirm(false)} className="btn-secondary px-4 py-2">取消</button>
+              <button onClick={doReset} className="bg-vermilion-600 text-white px-4 py-2 text-sm font-medium hover:bg-vermilion-700 transition-colors cursor-pointer">确认清空</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
