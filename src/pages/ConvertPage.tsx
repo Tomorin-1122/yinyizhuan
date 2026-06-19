@@ -53,6 +53,7 @@ export default function ConvertPage() {
   const [parsedItems, setParsedItems] = useState<Partial<Citation>[]>([])
   const [toast, setToast] = useState('')
   const [fetchLoading, setFetchLoading] = useState(false)
+  const [dragOver, setDragOver] = useState(false)
 
   // 繁简转换：繁体转简体
   const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
@@ -178,9 +179,7 @@ export default function ConvertPage() {
     }
   }
 
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const processFile = (file: File) => {
     const reader = new FileReader()
     reader.onload = (ev) => {
       const content = ev.target?.result as string
@@ -207,7 +206,20 @@ export default function ConvertPage() {
       }
     }
     reader.readAsText(file)
+  }
+
+  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    processFile(file)
     e.target.value = ''
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setDragOver(false)
+    const file = e.dataTransfer.files?.[0]
+    if (file) processFile(file)
   }
 
   const selectParsedItem = (item: Partial<Citation>) => {
@@ -451,7 +463,16 @@ export default function ConvertPage() {
           {mode === 'file' && (
             <div className="space-y-4">
               <label className="block text-sm font-medium text-ink-800">上传 BibTeX (.bib)、RIS (.ris) 或文本 (.txt) 文件</label>
-              <label className="flex flex-col items-center justify-center h-48 border-2 border-dashed border-ink-300 bg-parchment-50 cursor-pointer hover:border-ink-500 hover:bg-parchment-100 transition-all duration-200">
+              <label
+                onDragOver={e => { e.preventDefault(); setDragOver(true) }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={handleDrop}
+                className={`flex flex-col items-center justify-center h-48 border-2 border-dashed transition-all duration-200 cursor-pointer ${
+                  dragOver
+                    ? 'border-ink-600 bg-parchment-200'
+                    : 'border-ink-300 bg-parchment-50 hover:border-ink-500 hover:bg-parchment-100'
+                }`}
+              >
                 <IconUpload className="w-10 h-10 text-ink-400 mb-3" />
                 <span className="text-ink-600 text-sm">点击或拖拽文件到此处</span>
                 <span className="text-ink-400 text-xs mt-1">支持 .bib / .ris / .txt 格式</span>
