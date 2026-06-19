@@ -11,13 +11,7 @@ export function parseBibTeX(content: string): Partial<Citation>[] {
     const key = match[2].trim();
     const fieldsText = match[3];
     
-    const fields: Record<string, string> = {};
-    const fieldRegex = /([a-zA-Z]+)\s*=\s*[\{"]?([\s\S]*?)[\}"]?[\s\n]*,/g;
-    let fieldMatch;
-    
-    while ((fieldMatch = fieldRegex.exec(fieldsText + ',')) !== null) {
-      fields[fieldMatch[1].toLowerCase()] = fieldMatch[2].trim().replace(/\s+/g, ' ');
-    }
+    const fields = parseBibFields(fieldsText);
 
     const type = mapBibType(bibType);
     const authors = parseBibAuthors(fields.author || '');
@@ -75,4 +69,44 @@ function parseBibAuthors(authorStr: string): Author[] {
     }
     return { name: name.trim() };
   });
+}
+
+/**
+ * 状态机解析 BibTeX 字段，支持嵌套花括号
+ * 例：title = {A {Deeply} Nested {Example}} → 完整保留
+ */
+function parseBibFields(text: string): Record<string, string> {
+  const fields: Record<string, string> = {}
+  let i = 0
+  while (i < text.length) {
+    // 跳过空白和逗号
+    while (i < text.length && /[\s,]/.test(text[i])) i++
+    if (i >= text.length) break
+    // 读字段名
+    let name = ''
+    while (i < text.length && /[a-zA-Z]/.test(text[i])) name += text[i++]
+    if (!name) { i++; continue }
+    // 跳过 = 和空白
+    while (i < text.length && /[\s=]/.test(text[i])) i++
+    // 读值（支持 { } 嵌套 和 " "）
+    let value = ''
+    const quote = text[i]
+    if (quote === '{') {
+      let depth = 1; i++
+      while (i < text.length && depth > 0) {
+        if (text[i] === '{') depth++
+        else if (text[i] === '}') depth--
+        if (depth > 0) value += text[i]
+        i++
+      }
+    } else if (quote === '"') {
+      i++
+      while (i < text.length && text[i] !== '"') value += text[i++]
+      i++
+    } else {
+      while (i < text.length && !/[\s,}]/.test(text[i])) value += text[i++]
+    }
+    if (name) fields[name.toLowerCase()] = value.trim().replace(/\s+/g, ' ')
+  }
+  return fields
 }
