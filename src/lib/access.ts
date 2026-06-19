@@ -1,4 +1,5 @@
-const INVITE_CODE = '1031'
+// 邀请码 SHA-256 哈希（明文 '1031' 不再写入 bundle）
+const INVITE_CODE_HASH = '3e34b5dc434bcf3186f089d362691cfac1b17231601f2f402dc79015be878d83'
 const ADMIN_KEY = 'yyz_admin'
 const UNLOCK_KEY = 'yyz_unlocked'
 const DAILY_KEY = 'yyz_daily'
@@ -16,8 +17,11 @@ export function isUnlocked(): boolean {
   return isAdmin() || localStorage.getItem(UNLOCK_KEY) === 'true'
 }
 
-export function unlock(code: string): boolean {
-  if (code.trim() === INVITE_CODE) {
+export async function unlock(code: string): Promise<boolean> {
+  const data = new TextEncoder().encode(code.trim())
+  const hashBuffer = await crypto.subtle.digest('SHA-256', data)
+  const hashHex = Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('')
+  if (hashHex === INVITE_CODE_HASH) {
     localStorage.setItem(UNLOCK_KEY, 'true')
     return true
   }

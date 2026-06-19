@@ -6,9 +6,9 @@ export default function InvitePage({ onUnlock }: { onUnlock: () => void }) {
   const [error, setError] = useState('')
   const [shaking, setShaking] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    if (unlock(code)) {
+    if (await unlock(code)) {
       onUnlock()
     } else {
       setError('邀请码错误，请重试')

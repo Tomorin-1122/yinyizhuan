@@ -16,8 +16,8 @@ export default function InviteModal({ open, onClose, onSuccess, onToast }: Invit
 
   if (!open) return null
 
-  const handleSubmit = () => {
-    if (unlock(inviteCode)) {
+  const handleSubmit = async () => {
+    if (await unlock(inviteCode)) {
       onClose()
       setInviteCode('')
       setInviteError('')
