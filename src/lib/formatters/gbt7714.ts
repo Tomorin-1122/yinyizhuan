@@ -1,14 +1,14 @@
 import { Citation } from '../types'
+import { formatAuthorName, joinAuthorNames } from './author-utils'
 
 function authorStr(c: Citation): string {
   if (!c.authors || c.authors.length === 0) return ''
   if (c.language === 'en') {
-    return c.authors.map(a => a.name).join(', ')
+    const names = c.authors.map(a => a.name)
+    return joinAuthorNames(names, { separator: ', ' })
   }
-  return c.authors.map(a => {
-    if (!a.role || a.role === '著') return a.name
-    return a.name + a.role
-  }).join(', ')
+  const names = c.authors.map(a => formatAuthorName(a, 'direct', ['著']))
+  return joinAuthorNames(names, { separator: ', ' })
 }
 
 function docType(c: Citation): string {

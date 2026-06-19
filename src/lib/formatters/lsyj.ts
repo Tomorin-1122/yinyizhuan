@@ -1,4 +1,5 @@
 import { Citation } from '../types'
+import { formatAuthorName, joinAuthorNames } from './author-utils'
 
 /**
  * 处理书名号嵌套
@@ -47,16 +48,12 @@ function processBookTitleMarks(text: string): string {
 function authorStr(c: Citation): string {
   if (!c.authors || c.authors.length === 0) return ''
   if (c.language === 'en') {
-    return c.authors.map(a => {
-      const suffix = a.role && a.role !== 'author' ? `, ${a.role}` : ''
-      return a.name + suffix
-    }).join(c.authors.length <= 2 ? ' and ' : ', ')
+    const names = c.authors.map(a => formatAuthorName(a, 'suffix', ['author']))
+    const sep = c.authors.length <= 2 ? ' and ' : ', '
+    return joinAuthorNames(names, { separator: sep })
   }
-  const parts = c.authors.map(a => {
-    if (!a.role || a.role === '著') return a.name
-    return a.name + a.role
-  })
-  return parts.join('、')
+  const names = c.authors.map(a => formatAuthorName(a, 'direct', ['著']))
+  return joinAuthorNames(names, { separator: '、' })
 }
 
 function pageStr(pages: string | undefined, lang: string): string {

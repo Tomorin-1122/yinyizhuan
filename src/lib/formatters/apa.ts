@@ -1,16 +1,14 @@
 import { Citation } from '../types'
+import { formatAuthorName, joinAuthorNames } from './author-utils'
 
 function authorStr(c: Citation): string {
   if (!c.authors || c.authors.length === 0) return ''
   if (c.language === 'en') {
-    if (c.authors.length === 1) return c.authors[0].name
-    if (c.authors.length === 2) return `${c.authors[0].name} & ${c.authors[1].name}`
-    return `${c.authors[0].name} et al.`
+    const names = c.authors.map(a => a.name)
+    return joinAuthorNames(names, { separator: ', ', lastSeparator: ' & ', etAlAfter: 2, etAlText: 'et al.' })
   }
-  return c.authors.map(a => {
-    if (!a.role || a.role === '著') return a.name
-    return a.name + '(' + a.role + ')'
-  }).join('、')
+  const names = c.authors.map(a => formatAuthorName(a, 'parens', ['著']))
+  return joinAuthorNames(names, { separator: '、' })
 }
 
 export function formatAPA(citation: Citation): string {
