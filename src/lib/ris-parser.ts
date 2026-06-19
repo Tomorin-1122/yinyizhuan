@@ -1,4 +1,5 @@
-import { Citation, CitationType, Author, CitationLanguage } from './types';
+import { Citation, CitationType, Author } from './types';
+import { detectLanguage } from './utils';
 
 export function parseRIS(content: string): Partial<Citation>[] {
   const citations: Partial<Citation>[] = [];
@@ -67,10 +68,4 @@ function mapRISType(ty: string): CitationType {
     case 'DIARY': return 'diary';
     default: return 'book';
   }
-}
-
-function detectLanguage(text: string): CitationLanguage {
-  if (/[\u3040-\u30ff]/.test(text)) return 'ja';
-  if (/[\u4e00-\u9fa5]/.test(text)) return 'zh';
-  return 'en';
 }

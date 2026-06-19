@@ -1,4 +1,5 @@
 import { Citation, CitationType, CitationLanguage } from './types';
+import { detectLanguage } from './utils';
 
 export function parseCitationText(text: string): Partial<Citation> {
   const normalizedText = text.trim();
@@ -254,12 +255,6 @@ function gbtTagToType(tag: string): CitationType {
 }
 
 // ─── 语言/类型检测 ────────────────────────────────────────────────
-function detectLanguage(text: string): CitationLanguage {
-  if (/[\u3040-\u30ff]/.test(text)) return 'ja';
-  if (/[\u4e00-\u9fa5]/.test(text)) return 'zh';
-  return 'en';
-}
-
 function detectType(text: string, lang: CitationLanguage): CitationType {
   if (text.includes('转引自')) return 'transferred';
   if (/https?:\/\//.test(text)) return 'electronic';

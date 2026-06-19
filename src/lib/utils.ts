@@ -1,7 +1,13 @@
-import { CitationType, TargetFormat } from './types';
+import { CitationType, CitationLanguage, TargetFormat } from './types';
 
 export function generateId(): string {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+}
+
+export function detectLanguage(text: string): CitationLanguage {
+  if (/[\u3040-\u30ff]/.test(text)) return 'ja';
+  if (/[\u4e00-\u9fa5]/.test(text)) return 'zh';
+  return 'en';
 }
 
 export async function copyToClipboard(text: string): Promise<boolean> {
