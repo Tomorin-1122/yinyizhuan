@@ -1,6 +1,8 @@
+import { useRef } from 'react'
 import { Citation, CitationType, Author } from '../lib/types'
 import { IconPlus, IconMinus } from './Icons'
 import { FieldError } from '../lib/validate'
+import { lookupPlace } from '../lib/publisher-places'
 
 const CITATION_TYPES: { value: CitationType; label: string }[] = [
   { value: 'book', label: '著作' },
@@ -41,6 +43,32 @@ export default function ManualForm({
   errors.forEach(e => { errorMap[e.field] = e.message })
   const showBookFields = ['book', 'ancient', 'diary', 'classic'].includes(c.type)
   const showChapterFields = c.type === 'chapter'
+
+  // 追踪 publishPlace 是否为自动补全
+  const isAutoFilledRef = useRef(false)
+
+  // 出版社 onChange 联动：自动补全出版地
+  const handlePublisherChange = (value: string) => {
+    updateField('publisher', value)
+    // 若地址为空或原本就是自动补的，按新出版社查表
+    if (!c.publishPlace || isAutoFilledRef.current) {
+      const place = lookupPlace(value)
+      if (place) {
+        updateField('publishPlace', place)
+        isAutoFilledRef.current = true
+      } else if (isAutoFilledRef.current) {
+        // 之前是自动填的，现在出版社不认识了，清空
+        updateField('publishPlace', '')
+        isAutoFilledRef.current = false
+      }
+    }
+  }
+
+  // 用户手动修改出版地时，标记为非自动补全
+  const handlePublishPlaceChange = (value: string) => {
+    updateField('publishPlace', value)
+    isAutoFilledRef.current = false
+  }
   const showJournalFields = c.type === 'journal'
   const showNewspaperFields = c.type === 'newspaper'
   const showThesisFields = ['thesis', 'conference'].includes(c.type)
@@ -129,11 +157,11 @@ export default function ManualForm({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">出版地点</label>
-              <input value={c.publishPlace || ''} onChange={e => updateField('publishPlace', e.target.value)} className="input-field" placeholder="北京" />
+              <input value={c.publishPlace || ''} onChange={e => handlePublishPlaceChange(e.target.value)} className="input-field" placeholder="北京" />
             </div>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">出版社</label>
-              <input value={c.publisher || ''} onChange={e => updateField('publisher', e.target.value)} className="input-field" placeholder="人民出版社" />
+              <input value={c.publisher || ''} onChange={e => handlePublisherChange(e.target.value)} className="input-field" placeholder="人民出版社" />
             </div>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">

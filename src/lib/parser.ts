@@ -1,5 +1,14 @@
 import { Citation, CitationType, CitationLanguage } from './types';
 import { detectLanguage, generateId } from './utils';
+import { lookupPlace } from './publisher-places';
+
+function fillPublishPlace(c: Partial<Citation>): Partial<Citation> {
+  if (c.type === 'book' && !c.publishPlace && c.publisher) {
+    const place = lookupPlace(c.publisher);
+    if (place) return { ...c, publishPlace: place };
+  }
+  return c;
+}
 
 export function parseCitationText(text: string): Partial<Citation> {
   const normalizedText = text.trim();
@@ -8,14 +17,14 @@ export function parseCitationText(text: string): Partial<Citation> {
   // 豆瓣图书多行格式（优先检测，避免被 GB/T 误判）
   const douban = parseDoubanBook(normalizedText);
   if (douban) {
-    return { id, rawText: normalizedText, language: 'zh', ...douban };
+    return fillPublishPlace({ id, rawText: normalizedText, language: 'zh', ...douban });
   }
 
   // GB/T 7714 格式
   const normalizedSingle = normalizedText.replace(/\s+/g, ' ');
   const gbt = parseGBT7714Style(normalizedSingle);
   if (gbt) {
-    return { id, language: 'zh', rawText: normalizedSingle, ...gbt };
+    return fillPublishPlace({ id, language: 'zh', rawText: normalizedSingle, ...gbt });
   }
 
   const language = detectLanguage(normalizedText);
@@ -29,7 +38,7 @@ export function parseCitationText(text: string): Partial<Citation> {
     result = { ...result, ...parseEnglishAPA(singleLine) };
   }
 
-  return result;
+  return fillPublishPlace(result);
 }
 
 // ─── 豆瓣图书多行格式 ──────────────────────────────────────────────
@@ -76,26 +85,52 @@ function parseDoubanBook(text: string): Partial<Citation> | null {
   }
 
   // 豆瓣特殊格式：某行同时含书名和"作者"（如 "书名作者: 于志嘉"）
+  // 需要在标题解析前处理，提取作者并标记该行
   if (!result.authors || result.authors.length === 0) {
-    const combinedAuthorLine = lines.find(l => /作者[:：]/.test(l));
-    if (combinedAuthorLine) {
-      const m = /作者[:：](.+)$/.exec(combinedAuthorLine);
-      if (m) result.authors = [{ name: m[1].trim() }];
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (/作者[:：]/.test(line) && !structuredIdx.has(i)) {
+        const m = /作者[:：](.+)$/.exec(line);
+        if (m) {
+          result.authors = [{ name: m[1].trim() }];
+          break;
+        }
+      }
     }
   }
 
+  // 译者
+  const translatorField = fields['译者'] || '';
+  if (translatorField) {
+    result.translators = translatorField.split(/[,，、；;]/).map(n => ({ name: n.trim() })).filter(a => a.name);
+  }
+
   // 标题：titleLines[0] 为主标题，[1] 为副标题，用——连接
-  if (titleLines.length > 0) {
-    let mainTitle = titleLines[0];
+  // 过滤掉含"作者:"的行（已处理为作者字段）
+  const filteredTitleLines = titleLines.filter(line => {
+    // 如果这行是"书名作者: xxx"格式，只取书名部分
+    if (/作者[:：]/.test(line)) return false;
+    return true;
+  });
+
+  if (filteredTitleLines.length > 0) {
+    let mainTitle = filteredTitleLines[0];
     // 若主标题行也含"作者:"，取冒号前的部分作为标题
     const authorInTitle = /作者[:：]/.exec(mainTitle);
     if (authorInTitle) {
       mainTitle = mainTitle.slice(0, authorInTitle.index).trim();
     }
-    if (titleLines.length > 1 && titleLines[1] && !fields[titleLines[1]]) {
-      result.title = `${mainTitle}——${titleLines[1]}`;
+    if (filteredTitleLines.length > 1 && filteredTitleLines[1] && !fields[filteredTitleLines[1]]) {
+      result.title = `${mainTitle}——${filteredTitleLines[1]}`;
     } else {
       result.title = mainTitle;
+    }
+  } else if (titleLines.length > 0) {
+    // 降级：从含"作者:"的行中提取书名
+    const lineWithAuthor = titleLines.find(l => /作者[:：]/.test(l));
+    if (lineWithAuthor) {
+      const m = /^(.+?)作者[:：]/.exec(lineWithAuthor);
+      if (m) result.title = m[1].trim();
     }
   }
 
