@@ -8,7 +8,8 @@ import {
 } from '../lib/storage'
 import { copyToClipboard, downloadFile, formatTimestamp, getCitationTypeName, getFormatName } from '../lib/utils'
 import { exportSelectedAsWord } from '../lib/export-word'
-import { IconCopy, IconTrash, IconDownload, IconCheck, IconFile } from '../components/Icons'
+import { IconCopy, IconTrash, IconDownload, IconCheck, IconFile, IconRepeat } from '../components/Icons'
+import { processBookTitleMarks } from '../lib/formatters/lsyj'
 
 function IconSearch({ className = 'w-4 h-4' }: { className?: string }) {
   return (
@@ -371,6 +372,35 @@ export default function HistoryPage() {
   const handleCopy = async (id: string, text: string) => {
     const ok = await copyToClipboard(text)
     if (ok) { setCopiedId(id); setTimeout(() => setCopiedId(''), 1500) }
+  }
+
+  // 生成再次引证版本（仅 LSYJ + book）
+  const generateReCitation = (record: ConversionRecord): string | null => {
+    const { citation } = record
+    if (record.targetFormat !== 'lsyj' || citation.type !== 'book') return null
+    const auth = citation.authors.map(a => {
+      if (citation.language === 'en') {
+        const suffix = a.role && a.role !== 'author' ? `, ${a.role}` : ''
+        return a.name + suffix
+      }
+      if (!a.role || a.role === '著') return a.name
+      return a.name + a.role
+    }).join(citation.language === 'en' ? ', ' : '、')
+    const title = citation.language === 'en'
+      ? `*${citation.title}*`
+      : processBookTitleMarks(`《${citation.title}》`)
+    const parts = [auth ? auth + '：' : '', title]
+    if (citation.pages) {
+      parts.push(citation.language === 'en' ? `p.${citation.pages}` : `第${citation.pages}页`)
+    }
+    return parts.join('') + (citation.language === 'en' ? '.' : '。')
+  }
+
+  const handleReCite = async (record: ConversionRecord) => {
+    const reCited = generateReCitation(record)
+    if (!reCited) return
+    const ok = await copyToClipboard(reCited)
+    if (ok) showToast('已复制再次引证版本')
   }
 
   const handleDelete = (id: string) => {
@@ -839,6 +869,15 @@ export default function HistoryPage() {
                       >
                         {copiedId === r.id ? <IconCheck className="w-4 h-4 text-green-600" /> : <IconCopy className="w-4 h-4" />}
                       </button>
+                      {r.targetFormat === 'lsyj' && r.citation.type === 'book' && (
+                        <button
+                          onClick={() => handleReCite(r)}
+                          className="btn-ghost px-2 py-1"
+                          title="再次引证：省略出版信息，只保留责任者、题名、页码"
+                        >
+                          <IconRepeat className="w-4 h-4" />
+                        </button>
+                      )}
                       <AddToGroupDropdown
                         recordId={r.id}
                         groups={groups}

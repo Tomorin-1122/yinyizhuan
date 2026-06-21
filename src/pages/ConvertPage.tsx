@@ -9,9 +9,8 @@ import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
 import { canConvert, recordConversion, isAdmin, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { useAccessState } from '../lib/use-access'
 import { validateCitation } from '../lib/validate'
-import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader, IconRepeat, IconChevronDown } from '../components/Icons'
+import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader, IconChevronDown } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
-import { processBookTitleMarks } from '../lib/formatters/lsyj'
 import { Converter } from 'opencc-js'
 import ManualForm from '../components/ManualForm'
 import InviteModal from '../components/InviteModal'
@@ -108,34 +107,6 @@ export default function ConvertPage() {
 
   const handleDownload = () => {
     downloadFile(result, `citation_${Date.now()}.txt`, 'text/plain')
-  }
-
-  // 生成再次引证版本（仅 LSYJ + book）
-  const generateReCitation = (): string | null => {
-    if (targetFormat !== 'lsyj' || citation.type !== 'book') return null
-    const auth = citation.authors.map(a => {
-      if (citation.language === 'en') {
-        const suffix = a.role && a.role !== 'author' ? `, ${a.role}` : ''
-        return a.name + suffix
-      }
-      if (!a.role || a.role === '著') return a.name
-      return a.name + a.role
-    }).join(citation.language === 'en' ? ', ' : '、')
-    const title = citation.language === 'en'
-      ? `*${citation.title}*`
-      : processBookTitleMarks(`《${citation.title}》`)
-    const parts = [auth ? auth + '：' : '', title]
-    if (citation.pages) {
-      parts.push(citation.language === 'en' ? `p.${citation.pages}` : `第${citation.pages}页`)
-    }
-    return parts.join('') + (citation.language === 'en' ? '.' : '。')
-  }
-
-  const handleReCite = async () => {
-    const reCited = generateReCitation()
-    if (!reCited) return
-    const ok = await copyToClipboard(reCited)
-    if (ok) showToast('已复制再次引证版本')
   }
 
   // 生成含页码版本（仅期刊）
@@ -512,16 +483,6 @@ export default function ConvertPage() {
                   >
                     <IconChevronDown className={`w-4 h-4 transition-transform ${showPages ? 'rotate-180' : ''}`} />
                     {showPages ? '隐藏页码' : '显示页码'}
-                  </button>
-                )}
-                {targetFormat === 'lsyj' && citation.type === 'book' && (
-                  <button
-                    onClick={handleReCite}
-                    className="btn-ghost flex-1 text-sm"
-                    title="再次引证：省略出版信息，只保留责任者、题名、页码。依据《历史研究》规范第七条。"
-                  >
-                    <IconRepeat className="w-4 h-4" />
-                    再次引证
                   </button>
                 )}
                 {lastRecordId && (

@@ -41,7 +41,7 @@ export default function ManualForm({
   const c = citation
   const errorMap: Record<string, string> = {}
   errors.forEach(e => { errorMap[e.field] = e.message })
-  const showBookFields = ['book', 'ancient', 'diary', 'classic'].includes(c.type)
+  const showBookFields = ['book', 'diary', 'classic'].includes(c.type)
   const showChapterFields = c.type === 'chapter'
 
   // 追踪 publishPlace 是否为自动补全
@@ -108,6 +108,7 @@ export default function ManualForm({
       </div>
 
       {/* Authors */}
+      {c.type !== 'ancient' && (
       <div>
         <div className="flex items-center justify-between mb-1">
           <label className="text-sm font-medium text-ink-800">责任者(作者)</label>
@@ -138,8 +139,10 @@ export default function ManualForm({
           </div>
         ))}
       </div>
+      )}
 
       {/* Title */}
+      {c.type !== 'ancient' && (
       <div>
         <label className="block text-sm font-medium text-ink-800 mb-1">文献题名</label>
         <input
@@ -150,6 +153,7 @@ export default function ManualForm({
         />
         {errorMap.title && <p className="text-red-500 text-xs mt-1">{errorMap.title}</p>}
       </div>
+      )}
 
       {/* Book fields */}
       {(showBookFields || showChapterFields) && (
