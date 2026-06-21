@@ -191,8 +191,10 @@ function formatLSYJRaw(citation: Citation): string {
       if (isEn) {
         const parts: string[] = []
         parts.push(authorStr(c))
-        parts.push(c.title)
-        if (c.journalName) parts.push(c.journalName)
+        // 标题用英文引号
+        parts.push(`"${c.title}"`)
+        // 期刊名斜体（用 * 标记，提示用户手动设斜体）
+        if (c.journalName) parts.push(`*${c.journalName}*`)
         if (c.volumeNumber) parts.push(`Vol. ${c.volumeNumber}`)
         if (c.issue) parts.push(`No. ${c.issue}`)
         if (c.publishYear) parts.push(c.publishYear)

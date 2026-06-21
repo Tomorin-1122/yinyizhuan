@@ -338,7 +338,7 @@ export default function ConvertPage() {
               {pasteText && !/[\u4e00-\u9fa5]/.test(pasteText) && (
                 <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700 p-3 text-xs text-blue-800 dark:text-blue-300 flex items-start gap-2">
                   <span className="shrink-0 font-bold">i</span>
-                  <span>检测到外文文献，建议使用 <strong>APA 格式</strong>（如 <code className="bg-blue-100 dark:bg-blue-800 px-1">Wang, R. (2019). Title. Journal, 24(6), 1-10.</code>）以提升解析准确率。</span>
+                  <span>检测到外文文献，建议核实表单后转换。</span>
                 </div>
               )}
               <button onClick={handleParse} className="btn-primary w-full">解析并填充表单</button>
@@ -447,6 +447,11 @@ export default function ConvertPage() {
               <div className="flex-1 p-4 bg-parchment-50 border-2 border-ink-200 font-body text-ink-950 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
                 {result}
               </div>
+              {targetFormat === 'lsyj' && citation.language === 'en' && result.includes('*') && (
+                <div className="bg-amber-50 border border-amber-200 p-2 text-xs text-amber-800 mt-2">
+                  标 <code>*</code> 的部分需在 Word 中设为斜体。
+                </div>
+              )}
               <div className="flex gap-2 mt-3">
                 <button onClick={handleCopy} className="btn-ghost flex-1 text-sm">
                   {copied ? <IconCheck className="w-4 h-4 text-green-600" /> : <IconCopy className="w-4 h-4" />}

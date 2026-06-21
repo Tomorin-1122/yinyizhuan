@@ -35,7 +35,7 @@ export function parseCitationText(text: string): Partial<Citation> {
   if (language === 'zh') {
     result = { ...result, ...parseChineseCitation(singleLine, type) };
   } else {
-    result = { ...result, ...parseEnglishAPA(singleLine) };
+    result = { ...result, ...parseEnglishCitation(singleLine) };
   }
 
   return fillPublishPlace(result);
@@ -411,6 +411,86 @@ function parseChineseCitation(text: string, type: CitationType): Partial<Citatio
   }
 
   return result;
+}
+
+// ─── 英文文献统一入口 ────────────────────────────────────────────
+export function parseEnglishCitation(text: string): Partial<Citation> {
+  // 先尝试 MLA：特征是标题用双引号 "" 包裹
+  if (/[""\u201C\u201D]/.test(text)) {
+    const mla = parseMLA(text)
+    if (mla.title) return mla
+  }
+  // 再尝试 APA
+  return parseEnglishAPA(text)
+}
+
+function parseMLA(text: string): Partial<Citation> {
+  const result: Partial<Citation> = {}
+
+  // 作者：第一个双引号前的内容
+  const quoteIdx = text.search(/[""\u201C\u201D]/)
+  if (quoteIdx < 0) return result
+  const authorsPart = text.slice(0, quoteIdx).trim().replace(/[,.]\s*$/, '')
+  result.authors = parseMLAAuthors(authorsPart)
+
+  // 标题：双引号内的内容
+  const titleMatch = /[""\u201C]([^""\u201D]+)[""\u201D]/.exec(text)
+  if (titleMatch) result.title = titleMatch[1].trim()
+
+  // 双引号后的内容
+  const afterTitle = text.slice(titleMatch!.index + titleMatch![0].length).trim().replace(/^[.,]\s*/, '')
+
+  // 期刊名：第一个逗号前（或句号前）
+  const journalMatch = /^([^,，.]+)[,，.]\s*/.exec(afterTitle)
+  let rest = afterTitle
+  if (journalMatch) {
+    result.journalName = journalMatch[1].trim()
+    rest = afterTitle.slice(journalMatch[0].length)
+  }
+
+  // vol. X
+  const volMatch = /vol\.?\s*(\d+)/i.exec(rest)
+  if (volMatch) result.volumeNumber = volMatch[1]
+
+  // no. Y
+  const noMatch = /no\.?\s*(\d+)/i.exec(rest)
+  if (noMatch) result.issue = noMatch[1]
+
+  // 年份
+  const yearMatch = /(\d{4})/.exec(rest)
+  if (yearMatch) result.publishYear = yearMatch[1]
+
+  // 页码 pp. Z 或 p. Z
+  const pageMatch = /pp?\.\s*([\d–—-]+)/i.exec(rest)
+  if (pageMatch) result.pages = pageMatch[1]
+
+  // URL
+  const urlMatch = /(https?:\/\/[^\s]+)/.exec(rest)
+  if (urlMatch) result.url = urlMatch[1]
+
+  // 访问日期 Accessed DATE
+  const accessMatch = /accessed\s+([\w\s,]+)/i.exec(rest)
+  if (accessMatch) result.accessDate = accessMatch[1].trim()
+
+  result.type = 'journal'
+  return result
+}
+
+function parseMLAAuthors(authorsPart: string): { name: string }[] {
+  if (!authorsPart.trim()) return []
+  // MLA: "wilensky, norman m." → 规范化为 "Wilensky, Norman M."
+  // 多作者用 "; " 或 ", and " 分隔
+  const segments = authorsPart.split(/;\s*|,\s*and\s+/i).map(s => s.trim()).filter(Boolean)
+  return segments.map(raw => {
+    // 首字母大写
+    const parts = raw.split(/,\s*/).map(p =>
+      p.trim().split(/\s+/).map(w =>
+        w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()
+      ).join(' ')
+    )
+    // parts[0]=姓, parts[1]=名（如果有）
+    return { name: parts.length >= 2 ? `${parts[0]}, ${parts[1]}` : parts[0] }
+  })
 }
 
 // ─── 英文/APA 解析 ────────────────────────────────────────────────
