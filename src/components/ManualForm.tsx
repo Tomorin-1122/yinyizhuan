@@ -171,7 +171,7 @@ export default function ManualForm({
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">出版年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2020" />
+              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2004" />
             </div>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
@@ -237,7 +237,7 @@ export default function ManualForm({
           <div className={`grid gap-3 sm:gap-4 ${c.language === 'en' ? 'grid-cols-2 sm:grid-cols-4' : 'grid-cols-2 sm:grid-cols-3'}`}>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
+              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2004" />
             </div>
             {c.language === 'en' && (
               <div>
@@ -280,7 +280,7 @@ export default function ManualForm({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">出版日期</label>
-              <input value={c.publishDate || ''} onChange={e => updateField('publishDate', e.target.value)} className="input-field" placeholder="1986年8月22日" />
+              <input value={c.publishDate || ''} onChange={e => updateField('publishDate', e.target.value)} className="input-field" placeholder="2004年10月31日" />
             </div>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">版次</label>
@@ -353,7 +353,7 @@ export default function ManualForm({
         <div className="grid grid-cols-1 gap-4">
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">档案日期</label>
-            <input value={c.archiveDate || ''} onChange={e => updateField('archiveDate', e.target.value)} className="input-field" placeholder="1917年9月15日" />
+            <input value={c.archiveDate || ''} onChange={e => updateField('archiveDate', e.target.value)} className="input-field" placeholder="2004年10月31日" />
           </div>
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">卷宗号</label>
@@ -376,11 +376,11 @@ export default function ManualForm({
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">访问日期</label>
-              <input value={c.accessDate || ''} onChange={e => updateField('accessDate', e.target.value)} className="input-field" placeholder="1998年10月4日" />
+              <input value={c.accessDate || ''} onChange={e => updateField('accessDate', e.target.value)} className="input-field" placeholder="2004年10月31日" />
             </div>
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
-              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="1998" />
+              <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2004" />
             </div>
           </div>
         </div>
@@ -534,7 +534,7 @@ export default function ManualForm({
           </div>
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">转引来源</label>
-            <input value={c.transferredFrom || ''} onChange={e => updateField('transferredFrom', e.target.value)} className="input-field" placeholder="汤志钧：《章太炎年谱长编》下册，北京：中华书局，1979年" />
+            <input value={c.transferredFrom || ''} onChange={e => updateField('transferredFrom', e.target.value)} className="input-field" placeholder="汤志钧：《章太炎年谱长编》下册，北京：中华书局，2004年" />
             <p className="text-xs text-ink-400 mt-1">格式：责任者：《题名》，出版地：出版社，年份</p>
           </div>
           <div>
