@@ -202,28 +202,69 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
     const yearMatch = /(\d{4})/.exec(afterTag);
     if (yearMatch) result.publishYear = yearMatch[1];
   } else if (type === 'conference') {
-    // 会议论文：作者. 题名[C]//会议组织者. 论文集名. 会议地点:出版社, 年份:页码
-    // afterTag 可能是 "//组织者. 论文集名. 地点:社, 年:页" 或 "论文集名. 地点, 年:页"
-    const doubleSep = afterTag.replace(/^\/\//, '');
+    // 会议论文：作者.题名[C]//组织者.论文集名.出版地:出版社,年份:页码
+    // 或：作者.题名[C]//组织者.论文集名.出版社,年份:页码（无出版地）
+    // 或：作者.题名[C]//论文集名.出版社,年份:页码（无组织者）
+    const doubleSep = afterTag.replace(/^\/\//, '').trim();
 
-    // 论文集名（第一个 . 之前，若有组织者则跳过组织者行）
+    // 用句号分段（注意末尾可能没有句号）
     const parts = doubleSep.split(/[.。]/).map(s => s.trim()).filter(Boolean);
-    // parts[0] = 可能的组织者, parts[1] = 论文集名 或 parts[0]=论文集名
-    if (parts.length >= 2) {
-      result.bookTitle = parts[1] || parts[0];
+    // parts[0] = 组织者（可能含逗号分隔的多个机构）或论文集名
+    // parts[1] = 论文集名 或 "出版地:出版社,年份:页码"
+    // parts[2] = "出版地:出版社,年份:页码" 或 "出版社,年份:页码"
+
+    // 判断 parts[0] 是否为组织者：如果 parts.length >= 3，则 parts[0]=组织者, parts[1]=论文集名, parts[2]=出版信息
+    // 如果 parts.length == 2，则 parts[0]=论文集名, parts[1]=出版信息（无组织者）
+    // 如果 parts.length == 1，则 parts[0]=论文集名（无出版信息）
+    let orgPart = ''
+    let titlePart = ''
+    let pubPart = ''
+    if (parts.length >= 3) {
+      orgPart = parts[0]
+      titlePart = parts[1]
+      pubPart = parts.slice(2).join('. ')
+    } else if (parts.length === 2) {
+      titlePart = parts[0]
+      pubPart = parts[1]
     } else {
-      result.bookTitle = parts[0] || '';
+      titlePart = parts[0] || ''
     }
 
-    // 地点
-    const placeMatch = /([^,.，。]+)[,，]\s*\d{4}/.exec(doubleSep);
-    if (placeMatch) result.publishPlace = placeMatch[1].trim();
+    result.bookTitle = titlePart
 
-    const yearMatch = /(\d{4})/.exec(afterTag);
-    if (yearMatch) result.publishYear = yearMatch[1];
+    // 提取会议组织者（顿号分隔的多个机构）→ 存入 bookAuthors
+    if (orgPart) {
+      result.bookAuthors = orgPart.split(/[,，]/).map(s => s.trim()).filter(Boolean).map(name => ({ name }))
+    }
 
-    const pageMatch = /[:\：]\s*(\d[\d\-—~]*)/.exec(afterTag);
-    if (pageMatch) result.pages = pageMatch[1];
+    // 从 pubPart 提取出版地、出版社、年份、页码
+    // 格式1：天津：天津古籍出版社,2005:12-23
+    // 格式2：天津古籍出版社,2005:12-23（无出版地）
+    // 格式3：[出版者不详],2012:101-114（无出版地无出版社）
+    const pubPlaceMatch = /^([^:，,]+)[:：]([^,，]+)/.exec(pubPart)
+    if (pubPlaceMatch) {
+      result.publishPlace = pubPlaceMatch[1].trim()
+      result.publisher = pubPlaceMatch[2].trim()
+    } else {
+      // 无出版地，只有出版社
+      const pubOnlyMatch = /^([^,，]+)/.exec(pubPart)
+      if (pubOnlyMatch) {
+        const pubName = pubOnlyMatch[1].trim()
+        // 检测 [出版者不详] 等标记
+        if (/出版者不详|出版地不详|\[.*不详.*\]/.test(pubName)) {
+          result.publisher = ''
+          result.notes = '出版者不详，请手动填写'
+        } else {
+          result.publisher = pubName
+        }
+      }
+    }
+
+    const yearMatch = /(\d{4})/.exec(pubPart)
+    if (yearMatch) result.publishYear = yearMatch[1]
+
+    const pageMatch = /[:：]\s*(\d[\d\-—~]*)/.exec(pubPart)
+    if (pageMatch) result.pages = pageMatch[1]
   } else if (type === 'journal') {
     const journalMatch = /^([^,，]+)[,，]\s*(\d{4})[,，]?\s*(?:第?(\d+)卷)?[,，]?\s*[(\（]?(?:第?(\d+)[期号]?)[)\）]?\s*[:\：]\s*(\d[\d\-—~]*)/.exec(afterTag);
     if (journalMatch) {

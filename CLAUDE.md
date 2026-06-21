@@ -15,10 +15,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev       # Start dev server (Vite)
 npm run build     # TypeScript + Vite production build
 npm run lint      # ESLint check
+npm run test      # Run tests (vitest)
 npm run preview   # Preview production build
 ```
-
-No test suite configured.
 
 ## Tech Stack
 
@@ -36,6 +35,7 @@ src/
 ├── lib/                    # Core logic (no React dependencies)
 │   ├── types.ts           # Citation, ConversionRecord, TargetFormat types
 │   ├── parser.ts          # Text parsing → Citation object (GB/T 7714, Douban, etc.)
+│   ├── publisher-places.ts # Publisher → city mapping + auto-fill (100+ entries)
 │   ├── formatters/        # Citation → formatted string
 │   │   ├── lsyj.ts       # 《历史研究》格式 (primary target format)
 │   │   ├── gbt7714.ts    # GB/T 7714-2015

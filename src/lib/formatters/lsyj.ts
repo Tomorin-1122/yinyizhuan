@@ -240,8 +240,42 @@ function formatLSYJRaw(citation: Citation): string {
       return result + '。'
     }
 
-    case 'thesis':
     case 'conference': {
+      if (isEn) {
+        const parts: string[] = []
+        parts.push(authorStr(c))
+        parts.push(`"${c.title}"`)
+        if (c.bookAuthors && c.bookAuthors.length > 0) {
+          const orgs = c.bookAuthors.map(a => a.name).join(', ')
+          parts.push(`in ${orgs}`)
+        }
+        if (c.bookTitle) parts.push(`*${c.bookTitle}*`)
+        if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}: ${c.publisher}`)
+        else if (c.publisher) parts.push(c.publisher)
+        if (c.publishYear) parts.push(c.publishYear)
+        if (c.pages) parts.push(pageStr(c.pages, 'en'))
+        return parts.filter(Boolean).join(', ') + '.'
+      }
+      // 中文会议论文
+      const parts: string[] = []
+      const auth = authorStr(c)
+      if (auth) parts.push(auth + '：')
+      parts.push(processBookTitleMarks(`《${c.title}》`))
+      if (c.bookTitle) parts.push(processBookTitleMarks(`《${c.bookTitle}》`))
+      if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+      else if (c.publisher) parts.push(c.publisher)
+      if (c.publishYear) parts.push(`${c.publishYear}年`)
+      if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+      let result = ''
+      for (let i = 0; i < parts.length; i++) {
+        if (i === 0) result = parts[i]
+        else if (parts[i - 1].endsWith('：')) result += parts[i]
+        else result += '，' + parts[i]
+      }
+      return result + '。'
+    }
+
+    case 'thesis': {
       if (isEn) {
         const parts: string[] = []
         parts.push(authorStr(c))

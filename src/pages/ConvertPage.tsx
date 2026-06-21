@@ -93,6 +93,9 @@ export default function ConvertPage() {
       rawInput: citation.rawText || '',
     })
     showToast('转换成功，已保存到历史记录')
+    if (citation.notes?.includes('出版者不详')) {
+      showToast('⚠️ 该会议论文出版者不详，请手动填写出版社和出版地')
+    }
   }, [citation, targetFormat, refreshAccess])
 
   const handleCopy = async () => {
