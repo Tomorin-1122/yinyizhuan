@@ -400,15 +400,17 @@ export default function ManualForm({
         <div className="grid grid-cols-1 gap-4">
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">原文献信息</label>
-            <input value={c.originalCitation || ''} onChange={e => updateField('originalCitation', e.target.value)} className="input-field" placeholder="原文献的完整信息" />
+            <input value={c.originalCitation || ''} onChange={e => updateField('originalCitation', e.target.value)} className="input-field" placeholder="章太炎：《在长沙晨光学校演说》，1925年10月" />
+            <p className="text-xs text-ink-400 mt-1">格式：责任者：《题名》，版本/日期信息</p>
           </div>
           <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">转引文献信息</label>
-            <input value={c.transferredFrom || ''} onChange={e => updateField('transferredFrom', e.target.value)} className="input-field" placeholder="转引来源的完整信息" />
+            <label className="block text-sm font-medium text-ink-800 mb-1">转引来源</label>
+            <input value={c.transferredFrom || ''} onChange={e => updateField('transferredFrom', e.target.value)} className="input-field" placeholder="汤志钧：《章太炎年谱长编》下册，北京：中华书局，1979年" />
+            <p className="text-xs text-ink-400 mt-1">格式：责任者：《题名》，出版地：出版社，年份</p>
           </div>
           <div>
             <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
-            <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="56" />
+            <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="823" />
           </div>
         </div>
       )}
