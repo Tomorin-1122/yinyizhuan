@@ -32,6 +32,7 @@ export interface Citation {
   archiveNumber?: string;
   archiveLocation?: string;
   ancientEdition?: string;
+  ancientSubType?: 'blockprint' | 'punctuated' | 'reprint' | 'extract' | 'gazetteer' | 'classic' | 'chronicle';
   section?: string;
   pageAB?: string;
   url?: string;

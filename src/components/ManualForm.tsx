@@ -379,18 +379,136 @@ export default function ManualForm({
       {showAncientFields && (
         <div className="grid grid-cols-1 gap-4">
           <div>
-            <label className="block text-sm font-medium text-ink-800 mb-1">版本信息</label>
-            <input value={c.ancientEdition || ''} onChange={e => updateField('ancientEdition', e.target.value)} className="input-field" placeholder="光绪三年苏州文学山房活字本" />
+            <label className="block text-sm font-medium text-ink-800 mb-1">古籍类型</label>
+            <select
+              value={c.ancientSubType || ''}
+              onChange={e => updateField('ancientSubType', e.target.value as Citation['ancientSubType'])}
+              className="input-field cursor-pointer"
+            >
+              <option value="">请选择</option>
+              <option value="blockprint">刻本</option>
+              <option value="punctuated">点校本/整理本</option>
+              <option value="reprint">影印本</option>
+              <option value="extract">析出文献</option>
+              <option value="gazetteer">地方志</option>
+              <option value="classic">常用基本典籍</option>
+              <option value="chronicle">编年体典籍</option>
+            </select>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+
+          {/* 版本信息（刻本/点校本/影印本/典籍用） */}
+          {(!c.ancientSubType || ['blockprint', 'punctuated', 'reprint', 'classic'].includes(c.ancientSubType)) && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">
+                {c.ancientSubType === 'punctuated' ? '版本标注' : '版本信息'}
+              </label>
+              <input
+                value={c.ancientEdition || ''}
+                onChange={e => updateField('ancientEdition', e.target.value)}
+                className="input-field"
+                placeholder={c.ancientSubType === 'punctuated' ? '标点本/整理本' : '光绪三年苏州文学山房活字本'}
+              />
+            </div>
+          )}
+
+          {/* 篇名/部类（刻本/点校本/影印本/析出/典籍用） */}
+          {(!c.ancientSubType || ['blockprint', 'punctuated', 'reprint', 'extract', 'classic'].includes(c.ancientSubType)) && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">篇名/部类</label>
               <input value={c.section || ''} onChange={e => updateField('section', e.target.value)} className="input-field" placeholder="首辅志" />
             </div>
+          )}
+
+          {/* 出版地/出版社/年份（点校本/影印本/析出/地方志用） */}
+          {c.ancientSubType && ['punctuated', 'reprint', 'extract', 'gazetteer'].includes(c.ancientSubType) && (
+            <div className="grid grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">出版地</label>
+                <input value={c.publishPlace || ''} onChange={e => updateField('publishPlace', e.target.value)} className="input-field" placeholder="北京" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">出版社</label>
+                <input value={c.publisher || ''} onChange={e => updateField('publisher', e.target.value)} className="input-field" placeholder="中华书局" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">年份</label>
+                <input value={c.publishYear || ''} onChange={e => updateField('publishYear', e.target.value)} className="input-field" placeholder="2005" />
+              </div>
+            </div>
+          )}
+
+          {/* 文集责任者/文集题名（析出文献用） */}
+          {c.ancientSubType === 'extract' && (
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">文集责任者</label>
+                <input value={c.bookAuthors?.[0]?.name || ''} onChange={e => updateField('bookAuthors', [{ name: e.target.value }])} className="input-field" placeholder="张三" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">文集题名</label>
+                <input value={c.bookTitle || ''} onChange={e => updateField('bookTitle', e.target.value)} className="input-field" placeholder="文集名" />
+              </div>
+            </div>
+          )}
+
+          {/* 丛书项（析出/地方志用） */}
+          {c.ancientSubType && ['extract', 'gazetteer'].includes(c.ancientSubType) && (
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">丛书名</label>
+                <input value={c.seriesName || ''} onChange={e => updateField('seriesName', e.target.value)} className="input-field" placeholder="四库全书存目丛书" />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">丛书册数</label>
+                <input value={c.seriesVolume || ''} onChange={e => updateField('seriesVolume', e.target.value)} className="input-field" placeholder="第88册" />
+              </div>
+            </div>
+          )}
+
+          {/* 影印本栏 */}
+          {c.ancientSubType === 'reprint' && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">栏（上/中/下，可选）</label>
+              <input value={c.pageAB || ''} onChange={e => updateField('pageAB', e.target.value)} className="input-field" placeholder="下栏" />
+            </div>
+          )}
+
+          {/* 编年体年月甲子 */}
+          {c.ancientSubType === 'chronicle' && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">年月甲子（可选）</label>
+              <input value={c.archiveDate || ''} onChange={e => updateField('archiveDate', e.target.value)} className="input-field" placeholder="光绪二十四年十二月上" />
+            </div>
+          )}
+
+          {/* 地方志修纂年代 */}
+          {c.ancientSubType === 'gazetteer' && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">修纂年代</label>
+              <input value={c.edition || ''} onChange={e => updateField('edition', e.target.value)} className="input-field" placeholder="万历" />
+            </div>
+          )}
+
+          {/* 卷次（典籍/编年体用） */}
+          {c.ancientSubType && ['classic', 'chronicle'].includes(c.ancientSubType) && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">卷次</label>
+              <input value={c.volume || ''} onChange={e => updateField('volume', e.target.value)} className="input-field" placeholder="卷一" />
+            </div>
+          )}
+
+          {/* a/b面（刻本/点校本/影印本用） */}
+          {c.ancientSubType && ['blockprint', 'punctuated', 'reprint'].includes(c.ancientSubType) && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">a/b面</label>
               <input value={c.pageAB || ''} onChange={e => updateField('pageAB', e.target.value)} className="input-field" placeholder="a 或 b" />
             </div>
+          )}
+
+          {/* 页码 */}
+          <div>
+            <label className="block text-sm font-medium text-ink-800 mb-1">页码</label>
+            <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="可选" />
           </div>
         </div>
       )}
