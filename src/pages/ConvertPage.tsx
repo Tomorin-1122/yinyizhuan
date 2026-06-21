@@ -9,7 +9,7 @@ import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
 import { canConvert, recordConversion, isAdmin, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { useAccessState } from '../lib/use-access'
 import { validateCitation } from '../lib/validate'
-import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader, IconRepeat } from '../components/Icons'
+import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader, IconRepeat, IconChevronDown } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
 import { processBookTitleMarks } from '../lib/formatters/lsyj'
 import { Converter } from 'opencc-js'
@@ -39,6 +39,7 @@ export default function ConvertPage() {
   const [result, setResult] = useState('')
   const [lastRecordId, setLastRecordId] = useState<string | null>(null)
   const [copied, setCopied] = useState(false)
+  const [showPages, setShowPages] = useState(false)
   const [showInvite, setShowInvite] = useState(false)
   const [pasteText, setPasteText] = useState('')
   const [urlInput, setUrlInput] = useState('')
@@ -81,6 +82,7 @@ export default function ConvertPage() {
     }
     const output = formatCitation(citation, targetFormat)
     setResult(output)
+    setShowPages(false)
     recordConversion()
     refreshAccess()
     const newId = generateId()
@@ -100,7 +102,7 @@ export default function ConvertPage() {
   }, [citation, targetFormat, refreshAccess])
 
   const handleCopy = async () => {
-    const ok = await copyToClipboard(result)
+    const ok = await copyToClipboard(displayedResult)
     if (ok) { setCopied(true); setTimeout(() => setCopied(false), 1500) }
   }
 
@@ -135,6 +137,18 @@ export default function ConvertPage() {
     const ok = await copyToClipboard(reCited)
     if (ok) showToast('已复制再次引证版本')
   }
+
+  // 生成含页码版本（仅期刊）
+  const getResultWithPages = (): string => {
+    if (!result || targetFormat !== 'lsyj' || citation.type !== 'journal') return result
+    if (!citation.pages) return result
+    const pagePart = citation.language === 'en'
+      ? `, p.${citation.pages}`
+      : `，第${citation.pages}页`
+    return result.replace(/。$/, pagePart + '。').replace(/\.$/, pagePart + '.')
+  }
+
+  const displayedResult = showPages ? getResultWithPages() : result
 
   const handleParse = () => {
     if (!pasteText.trim()) return
@@ -474,7 +488,7 @@ export default function ConvertPage() {
             <div className="flex-1 flex flex-col animate-slide-up">
               <label className="block text-sm font-medium text-ink-800 mb-2">转换结果</label>
               <div className="flex-1 p-4 bg-parchment-50 border-2 border-ink-200 font-body text-ink-950 leading-relaxed text-sm whitespace-pre-wrap min-h-[120px]">
-                {result}
+                {displayedResult}
               </div>
               {targetFormat === 'lsyj' && citation.language === 'en' && result.includes('*') && (
                 <div className="bg-amber-50 border border-amber-200 p-2 text-xs text-amber-800 mt-2">
@@ -490,6 +504,16 @@ export default function ConvertPage() {
                   <IconDownload className="w-4 h-4" />
                   下载
                 </button>
+                {targetFormat === 'lsyj' && citation.type === 'journal' && citation.pages && (
+                  <button
+                    onClick={() => setShowPages(!showPages)}
+                    className="btn-ghost flex-1 text-sm"
+                    title="显示/隐藏期刊页码"
+                  >
+                    <IconChevronDown className={`w-4 h-4 transition-transform ${showPages ? 'rotate-180' : ''}`} />
+                    {showPages ? '隐藏页码' : '显示页码'}
+                  </button>
+                )}
                 {targetFormat === 'lsyj' && citation.type === 'book' && (
                   <button
                     onClick={handleReCite}

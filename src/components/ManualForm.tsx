@@ -245,10 +245,17 @@ export default function ManualForm({
               <label className="block text-sm font-medium text-ink-800 mb-1">{c.language === 'en' ? '期号 Issue' : '期号'}</label>
               <input value={c.issue || ''} onChange={e => updateField('issue', e.target.value)} className="input-field" placeholder="3" />
             </div>
-            <div className={c.language === 'en' ? '' : 'col-span-2 sm:col-span-1'}>
-              <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
-              <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="12-20" />
-            </div>
+            {/* 中文期刊：卷号（可选） */}
+            {c.language !== 'en' && (
+              <div>
+                <label className="block text-sm font-medium text-ink-800 mb-1">卷号(可选)</label>
+                <input value={c.volumeNumber || ''} onChange={e => updateField('volumeNumber', e.target.value)} className="input-field" placeholder="留空则不输出" />
+              </div>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-ink-800 mb-1">页码(可选)</label>
+            <input value={c.pages || ''} onChange={e => updateField('pages', e.target.value)} className="input-field" placeholder="默认不输出，可在结果区展开" />
           </div>
           {c.language === 'en' && (
             <div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 p-3 text-xs text-amber-800 dark:text-amber-300 flex items-start gap-2">

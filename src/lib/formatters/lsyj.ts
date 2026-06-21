@@ -221,13 +221,15 @@ function formatLSYJRaw(citation: Citation): string {
       result += '，'
       result += journalPart
       if (c.volumeNumber && c.issue) {
+        // 有卷号：第X卷第Y号，YYYY年（规范用"号"）
         result += `第${c.volumeNumber}卷第${removeLeadingZero(c.issue)}号`
         if (c.publishYear) result += `，${c.publishYear}年`
       } else {
+        // 无卷号：YYYY年第N期
         if (c.publishYear) result += `${c.publishYear}年`
         if (c.issue) result += `第${removeLeadingZero(c.issue)}期`
       }
-      if (c.pages) result += `，${pageStr(c.pages, 'zh')}`
+      // 页码默认不输出（由结果区"显示页码"按钮控制）
       return result + '。'
     }
 
