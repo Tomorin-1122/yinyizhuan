@@ -5,15 +5,9 @@ export interface FieldError {
   message: string
 }
 
-export function validateCitation(c: Citation): FieldError[] {
-  const errors: FieldError[] = []
-
-  // 仅年份格式验证（其他字段不再阻止转换）
-  if (c.publishYear && !/^\d{4}(-\d{4})?$/.test(c.publishYear)) {
-    errors.push({ field: 'publishYear', message: '年份格式应为 YYYY 或 YYYY-YYYY' })
-  }
-
-  return errors
+export function validateCitation(_c: Citation): FieldError[] {
+  // 不再阻止转换，所有验证改为提醒
+  return []
 }
 
 // 检查期刊是否缺少作者或题名（仅提醒，不阻止转换）
