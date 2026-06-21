@@ -34,7 +34,27 @@ export interface Citation {
   ancientEdition?: string;
   ancientSubType?: 'blockprint' | 'punctuated' | 'reprint' | 'extract' | 'gazetteer' | 'classic' | 'chronicle';
   section?: string;
+  /** a/b面（刻本用，如"a"、"b"） */
   pageAB?: string;
+
+  /** 点校者（点校本/整理本用） */
+  punctuators?: Author[];
+
+  /** 单书册数（如"上册"、"第3册"，区别于丛书册数） */
+  bookletVolume?: string;
+
+  /** 栏（影印本用，上/中/下栏） */
+  column?: string;
+
+  /** 部类（析出文献用，如"子部"、"史部"） */
+  category?: string;
+
+  /** 修纂年代（地方志用，如"万历"、"民国"） */
+  compileEra?: string;
+
+  /** 年代（古籍用，如"明"、"清"，输出时加方括号） */
+  dynasty?: string;
+
   url?: string;
   accessDate?: string;
   originalCitation?: string;

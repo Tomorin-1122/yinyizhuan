@@ -374,26 +374,42 @@ export default function HistoryPage() {
     if (ok) { setCopiedId(id); setTimeout(() => setCopiedId(''), 1500) }
   }
 
-  // 生成再次引证版本（仅 LSYJ + book）
+  // 生成再次引证版本（LSYJ + book/ancient with publish info）
   const generateReCitation = (record: ConversionRecord): string | null => {
     const { citation } = record
-    if (record.targetFormat !== 'lsyj' || citation.type !== 'book') return null
-    const auth = citation.authors.map(a => {
-      if (citation.language === 'en') {
-        const suffix = a.role && a.role !== 'author' ? `, ${a.role}` : ''
-        return a.name + suffix
+    if (record.targetFormat !== 'lsyj') return null
+    if (citation.type === 'book') {
+      const auth = citation.authors.map(a => {
+        if (citation.language === 'en') {
+          const suffix = a.role && a.role !== 'author' ? `, ${a.role}` : ''
+          return a.name + suffix
+        }
+        if (!a.role || a.role === '著') return a.name
+        return a.name + a.role
+      }).join(citation.language === 'en' ? ', ' : '、')
+      const title = citation.language === 'en'
+        ? `*${citation.title}*`
+        : processBookTitleMarks(`《${citation.title}》`)
+      const parts = [auth ? auth + '：' : '', title]
+      if (citation.pages) {
+        parts.push(citation.language === 'en' ? `p.${citation.pages}` : `第${citation.pages}页`)
       }
-      if (!a.role || a.role === '著') return a.name
-      return a.name + a.role
-    }).join(citation.language === 'en' ? ', ' : '、')
-    const title = citation.language === 'en'
-      ? `*${citation.title}*`
-      : processBookTitleMarks(`《${citation.title}》`)
-    const parts = [auth ? auth + '：' : '', title]
-    if (citation.pages) {
-      parts.push(citation.language === 'en' ? `p.${citation.pages}` : `第${citation.pages}页`)
+      return parts.join('') + (citation.language === 'en' ? '.' : '。')
     }
-    return parts.join('') + (citation.language === 'en' ? '.' : '。')
+    if (citation.type === 'ancient' && citation.publisher) {
+      const dyn = citation.dynasty ? `[${citation.dynasty}]` : ''
+      const auth = citation.authors.map(a => {
+        if (!a.role || a.role === '著') return a.name
+        return a.name + a.role
+      }).join('、')
+      const title = processBookTitleMarks(`《${citation.title}》`)
+      const parts: string[] = []
+      if (dyn || auth) parts.push(dyn + auth + '：')
+      parts.push(title)
+      if (citation.pages) parts.push(`第${citation.pages}页`)
+      return parts.join('') + '。'
+    }
+    return null
   }
 
   const handleReCite = async (record: ConversionRecord) => {
@@ -869,7 +885,7 @@ export default function HistoryPage() {
                       >
                         {copiedId === r.id ? <IconCheck className="w-4 h-4 text-green-600" /> : <IconCopy className="w-4 h-4" />}
                       </button>
-                      {r.targetFormat === 'lsyj' && r.citation.type === 'book' && (
+                      {r.targetFormat === 'lsyj' && (r.citation.type === 'book' || (r.citation.type === 'ancient' && r.citation.publisher)) && (
                         <button
                           onClick={() => handleReCite(r)}
                           className="btn-ghost px-2 py-1"

@@ -172,6 +172,90 @@ describe('formatLSYJ', () => {
     expect(result).toContain('明史')
     expect(result).toMatchSnapshot()
   })
+
+  // ─── 古籍子类型测试 ─────────────────────────────────────
+
+  it('古籍-刻本', () => {
+    const c: Citation = {
+      id: 'a1', type: 'ancient', language: 'zh', authors: [{ name: '姚际恒' }], title: '古今伪书考',
+      ancientSubType: 'blockprint', volume: '卷3',
+      ancientEdition: '光绪三年苏州文学山房活字本', pages: '9', pageAB: 'a',
+    }
+    expect(formatLSYJ(c)).toBe('姚际恒：《古今伪书考》卷3，光绪三年苏州文学山房活字本，第9页a。')
+  })
+
+  it('古籍-点校本', () => {
+    const c: Citation = {
+      id: 'a2', type: 'ancient', language: 'zh', authors: [{ name: '毛祥麟' }], title: '墨余录',
+      ancientSubType: 'punctuated', punctuators: [{ name: '毕万忱' }],
+      publishPlace: '上海', publisher: '上海古籍出版社', publishYear: '1985',
+      ancientEdition: '标点本', pages: '35',
+    }
+    expect(formatLSYJ(c)).toBe('毛祥麟：《墨余录》，毕万忱点校，上海：上海古籍出版社，1985年标点本，第35页。')
+  })
+
+  it('古籍-影印本', () => {
+    const c: Citation = {
+      id: 'a3', type: 'ancient', language: 'zh', authors: [{ name: '杨钟羲' }], title: '雪桥诗话续集',
+      ancientSubType: 'reprint', volume: '卷5',
+      publishPlace: '沈阳', publisher: '辽沈书社', publishYear: '1991',
+      ancientEdition: '影印本', bookletVolume: '上册', pages: '461', column: '下栏',
+    }
+    expect(formatLSYJ(c)).toBe('杨钟羲：《雪桥诗话续集》卷5，沈阳：辽沈书社，1991年影印本，上册，第461页下栏。')
+  })
+
+  it('古籍-析出文献', () => {
+    const c: Citation = {
+      id: 'a4', type: 'ancient', language: 'zh', authors: [{ name: '管志道' }], title: '续问辨牍',
+      ancientSubType: 'extract', volume: '卷2', section: '答屠仪部赤水丈书',
+      bookTitle: '四库全书存目丛书',
+      publishPlace: '济南', publisher: '齐鲁书社', publishYear: '1997',
+      ancientEdition: '影印本', category: '子部', seriesVolume: '第88册', pages: '73',
+    }
+    expect(formatLSYJ(c)).toBe('管志道：《续问辨牍》卷2《答屠仪部赤水丈书》，《四库全书存目丛书》，济南：齐鲁书社，1997年影印本，子部，第88册，第73页。')
+  })
+
+  it('古籍-地方志', () => {
+    const c: Citation = {
+      id: 'a5', type: 'ancient', language: 'zh', authors: [], title: '广东通志',
+      ancientSubType: 'gazetteer', compileEra: '万历', volume: '卷15', section: '郡县志二·广州府·城池',
+      seriesName: '稀见中国地方志汇刊',
+      publishPlace: '北京', publisher: '中国书店', publishYear: '1992',
+      ancientEdition: '影印本', seriesVolume: '第42册', pages: '367',
+    }
+    expect(formatLSYJ(c)).toBe('万历《广东通志》卷15《郡县志二·广州府·城池》，《稀见中国地方志汇刊》第42册，北京：中国书店，1992年影印本，第367页。')
+  })
+
+  it('古籍-常用基本典籍', () => {
+    const c: Citation = {
+      id: 'a6', type: 'ancient', language: 'zh', authors: [], title: '旧唐书',
+      ancientSubType: 'classic', volume: '卷9', section: '玄宗纪下',
+      publishPlace: '北京', publisher: '中华书局', publishYear: '1975',
+      ancientEdition: '标点本', bookletVolume: '上册', pages: '233',
+    }
+    expect(formatLSYJ(c)).toBe('《旧唐书》卷9《玄宗纪下》，北京：中华书局，1975年标点本，上册，第233页。')
+  })
+
+  it('古籍-编年体典籍', () => {
+    const c: Citation = {
+      id: 'a7', type: 'ancient', language: 'zh', authors: [], title: '清德宗实录',
+      ancientSubType: 'chronicle', volume: '卷435', archiveDate: '光绪二十四年十二月上',
+      publishPlace: '北京', publisher: '中华书局', publishYear: '1987',
+      ancientEdition: '影印本', bookletVolume: '第6册', pages: '727',
+    }
+    expect(formatLSYJ(c)).toBe('《清德宗实录》卷435，光绪二十四年十二月上，北京：中华书局，1987年影印本，第6册，第727页。')
+  })
+
+  it('古籍-向后兼容（未选子类型）', () => {
+    const c: Citation = {
+      id: 'a8', type: 'ancient', language: 'zh',
+      authors: [{ name: '姚际恒' }], title: '古今伪书考', volume: '卷3',
+      ancientEdition: '光绪三年苏州文学山房活字本', pages: '9',
+    }
+    const result = formatLSYJ(c)
+    expect(result).toContain('姚际恒：《古今伪书考》')
+    expect(result).toContain('卷3')
+  })
 })
 
 // ─── GB/T 7714 格式测试 ─────────────────────────────

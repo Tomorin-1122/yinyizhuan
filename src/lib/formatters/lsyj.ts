@@ -80,6 +80,38 @@ function removeLeadingZero(num: string | undefined): string {
 }
 
 /**
+ * 格式化卷次：自动加"卷"前缀
+ * "3" → "卷3", "一" → "卷一", "卷3" → "卷3", "435" → "卷435"
+ */
+function formatVolume(vol: string | undefined): string {
+  if (!vol) return ''
+  // 已有"卷"前缀则原样返回
+  if (vol.startsWith('卷')) return vol
+  return `卷${vol}`
+}
+
+/**
+ * 格式化册数：纯数字加"第X册"，已有"册"字或"上/下册"则原样
+ * "3" → "第3册", "上册" → "上册", "第6册" → "第6册"
+ */
+function formatBooklet(vol: string | undefined): string {
+  if (!vol) return ''
+  // 已含"册"字则原样返回（覆盖"上册""下册""第6册"等）
+  if (vol.includes('册')) return vol
+  return `第${vol}册`
+}
+
+/**
+ * 格式化丛书册数：纯数字加"第X册"，已有格式则原样
+ * "42" → "第42册", "第88册" → "第88册"
+ */
+function formatSeriesVolume(vol: string | undefined): string {
+  if (!vol) return ''
+  if (vol.includes('册')) return vol
+  return `第${vol}册`
+}
+
+/**
  * 将英文括号 () 转换为中文括号 （）
  * 跳过 URL 中的括号（http:// 或 https:// 开头的段落）
  */
@@ -323,23 +355,17 @@ function formatLSYJRaw(citation: Citation): string {
     }
 
     case 'ancient': {
-      const auth = authorStr(c)
-      let result = ''
-      if (auth) result = auth + '：'
-      result += processBookTitleMarks(`《${c.title}》`)
-      if (c.volume) result += c.volume
-      if (c.section) result += processBookTitleMarks(`《${c.section}》`)
-      if (c.ancientEdition) result += `，${c.ancientEdition}`
-      if (c.seriesName) result += `，` + processBookTitleMarks(`《${c.seriesName}》`)
-      if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
-      if (c.publishYear) result += `，${c.publishYear}年`
-      if (c.edition) result += c.edition
-      if (c.seriesVolume) result += `，${c.seriesVolume}`
-      if (c.pages) {
-        const p = c.pageAB ? `${c.pages}页${c.pageAB}` : pageStr(c.pages, 'zh')
-        result += `，${p}`
+      // 按子类型分发到独立格式化函数
+      switch (c.ancientSubType) {
+        case 'blockprint':  return formatAncientBlockprint(c)
+        case 'punctuated':  return formatAncientPunctuated(c)
+        case 'reprint':     return formatAncientReprint(c)
+        case 'extract':     return formatAncientExtract(c)
+        case 'gazetteer':   return formatAncientGazetteer(c)
+        case 'classic':     return formatAncientClassic(c)
+        case 'chronicle':   return formatAncientChronicle(c)
+        default:            return formatAncientLegacy(c)
       }
-      return result + '。'
     }
 
     case 'electronic': {
@@ -385,6 +411,240 @@ function formatLSYJRaw(citation: Citation): string {
     default:
       return formatDefault(c)
   }
+}
+
+// ─── 古籍子类型格式化函数 ─────────────────────────────────────────
+
+// ─── 刻本 ───────────────────────────────────────
+// 规范：姚际恒：《古今伪书考》卷3，光绪三年苏州文学山房活字本，第9页a。
+// 带馆藏：《山东经会录》，隆庆五年刻本，京都大学法学部图书馆藏。
+function formatAncientBlockprint(c: Citation): string {
+  const parts: string[] = []
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  if (c.ancientEdition) parts.push(c.ancientEdition)
+  if (c.archiveLocation) parts.push(c.archiveLocation)
+  if (c.pages) {
+    const p = c.pageAB ? `第${c.pages}页${c.pageAB}` : pageStr(c.pages, 'zh')
+    parts.push(p)
+  }
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 点校本/整理本 ──────────────────────────────
+// 规范：毛祥麟：《墨余录》，毕万忱点校，上海：上海古籍出版社，1985年，第35页。
+function formatAncientPunctuated(c: Citation): string {
+  const parts: string[] = []
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  const pStr = punctuatorStr(c.punctuators || [])
+  if (pStr) parts.push(pStr)
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    const editionTag = c.ancientEdition ? `${c.publishYear}年${c.ancientEdition}` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 影印本 ─────────────────────────────────────
+// 规范：杨钟羲：《雪桥诗话续集》卷5，沈阳：辽沈书社，1991年影印本，上册，第461页下栏。
+function formatAncientReprint(c: Citation): string {
+  const parts: string[] = []
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    // 影印本标注拼到年份后
+    const editionTag = c.ancientEdition === '影印本' ? `${c.publishYear}年影印本` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  if (c.bookletVolume) parts.push(formatBooklet(c.bookletVolume))
+  if (c.pages) {
+    // 影印本：第461页下栏
+    const col = c.column ? `${c.column}` : ''
+    parts.push(`第${c.pages}页${col}`)
+  }
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 析出文献 ───────────────────────────────────
+// 规范：管志道：《续问辨牍》卷2《答屠仪部赤水丈书》，《四库全书存目丛书》，济南：齐鲁书社，1997年影印本，子部，第88册，第73页。
+function formatAncientExtract(c: Citation): string {
+  const parts: string[] = []
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  // 文集题名（用书名号，前面加逗号）
+  if (c.bookTitle) parts.push(processBookTitleMarks(`《${c.bookTitle}》`))
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    const editionTag = c.ancientEdition === '影印本' ? `${c.publishYear}年影印本` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  // 部类（子部、史部等）
+  if (c.category) parts.push(c.category)
+  if (c.seriesVolume) parts.push(formatSeriesVolume(c.seriesVolume))
+  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 地方志 ─────────────────────────────────────
+// 规范：万历《广东通志》卷15《郡县志二·广州府·城池》，《稀见中国地方志汇刊》，北京：中国书店，1992年影印本，第42册，第367页。
+function formatAncientGazetteer(c: Citation): string {
+  const parts: string[] = []
+  // 地方志：修纂年代冠题名前，作者一般不标
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  // 题名前冠修纂年代
+  const titleWithEra = c.compileEra
+    ? `${c.compileEra}${processBookTitleMarks(`《${c.title}》`)}`
+    : processBookTitleMarks(`《${c.title}》`)
+  parts.push(titleWithEra)
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  // 整理者（可选，在丛书名前）
+  const pStr = punctuatorStr(c.punctuators || [])
+  if (pStr) parts.push(pStr)
+  // 丛书名（如有）+ 册数紧跟
+  if (c.seriesName) {
+    let seriesPart = processBookTitleMarks(`《${c.seriesName}》`)
+    if (c.seriesVolume) seriesPart += formatSeriesVolume(c.seriesVolume)
+    parts.push(seriesPart)
+  }
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    const editionTag = c.ancientEdition === '影印本' ? `${c.publishYear}年影印本` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 常用基本典籍 ───────────────────────────────
+// 规范：《旧唐书》卷9《玄宗纪下》，北京：中华书局，1975年标点本，上册，第233页。
+function formatAncientClassic(c: Citation): string {
+  const parts: string[] = []
+  // 典籍一般不标作者
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    const editionTag = c.ancientEdition ? `${c.publishYear}年${c.ancientEdition}` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  if (c.bookletVolume) parts.push(formatBooklet(c.bookletVolume))
+  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 编年体典籍 ─────────────────────────────────
+// 规范：《清德宗实录》卷435，光绪二十四年十二月上，北京：中华书局，1987年影印本，第6册，第727页。
+function formatAncientChronicle(c: Citation): string {
+  const parts: string[] = []
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  if (dyn || auth) parts.push(dyn + auth + '：')
+  parts.push(processBookTitleMarks(`《${c.title}》`))
+  if (c.volume) parts.push(formatVolume(c.volume))
+  // 年月甲子（在出版信息前）
+  if (c.archiveDate) parts.push(c.archiveDate)
+  if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
+  if (c.publishYear) {
+    const editionTag = c.ancientEdition === '影印本' ? `${c.publishYear}年影印本` : `${c.publishYear}年`
+    parts.push(editionTag)
+  }
+  if (c.bookletVolume) parts.push(formatBooklet(c.bookletVolume))
+  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  return joinAncientParts(parts) + '。'
+}
+
+// ─── 向后兼容：未选子类型时用旧逻辑 ─────────────
+function formatAncientLegacy(c: Citation): string {
+  const dyn = dynastyPrefix(c)
+  const auth = authorStr(c)
+  let result = ''
+  if (dyn || auth) result = dyn + auth + '：'
+  result += processBookTitleMarks(`《${c.title}》`)
+  if (c.volume) result += formatVolume(c.volume)
+  if (c.section) result += processBookTitleMarks(`《${c.section}》`)
+  if (c.ancientEdition) result += `，${c.ancientEdition}`
+  if (c.seriesName) result += `，` + processBookTitleMarks(`《${c.seriesName}》`)
+  if (c.publishPlace && c.publisher) result += `，${c.publishPlace}：${c.publisher}`
+  if (c.publishYear) result += `，${c.publishYear}年`
+  if (c.seriesVolume) result += `，${formatSeriesVolume(c.seriesVolume)}`
+  if (c.pages) {
+    const p = c.pageAB ? `${c.pages}页${c.pageAB}` : pageStr(c.pages, 'zh')
+    result += `，${p}`
+  }
+  return result + '。'
+}
+
+// ─── 辅助函数：按古籍规范拼接 parts ──────────────
+// 规则：
+// - 第一个 part 直接放入
+// - 若前一个 part 以"："结尾（作者后），当前 part 直接拼接
+// - 否则前面加"，"
+function joinAncientParts(parts: string[]): string {
+  if (parts.length === 0) return ''
+  let result = parts[0]
+  for (let i = 1; i < parts.length; i++) {
+    const prev = parts[i - 1]
+    const next = parts[i]
+    // 作者后直接拼接
+    if (prev.endsWith('：')) { result += next; continue }
+    // 卷次后直接拼接（卷X + 篇名/下一个元素）
+    if (next.startsWith('卷')) { result += next; continue }
+    // 卷次后的篇名直接拼接（卷X + 《篇名》）
+    if (prev.startsWith('卷') && next.startsWith('《')) { result += next; continue }
+    // 其他情况加逗号
+    result += '，' + next
+  }
+  return result
+}
+
+/**
+ * 年代前缀：[明]、[清] 等
+ * 仅古籍用，有 dynasty 时输出方括号包裹
+ */
+function dynastyPrefix(c: Citation): string {
+  return c.dynasty ? `[${c.dynasty}]` : ''
+}
+
+/**
+ * 点校者/整理者字符串
+ * 同角色合并：王安、谢安点校
+ * 不同角色分开：王安点校、谢安整理
+ */
+function punctuatorStr(punctuators: import('../types').Author[]): string {
+  if (!punctuators || punctuators.length === 0) return ''
+  const roles = new Set(punctuators.map(p => p.role || '点校'))
+  if (roles.size === 1) {
+    const role = punctuators[0].role || '点校'
+    return punctuators.map(p => p.name).join('、') + role
+  }
+  return punctuators.map(p => p.name + (p.role || '点校')).join('、')
 }
 
 function formatDefault(c: Citation): string {
