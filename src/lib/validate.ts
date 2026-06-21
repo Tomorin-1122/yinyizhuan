@@ -8,7 +8,8 @@ export interface FieldError {
 export function validateCitation(c: Citation): FieldError[] {
   const errors: FieldError[] = []
 
-  if (!c.title.trim()) {
+  // 古籍可不填标题（有子类型专用字段）
+  if (c.type !== 'ancient' && !c.title.trim()) {
     errors.push({ field: 'title', message: '标题不能为空' })
   }
 
