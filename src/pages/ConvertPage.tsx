@@ -220,14 +220,7 @@ export default function ConvertPage() {
   }
 
   const updateField = <K extends keyof Citation>(field: K, value: Citation[K]) => {
-    setCitation(prev => {
-      const next = { ...prev, [field]: value }
-      // 切换类型时：如果标题为空且新类型需要标题，自动设置占位符
-      if (field === 'type' && !next.title.trim() && !['ancient', 'transferred'].includes(value as string)) {
-        next.title = '（请填写标题）'
-      }
-      return next
-    })
+    setCitation(prev => ({ ...prev, [field]: value }))
   }
 
   const updateAuthor = (index: number, field: keyof Author, value: string) => {
