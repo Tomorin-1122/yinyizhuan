@@ -60,6 +60,41 @@ src/
 
 12 types defined in `CitationType`: book, chapter, journal, newspaper, thesis, archive, ancient, electronic, conference, diary, transferred, classic
 
+### 古籍子类型
+
+古籍类型支持 7 种子类型（`ancientSubType`）：
+- `blockprint` - 刻本
+- `punctuated` - 点校本/整理本
+- `reprint` - 影印本
+- `extract` - 析出文献
+- `gazetteer` - 地方志
+- `classic` - 常用基本典籍
+- `chronicle` - 编年体典籍
+
+## Recent Updates (2026-06-21)
+
+### Parser
+- 会议论文解析重写：正确提取组织者、论文集名、出版地、出版社
+- 新增 MLA 解析器：支持双引号标题格式的英文文献
+
+### Formatter (lsyj.ts)
+- 会议论文独立分支（拆分自 thesis）
+- 英文期刊：标题加引号，期刊名加 `*` 斜体标记
+- 中文期刊：默认不输出页码，有卷号时用"号"而非"期"
+
+### 表单
+- 古籍：子类型下拉 + 按类型条件显示字段
+- 转引：优化 placeholder 和格式提示
+- 期刊：新增卷号字段，页码移到可选
+
+### 功能
+- 再次引证按钮（HistoryPage，仅 LSYJ + book）
+- 期刊页码切换按钮（ConvertPage）
+- 出版者不详 toast 提示
+
+### 验证
+- 仅期刊强制要求标题，其他类型可不填
+
 ## 《历史研究》 Format Notes
 
 - Uses footnote style with inline annotations
@@ -89,9 +124,10 @@ All data persists in browser localStorage:
 
 - Chinese encoding: Bash output garbles Chinese; use English/numeric output in scripts
 - File uploads: BibTeX/RIS parsers handle UTF-8; EndNote (.enl) requires special handling
-- The `lsyj.ts` formatter is the most complex (~13KB) due to 12 citation type variations
-- The `parser.ts` is the largest lib file (~19KB) with complex text parsing logic
-- The `ConvertPage.tsx` is the largest page (~48KB) with rich conversion UI
+- The `lsyj.ts` formatter is the most complex (~15KB) due to 12 citation type variations
+- The `parser.ts` is the largest lib file (~20KB) with complex text parsing logic
+- The `ConvertPage.tsx` is the largest page (~50KB) with rich conversion UI
+- `processBookTitleMarks` exported from lsyj.ts（用于再次引证功能）
 
 ## Deployment
 
