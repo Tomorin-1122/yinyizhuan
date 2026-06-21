@@ -9,7 +9,7 @@ import { formatAuthorName, joinAuthorNames } from './author-utils'
  * - 特殊情况：单书名号内再有书名号时，内层用双书名号
  * 示例：《读〈石钟山记〉有感》
  */
-function processBookTitleMarks(text: string): string {
+export function processBookTitleMarks(text: string): string {
   if (!text) return text
   
   // 首先将文本中可能已有的单书名号统一为临时标记
