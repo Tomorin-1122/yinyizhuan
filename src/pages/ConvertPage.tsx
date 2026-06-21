@@ -8,7 +8,7 @@ import { addRecord } from '../lib/storage'
 import { generateId, copyToClipboard, downloadFile } from '../lib/utils'
 import { canConvert, recordConversion, isAdmin, canFetchMetadata, recordMetadataFetch, getFetchMetadataRemaining } from '../lib/access'
 import { useAccessState } from '../lib/use-access'
-import { validateCitation } from '../lib/validate'
+import { validateCitation, checkJournalWarnings } from '../lib/validate'
 import { IconCopy, IconDownload, IconCheck, IconLink, IconPaste, IconEdit, IconUpload, IconX, IconSearch, IconLoader, IconChevronDown } from '../components/Icons'
 import { fetchMetadata } from '../lib/metadata-fetcher'
 import { Converter } from 'opencc-js'
@@ -70,6 +70,11 @@ export default function ConvertPage() {
       return
     }
     setShowErrors(false)
+    // 期刊作者/题名未填写提醒（不阻止转换）
+    const warnings = checkJournalWarnings(citation)
+    if (warnings.length > 0) {
+      showToast(`⚠️ ${warnings.join('；')}`)
+    }
     const status = canConvert()
     if (status === 'need_invite') {
       setShowInvite(true)
