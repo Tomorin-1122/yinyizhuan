@@ -20,5 +20,14 @@ CLAUDE.md
 历史研究-页面版式和引文注释规定.md
 项目状态记录.md
 
+# Dev/test artifacts
+csl-test.html
+endnote-parser.ts
+build_log.txt
+deploy_log.txt
+deploy_out.txt
+reasonix.toml
+screenshot-*.png
+
 # External cloned repos
 CSL-Chinese-IR-CSSCI-Journals/
