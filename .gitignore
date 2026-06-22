@@ -9,5 +9,11 @@ dist/
 # IDE
 .vscode/
 
+# Agent/tool configs
+.reasonix/
+.workbuddy/
+AGENTS.md
+CLAUDE.md
+
 # External cloned repos
 CSL-Chinese-IR-CSSCI-Journals/
