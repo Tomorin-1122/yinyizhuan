@@ -1,6 +1,6 @@
-import { Citation, CitationType, CitationLanguage } from './types';
-import { detectLanguage, generateId } from './utils';
-import { lookupPlace } from './publisher-places';
+import { Citation, CitationType, CitationLanguage } from './types.js';
+import { detectLanguage, generateId } from './utils.js';
+import { lookupPlace } from './publisher-places.js';
 
 function fillPublishPlace(c: Partial<Citation>): Partial<Citation> {
   if (c.type === 'book' && !c.publishPlace && c.publisher) {

@@ -1,4 +1,4 @@
-import { Author } from '../types'
+import { Author } from '../types.js'
 
 /**
  * 角色拼接样式

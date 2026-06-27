@@ -1,5 +1,5 @@
-import { Citation } from '../types'
-import { formatAuthorName, joinAuthorNames } from './author-utils'
+import { Citation } from '../types.js'
+import { formatAuthorName, joinAuthorNames } from './author-utils.js'
 
 /**
  * 处理书名号嵌套
@@ -637,7 +637,7 @@ function dynastyPrefix(c: Citation): string {
  * 同角色合并：王安、谢安点校
  * 不同角色分开：王安点校、谢安整理
  */
-function punctuatorStr(punctuators: import('../types').Author[]): string {
+function punctuatorStr(punctuators: import('../types.js').Author[]): string {
   if (!punctuators || punctuators.length === 0) return ''
   const roles = new Set(punctuators.map(p => p.role || '点校'))
   if (roles.size === 1) {

@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest'
-import { Citation } from '../types'
-import { formatLSYJ } from './lsyj'
-import { formatGBT7714 } from './gbt7714'
-import { formatAPA } from './apa'
+import { Citation } from '../types.js'
+import { formatLSYJ } from './lsyj.js'
+import { formatGBT7714 } from './gbt7714.js'
+import { formatAPA } from './apa.js'
 
 // ─── 测试样本 ────────────────────────────────────────
 

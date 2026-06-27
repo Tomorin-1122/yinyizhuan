@@ -1,7 +1,7 @@
-import { Citation, TargetFormat } from '../types'
-import { formatLSYJ } from './lsyj'
-import { formatGBT7714 } from './gbt7714'
-import { formatAPA } from './apa'
+import { Citation, TargetFormat } from '../types.js'
+import { formatLSYJ } from './lsyj.js'
+import { formatGBT7714 } from './gbt7714.js'
+import { formatAPA } from './apa.js'
 
 export function formatCitation(citation: Citation, format: TargetFormat): string {
   switch (format) {

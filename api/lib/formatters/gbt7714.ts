@@ -1,5 +1,5 @@
-import { Citation } from '../types'
-import { formatAuthorName, joinAuthorNames } from './author-utils'
+import { Citation } from '../types.js'
+import { formatAuthorName, joinAuthorNames } from './author-utils.js'
 
 function authorStr(c: Citation): string {
   if (!c.authors || c.authors.length === 0) return ''
