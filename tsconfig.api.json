@@ -7,10 +7,8 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "outDir": "./dist",
-    "rootDir": "."
+    "strict": true
   },
-  "include": ["api/**/*.ts", "api/_lib/**/*.ts"],
+  "include": ["api/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

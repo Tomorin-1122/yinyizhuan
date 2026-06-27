@@ -1,6 +1,9 @@
 # Dependencies
 node_modules/
 dist/
+api/_lib/*.js
+api/_lib/formatters/*.js
+api/_lib/opencc/
 
 # Environment
 .env
