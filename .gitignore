@@ -1,7 +1,6 @@
 # Dependencies
 node_modules/
 dist/
-api/lib/opencc/
 
 # Environment
 .env
