@@ -1,30 +1,21 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseCitationText } from '../_lib/parser';
-import { formatCitation } from '../_lib/formatters';
-import { TargetFormat } from '../_lib/types';
+const { parseCitationText } = require('../_lib/parser');
+const { formatCitation } = require('../_lib/formatters');
 
-// 支持的格式列表
-const VALID_FORMATS: TargetFormat[] = ['lsyj', 'gbt7714', 'apa'];
+const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
 
-// CORS头设置
-function setCorsHeaders(res: VercelResponse) {
+function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
 }
 
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse,
-) {
+module.exports = async function handler(request, response) {
   setCorsHeaders(response);
 
-  // 处理OPTIONS请求
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
 
-  // 只允许POST请求
   if (request.method !== 'POST') {
     return response.status(405).json({
       success: false,
@@ -36,7 +27,6 @@ export default async function handler(
   try {
     const { text, format = 'lsyj' } = request.body;
 
-    // 验证输入
     if (!text || typeof text !== 'string') {
       return response.status(400).json({
         success: false,
@@ -45,7 +35,6 @@ export default async function handler(
       });
     }
 
-    // 验证格式参数
     if (!VALID_FORMATS.includes(format)) {
       return response.status(400).json({
         success: false,
@@ -54,11 +43,9 @@ export default async function handler(
       });
     }
 
-    // 调用核心转换逻辑
     const citation = parseCitationText(text);
     const result = formatCitation(citation, format);
 
-    // 返回结构化响应
     return response.status(200).json({
       success: true,
       data: {
@@ -93,4 +80,4 @@ export default async function handler(
       message: 'Failed to convert citation'
     });
   }
-}
+};

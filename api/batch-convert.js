@@ -1,47 +1,22 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseCitationText } from '../_lib/parser';
-import { formatCitation } from '../_lib/formatters';
-import { TargetFormat } from '../_lib/types';
+const { parseCitationText } = require('../_lib/parser');
+const { formatCitation } = require('../_lib/formatters');
 
-// 支持的格式列表
-const VALID_FORMATS: TargetFormat[] = ['lsyj', 'gbt7714', 'apa'];
-
-// 最大批量数量
+const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
 const MAX_BATCH_SIZE = 50;
 
-// CORS头设置
-function setCorsHeaders(res: VercelResponse) {
+function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
 }
 
-interface BatchItem {
-  text: string;
-  format?: TargetFormat;
-}
-
-interface BatchResult {
-  index: number;
-  success: boolean;
-  original: string;
-  result?: string;
-  citation?: any;
-  error?: string;
-}
-
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse,
-) {
+module.exports = async function handler(request, response) {
   setCorsHeaders(response);
 
-  // 处理OPTIONS请求
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
 
-  // 只允许POST请求
   if (request.method !== 'POST') {
     return response.status(405).json({
       success: false,
@@ -53,7 +28,6 @@ export default async function handler(
   try {
     const { items } = request.body;
 
-    // 验证输入
     if (!Array.isArray(items) || items.length === 0) {
       return response.status(400).json({
         success: false,
@@ -62,7 +36,6 @@ export default async function handler(
       });
     }
 
-    // 验证批量大小
     if (items.length > MAX_BATCH_SIZE) {
       return response.status(400).json({
         success: false,
@@ -71,9 +44,8 @@ export default async function handler(
       });
     }
 
-    // 验证每个项目的格式
     for (let i = 0; i < items.length; i++) {
-      const item = items[i] as BatchItem;
+      const item = items[i];
       if (!item.text || typeof item.text !== 'string') {
         return response.status(400).json({
           success: false,
@@ -90,8 +62,7 @@ export default async function handler(
       }
     }
 
-    // 批量处理
-    const results: BatchResult[] = items.map((item: BatchItem, index: number) => {
+    const results = items.map((item, index) => {
       try {
         const citation = parseCitationText(item.text);
         const format = item.format || 'lsyj';
@@ -122,7 +93,6 @@ export default async function handler(
       }
     });
 
-    // 统计结果
     const successful = results.filter(r => r.success).length;
     const failed = results.filter(r => !r.success).length;
 
@@ -145,4 +115,4 @@ export default async function handler(
       message: 'Failed to process batch conversion'
     });
   }
-}
+};

@@ -1,25 +1,18 @@
-import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { FORMAT_LIST } from '../_lib/types';
+const { FORMAT_LIST } = require('../_lib/types');
 
-// CORS头设置
-function setCorsHeaders(res: VercelResponse) {
+function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
 
-export default async function handler(
-  request: VercelRequest,
-  response: VercelResponse,
-) {
+module.exports = async function handler(request, response) {
   setCorsHeaders(response);
 
-  // 处理OPTIONS请求
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
 
-  // 只允许GET请求
   if (request.method !== 'GET') {
     return response.status(405).json({
       success: false,
@@ -60,4 +53,4 @@ export default async function handler(
       message: 'Failed to get formats'
     });
   }
-}
+};
