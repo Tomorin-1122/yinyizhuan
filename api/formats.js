@@ -1,4 +1,4 @@
-const { FORMAT_LIST } = require('../_lib/types');
+const { FORMAT_LIST } = require('../lib/types');
 
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');

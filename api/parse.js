@@ -1,4 +1,4 @@
-const { parseCitationText } = require('../_lib/parser');
+const { parseCitationText } = require('../lib/parser');
 
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');

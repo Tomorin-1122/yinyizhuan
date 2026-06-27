@@ -1,5 +1,5 @@
-const { parseCitationText } = require('../_lib/parser');
-const { formatCitation } = require('../_lib/formatters');
+const { parseCitationText } = require('../lib/parser');
+const { formatCitation } = require('../lib/formatters');
 
 const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
 
