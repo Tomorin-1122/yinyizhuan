@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseCitationText } from '../_lib/parser';
+import { parseCitationText } from '../_lib/parser.js';
 
 // CORS头设置
 function setCorsHeaders(res: VercelResponse) {

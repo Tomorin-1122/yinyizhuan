@@ -1,7 +1,7 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { parseCitationText } from '../_lib/parser';
-import { formatCitation } from '../_lib/formatters';
-import { TargetFormat } from '../_lib/types';
+import { parseCitationText } from '../_lib/parser.js';
+import { formatCitation } from '../_lib/formatters/index.js';
+import { TargetFormat } from '../_lib/types.js';
 
 // 支持的格式列表
 const VALID_FORMATS: TargetFormat[] = ['lsyj', 'gbt7714', 'apa'];
