@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import { FORMAT_LIST } from '../_lib/types.js';
+import { FORMAT_LIST } from '../_lib/types';
 
 // CORS头设置
 function setCorsHeaders(res: VercelResponse) {
