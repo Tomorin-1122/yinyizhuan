@@ -10,28 +10,6 @@ export function detectLanguage(text: string): CitationLanguage {
   return 'en';
 }
 
-export async function copyToClipboard(text: string): Promise<boolean> {
-  try {
-    await navigator.clipboard.writeText(text);
-    return true;
-  } catch (err) {
-    console.error('Failed to copy text: ', err);
-    return false;
-  }
-}
-
-export function downloadFile(content: string, filename: string, mimeType: string): void {
-  const blob = new Blob([content], { type: mimeType });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  document.body.appendChild(link);
-  link.click();
-  document.body.removeChild(link);
-  URL.revokeObjectURL(url);
-}
-
 export function formatTimestamp(ts: number): string {
   const date = new Date(ts);
   const Y = date.getFullYear();
