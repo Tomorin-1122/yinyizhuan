@@ -49,7 +49,17 @@ function parseDoubanBook(text: string): Partial<Citation> | null {
   const hasISBN = /ISBN[:：]/.test(text);
   if (!hasPublisher && !(hasYear && hasISBN)) return null;
 
-  const lines = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+  // 如果输入没有换行（如 API 传输时 \n 丢失），在豆瓣关键词前插入换行
+  let normalized = text;
+  if (!/\n/.test(text)) {
+    const keywords = ['作者', '出版社', '出版年', 'ISBN', '译者', '副标题', '丛书', '定价', '装帧'];
+    for (const kw of keywords) {
+      normalized = normalized.replace(new RegExp(`[ 　]+${kw}[:：]`, 'g'), `\n${kw}：`);
+    }
+    normalized = normalized.trim();
+  }
+
+  const lines = normalized.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
   const result: Partial<Citation> = { type: 'book' };
 
   // 提取结构化字段（key: value 行）
