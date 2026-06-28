@@ -1,7 +1,9 @@
+const { checkApiKey } = require('../lib/auth');
+
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
 }
 
 // 类型英文 → 中文映射
@@ -20,6 +22,8 @@ module.exports = async function handler(request, response) {
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
+
+  if (!checkApiKey(request, response)) return;
 
   try {
     const { records } = request.body;
