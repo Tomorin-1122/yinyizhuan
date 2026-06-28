@@ -60,16 +60,28 @@ export default function AncientBookSearch({ onSelect }: AncientBookSearchProps) 
   const [loading, setLoading] = useState(false)
   const [showResults, setShowResults] = useState(false)
   const [allBooks, setAllBooks] = useState<AncientBook[]>([])
+  const [dataLoaded, setDataLoaded] = useState(false)
   const searchRef = useRef<HTMLDivElement>(null)
   const debounceRef = useRef<NodeJS.Timeout>()
 
-  // 加载古籍数据库
+  // 懒加载古籍数据库（只在组件挂载时加载）
   useEffect(() => {
+    // 避免重复加载
+    if (dataLoaded) return
+    
+    setLoading(true)
     fetch('/ancient-books.json')
       .then(res => res.json())
-      .then(data => setAllBooks(data))
-      .catch(err => console.error('加载古籍数据库失败:', err))
-  }, [])
+      .then(data => {
+        setAllBooks(data)
+        setDataLoaded(true)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('加载古籍数据库失败:', err)
+        setLoading(false)
+      })
+  }, [dataLoaded])
 
   // 点击外部关闭结果列表
   useEffect(() => {
@@ -132,6 +144,9 @@ export default function AncientBookSearch({ onSelect }: AncientBookSearchProps) 
     <div ref={searchRef} className="relative mb-3">
       <label className="block text-sm font-medium text-ink-800 mb-1">
         🔍 搜索常用基本典籍
+        {loading && !dataLoaded && (
+          <span className="text-xs text-ink-400 ml-2">（加载中...）</span>
+        )}
       </label>
       <div className="relative">
         <input
