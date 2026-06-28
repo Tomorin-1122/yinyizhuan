@@ -494,6 +494,25 @@ export default function HistoryPage() {
   }
 
   const searchByTag = (keyword: string) => {
+    // 日期格式 "2024年6月" → 设置月份筛选
+    const monthMatch = /^(\d{4})年(\d{1,2})月$/.exec(keyword)
+    if (monthMatch) {
+      const y = monthMatch[1]
+      const m = monthMatch[2].padStart(2, '0')
+      setSearchDateFrom(`${y}-${m}`)
+      setSearchDateTo(`${y}-${m}`)
+      setSearchKeyword('')
+      return
+    }
+    // 日期格式 "2024-06-15" → 设置日期筛选
+    const dayMatch = /^(\d{4}-\d{2}-\d{2})$/.exec(keyword)
+    if (dayMatch) {
+      setSearchDateFrom(dayMatch[1])
+      setSearchDateTo(dayMatch[1])
+      setSearchKeyword('')
+      return
+    }
+    // 默认：关键词筛选
     setSearchKeyword(keyword)
     setSearchType('all')
   }
@@ -620,6 +639,9 @@ export default function HistoryPage() {
             <IconDownload className="w-4 h-4" />CSV
           </button>
           <button onClick={handleAnalyze} className="btn-ghost text-sm" disabled={records.length === 0 || analyzeLoading}>
+            <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+              <path d="M18 20V10" /><path d="M12 20V4" /><path d="M6 20v-6" />
+            </svg>
             {analyzeLoading ? '分析中...' : '分析'}
           </button>
           {selected.size > 0 && (
