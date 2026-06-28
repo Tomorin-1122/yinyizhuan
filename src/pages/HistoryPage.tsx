@@ -301,6 +301,8 @@ export default function HistoryPage() {
   const [editingGroupId, setEditingGroupId] = useState<string | null>(null)
   const [editingGroupName, setEditingGroupName] = useState('')
   const [editingGroupDesc, setEditingGroupDesc] = useState('')
+  const [analyzeResult, setAnalyzeResult] = useState<any>(null)
+  const [analyzeLoading, setAnalyzeLoading] = useState(false)
   
   // 搜索相关状态
   const [searchKeyword, setSearchKeyword] = useState('')
@@ -456,6 +458,36 @@ export default function HistoryPage() {
     showToast(`已删除 ${count} 条记录`)
   }
 
+  const handleAnalyze = async () => {
+    const data = records.map(r => ({
+      targetFormat: r.targetFormat,
+      citationType: r.citation?.type || 'unknown',
+      language: r.citation?.language || 'zh',
+      authors: (r.citation?.authors || []).map((a: { name: string }) => a.name),
+      timestamp: r.timestamp,
+      title: r.citation?.title || '',
+    }))
+    setAnalyzeLoading(true)
+    try {
+      const res = await fetch('/api/history-analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ records: data }),
+      })
+      const json = await res.json()
+      if (json.success) {
+        setAnalyzeResult(json.data)
+        showToast('分析完成')
+      } else {
+        showToast('分析失败: ' + json.error)
+      }
+    } catch {
+      showToast('网络错误，请重试')
+    } finally {
+      setAnalyzeLoading(false)
+    }
+  }
+
   const handleExportJSON = () => {
     const data = selected.size > 0
       ? JSON.stringify(records.filter(r => selected.has(r.id)), null, 2)
@@ -576,6 +608,9 @@ export default function HistoryPage() {
           </button>
           <button onClick={handleExportCSV} className="btn-ghost text-sm" disabled={records.length === 0}>
             <IconDownload className="w-4 h-4" />CSV
+          </button>
+          <button onClick={handleAnalyze} className="btn-ghost text-sm" disabled={records.length === 0 || analyzeLoading}>
+            {analyzeLoading ? '分析中...' : '📊 分析'}
           </button>
           {selected.size > 0 && (
             <button onClick={handleExportWord} className="btn-ghost text-sm text-ink-700 dark:text-gray-200">
@@ -795,6 +830,51 @@ export default function HistoryPage() {
               {g.name} ({g.recordIds.filter(id => records.some(r => r.id === id)).length})
             </button>
           ))}
+        </div>
+      )}
+
+      {/* 分析结果 */}
+      {analyzeResult && (
+        <div className="mb-6 border-2 border-accent-600 bg-accent-50 dark:bg-gray-800 p-6">
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100">📊 历史记录分析</h3>
+            <button onClick={() => setAnalyzeResult(null)} className="text-ink-400 hover:text-ink-700 dark:text-gray-500">✕</button>
+          </div>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+            <div className="bg-white dark:bg-gray-700 p-3 text-center">
+              <div className="text-2xl font-bold text-accent-600">{analyzeResult.total}</div>
+              <div className="text-xs text-ink-500 dark:text-gray-400">总转换次数</div>
+            </div>
+            <div className="bg-white dark:bg-gray-700 p-3 text-center">
+              <div className="text-2xl font-bold text-accent-600">{analyzeResult.uniqueAuthors}</div>
+              <div className="text-xs text-ink-500 dark:text-gray-400">不同作者</div>
+            </div>
+            <div className="bg-white dark:bg-gray-700 p-3 text-center">
+              <div className="text-lg font-bold text-accent-600">{analyzeResult.topFormats?.[0]?.[0] || '-'}</div>
+              <div className="text-xs text-ink-500 dark:text-gray-400">最常用格式</div>
+            </div>
+            <div className="bg-white dark:bg-gray-700 p-3 text-center">
+              <div className="text-lg font-bold text-accent-600">{analyzeResult.topTypes?.[0]?.[0] || '-'}</div>
+              <div className="text-xs text-ink-500 dark:text-gray-400">最多文献类型</div>
+            </div>
+          </div>
+          <details className="text-sm text-ink-700 dark:text-gray-300">
+            <summary className="cursor-pointer font-display font-bold mb-2">详细分布</summary>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
+              <div>
+                <div className="font-bold text-xs text-ink-500 dark:text-gray-400 mb-1">格式分布</div>
+                {Object.entries(analyzeResult.byFormat || {}).map(([k,v]) => (
+                  <div key={k} className="flex justify-between py-0.5"><span>{k}</span><span className="text-accent-600 font-bold">{v as number}</span></div>
+                ))}
+              </div>
+              <div>
+                <div className="font-bold text-xs text-ink-500 dark:text-gray-400 mb-1">文献类型</div>
+                {Object.entries(analyzeResult.byType || {}).map(([k,v]) => (
+                  <div key={k} className="flex justify-between py-0.5"><span>{k}</span><span className="text-accent-600 font-bold">{v as number}</span></div>
+                ))}
+              </div>
+            </div>
+          </details>
         </div>
       )}
 

@@ -1,22 +1,15 @@
-const { checkApiKey } = require('../lib/auth');
-
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 }
+
 
 module.exports = async function handler(request, response) {
   setCorsHeaders(response);
 
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
-  }
-
-  if (!checkApiKey(request, response)) return;
-
-  if (request.method !== 'POST') {
-    return response.status(405).json({ success: false, error: 'Method not allowed' });
   }
 
   try {
