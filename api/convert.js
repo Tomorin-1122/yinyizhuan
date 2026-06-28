@@ -1,5 +1,6 @@
 const { parseCitationText } = require('../lib/parser');
 const { formatCitation } = require('../lib/formatters');
+const { checkApiKey } = require('../lib/auth');
 
 const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
 
@@ -15,6 +16,8 @@ module.exports = async function handler(request, response) {
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
+
+  if (!checkApiKey(request, response)) return;
 
   if (request.method !== 'POST') {
     return response.status(405).json({

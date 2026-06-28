@@ -1,4 +1,5 @@
 const { parseCitationText } = require('../lib/parser');
+const { checkApiKey } = require('../lib/auth');
 
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -12,6 +13,8 @@ module.exports = async function handler(request, response) {
   if (request.method === 'OPTIONS') {
     return response.status(200).end();
   }
+
+  if (!checkApiKey(request, response)) return;
 
   if (request.method !== 'POST') {
     return response.status(405).json({
