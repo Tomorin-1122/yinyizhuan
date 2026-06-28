@@ -1,0 +1,5094 @@
+[
+  {
+    "id": 1,
+    "title": "嘉靖河間府志",
+    "fullTitle": "嘉靖河間府志二十八卷上   （河北）",
+    "authors": [
+      {
+        "name": "郜相",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 1,
+      "end": 1,
+      "count": 1,
+      "raw": "第01册"
+    },
+    "totalVolumes": 28,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "title": "嘉靖河间府志",
+    "fullTitle": "嘉靖河间府志二十八卷上   （河北）",
+    "authors": [],
+    "volumes": {
+      "start": 1,
+      "end": 1,
+      "count": 1,
+      "raw": "第01册"
+    },
+    "totalVolumes": 28,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "title": "嘉靖河間府志",
+    "fullTitle": "嘉靖河間府志二十八卷下   （河北）",
+    "authors": [
+      {
+        "name": "郜相",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 2,
+      "end": 2,
+      "count": 1,
+      "raw": "第02册"
+    },
+    "totalVolumes": 28,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 4,
+    "title": "嘉靖河间府志",
+    "fullTitle": "嘉靖河间府志二十八卷下   （河北）",
+    "authors": [],
+    "volumes": {
+      "start": 2,
+      "end": 2,
+      "count": 1,
+      "raw": "第02册"
+    },
+    "totalVolumes": 28,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 5,
+    "title": "正德大名府志",
+    "fullTitle": "正德大名府志十卷   （河北）",
+    "authors": [
+      {
+        "name": "石祿",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 3,
+      "end": 3,
+      "count": 1,
+      "raw": "第03册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 6,
+    "title": "弘治重修保定志",
+    "fullTitle": "弘治重修保定志二十五卷   （河北）",
+    "authors": [
+      {
+        "name": "章律",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 4,
+      "end": 4,
+      "count": 1,
+      "raw": "第04册"
+    },
+    "totalVolumes": 25,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 7,
+    "title": "嘉靖广平府志",
+    "fullTitle": "嘉靖广平府志十六卷   （河北）",
+    "authors": [],
+    "volumes": {
+      "start": 5,
+      "end": 5,
+      "count": 1,
+      "raw": "第05册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 8,
+    "title": "嘉靖廣平府志",
+    "fullTitle": "嘉靖廣平府志十六卷   （河北）",
+    "authors": [
+      {
+        "name": "翁相",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 5,
+      "end": 5,
+      "count": 1,
+      "raw": "第05册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 9,
+    "title": "嘉靖霸州志",
+    "fullTitle": "嘉靖霸州志九卷   （河北）",
+    "authors": [
+      {
+        "name": "唐交等",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 6,
+      "end": 6,
+      "count": 1,
+      "raw": "第06册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 10,
+    "title": "隆慶趙州志",
+    "fullTitle": "隆慶趙州志十卷   （河北）",
+    "authors": [
+      {
+        "name": "蔡懋昭",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 6,
+      "end": 6,
+      "count": 1,
+      "raw": "第06册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 11,
+    "title": "隆庆赵州志",
+    "fullTitle": "隆庆赵州志十卷   （河北）",
+    "authors": [],
+    "volumes": {
+      "start": 6,
+      "end": 6,
+      "count": 1,
+      "raw": "第06册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 12,
+    "title": "嘉靖雄乘",
+    "fullTitle": "嘉靖雄乘二卷   （河北）",
+    "authors": [
+      {
+        "name": "王齊",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第07册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 13,
+    "title": "弘治易州志",
+    "fullTitle": "弘治易州志二十卷   （河北）",
+    "authors": [
+      {
+        "name": "戴敏",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第07册"
+    },
+    "totalVolumes": 20,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 14,
+    "title": "嘉靖太原縣誌",
+    "fullTitle": "嘉靖太原縣誌六卷   （山西）",
+    "authors": [
+      {
+        "name": "高汝行",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 8,
+      "end": 8,
+      "count": 1,
+      "raw": "第08册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 15,
+    "title": "嘉靖隆慶志",
+    "fullTitle": "嘉靖隆慶志十卷   （河北）",
+    "authors": [
+      {
+        "name": "謝庭桂",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 8,
+      "end": 8,
+      "count": 1,
+      "raw": "第08册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 16,
+    "title": "嘉靖太原县志",
+    "fullTitle": "嘉靖太原县志六卷   （山西）",
+    "authors": [],
+    "volumes": {
+      "start": 8,
+      "end": 8,
+      "count": 1,
+      "raw": "第08册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 17,
+    "title": "嘉靖隆庆志",
+    "fullTitle": "嘉靖隆庆志十卷   （河北）",
+    "authors": [],
+    "volumes": {
+      "start": 8,
+      "end": 8,
+      "count": 1,
+      "raw": "第08册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 18,
+    "title": "嘉靖昆山县志",
+    "fullTitle": "嘉靖昆山县志十六卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 9,
+      "end": 9,
+      "count": 1,
+      "raw": "第09册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 19,
+    "title": "嘉靖昆山縣誌",
+    "fullTitle": "嘉靖昆山縣誌十六卷   （江蘇）",
+    "authors": [
+      {
+        "name": "楊逢春",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 9,
+      "end": 9,
+      "count": 1,
+      "raw": "第09册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 20,
+    "title": "万历通州志",
+    "fullTitle": "万历通州志八卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 10,
+      "end": 10,
+      "count": 1,
+      "raw": "第10册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明万历六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 21,
+    "title": "萬曆通州志",
+    "fullTitle": "萬曆通州志八卷   （江蘇）",
+    "authors": [
+      {
+        "name": "林雲程",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 10,
+      "end": 10,
+      "count": 1,
+      "raw": "第10册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明萬曆六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 22,
+    "title": "弘治句容县志",
+    "fullTitle": "弘治句容县志十二卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 11,
+      "end": 11,
+      "count": 1,
+      "raw": "第11册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明弘治九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 23,
+    "title": "弘治句容縣誌",
+    "fullTitle": "弘治句容縣誌十二卷   （江蘇）",
+    "authors": [
+      {
+        "name": "王僖征",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 11,
+      "end": 11,
+      "count": 1,
+      "raw": "第11册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 24,
+    "title": "嘉靖惟揚志",
+    "fullTitle": "嘉靖惟揚志三十八卷 （江蘇）",
+    "authors": [
+      {
+        "name": "朱懷幹",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 12,
+      "end": 12,
+      "count": 1,
+      "raw": "第12册"
+    },
+    "totalVolumes": 38,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 25,
+    "title": "嘉靖惟扬志",
+    "fullTitle": "嘉靖惟扬志三十八卷 （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 12,
+      "end": 12,
+      "count": 1,
+      "raw": "第12册"
+    },
+    "totalVolumes": 38,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 26,
+    "title": "嘉靖江阴县志",
+    "fullTitle": "嘉靖江阴县志二十一卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 13,
+      "end": 13,
+      "count": 1,
+      "raw": "第13册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 27,
+    "title": "嘉靖江陰縣誌",
+    "fullTitle": "嘉靖江陰縣誌二十一卷   （江蘇）",
+    "authors": [
+      {
+        "name": "趙錦",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 13,
+      "end": 13,
+      "count": 1,
+      "raw": "第13册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 28,
+    "title": "隆庆海州志",
+    "fullTitle": "隆庆海州志十卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 14,
+      "end": 14,
+      "count": 1,
+      "raw": "第14册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 29,
+    "title": "隆慶海州志",
+    "fullTitle": "隆慶海州志十卷   （江蘇）",
+    "authors": [
+      {
+        "name": "張峰",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 14,
+      "end": 14,
+      "count": 1,
+      "raw": "第14册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 30,
+    "title": "嘉靖高淳县志",
+    "fullTitle": "嘉靖高淳县志四卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 14,
+      "end": 14,
+      "count": 1,
+      "raw": "第14册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖五年修四十一年重刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 31,
+    "title": "嘉靖高淳縣誌",
+    "fullTitle": "嘉靖高淳縣誌四卷   （江蘇）",
+    "authors": [],
+    "volumes": {
+      "start": 14,
+      "end": 14,
+      "count": 1,
+      "raw": "第14册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖五年修四十一年重刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 32,
+    "title": "隆庆仪真县志",
+    "fullTitle": "隆庆仪真县志十四卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 15,
+      "end": 15,
+      "count": 1,
+      "raw": "第15册"
+    },
+    "totalVolumes": 14,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 33,
+    "title": "隆慶儀真縣誌",
+    "fullTitle": "隆慶儀真縣誌十四卷   （江蘇）",
+    "authors": [
+      {
+        "name": "申嘉瑞",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 15,
+      "end": 15,
+      "count": 1,
+      "raw": "第15册"
+    },
+    "totalVolumes": 14,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 34,
+    "title": "嘉靖寶應縣誌略",
+    "fullTitle": "嘉靖寶應縣誌略四卷   （江蘇）",
+    "authors": [
+      {
+        "name": "宋佐聞人詮",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 15,
+      "end": 15,
+      "count": 1,
+      "raw": "第15册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖九年修十七年楊瞻刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 35,
+    "title": "嘉靖宝应县志略",
+    "fullTitle": "嘉靖宝应县志略四卷   （江苏）",
+    "authors": [],
+    "volumes": {
+      "start": 15,
+      "end": 15,
+      "count": 1,
+      "raw": "第15册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖九年修十七年杨瞻刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 36,
+    "title": "嘉靖淳安县志",
+    "fullTitle": "嘉靖淳安县志十七卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 16,
+      "end": 16,
+      "count": 1,
+      "raw": "第16册"
+    },
+    "totalVolumes": 17,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 37,
+    "title": "嘉靖淳安縣誌",
+    "fullTitle": "嘉靖淳安縣誌十七卷   （浙江）",
+    "authors": [
+      {
+        "name": "姚鳴鸞",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 16,
+      "end": 16,
+      "count": 1,
+      "raw": "第16册"
+    },
+    "totalVolumes": 17,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 38,
+    "title": "嘉靖溫州縣誌",
+    "fullTitle": "嘉靖溫州縣誌八卷   （浙江）",
+    "authors": [
+      {
+        "name": "張孚敬",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 17,
+      "end": 17,
+      "count": 1,
+      "raw": "第17册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 39,
+    "title": "嘉靖太平縣誌",
+    "fullTitle": "嘉靖太平縣誌八卷   （浙江）",
+    "authors": [
+      {
+        "name": "曾才漢",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 17,
+      "end": 17,
+      "count": 1,
+      "raw": "第17册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 40,
+    "title": "嘉靖太平县志",
+    "fullTitle": "嘉靖太平县志八卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 17,
+      "end": 17,
+      "count": 1,
+      "raw": "第17册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 41,
+    "title": "嘉靖温州县志",
+    "fullTitle": "嘉靖温州县志八卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 17,
+      "end": 17,
+      "count": 1,
+      "raw": "第17册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 42,
+    "title": "万历黄岩县志",
+    "fullTitle": "万历黄岩县志七卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 18,
+      "end": 18,
+      "count": 1,
+      "raw": "第18册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明万历七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 43,
+    "title": "嘉靖海門縣誌集",
+    "fullTitle": "嘉靖海門縣誌集六卷   (浙江)",
+    "authors": [
+      {
+        "name": "吳宗元",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 18,
+      "end": 18,
+      "count": 1,
+      "raw": "第18册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十五年原刻明萬曆增刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 44,
+    "title": "萬曆黃岩縣誌",
+    "fullTitle": "萬曆黃岩縣誌七卷   （浙江）",
+    "authors": [
+      {
+        "name": "袁應祺",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 18,
+      "end": 18,
+      "count": 1,
+      "raw": "第18册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明萬曆七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 45,
+    "title": "嘉靖海门县志集",
+    "fullTitle": "嘉靖海门县志集六卷   (浙江)",
+    "authors": [],
+    "volumes": {
+      "start": 18,
+      "end": 18,
+      "count": 1,
+      "raw": "第18册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十五年原刻明万历增刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 46,
+    "title": "萬曆新昌縣誌",
+    "fullTitle": "萬曆新昌縣誌十三卷首一卷   （浙江）",
+    "authors": [
+      {
+        "name": "田琯",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 19,
+      "end": 19,
+      "count": 1,
+      "raw": "第19册"
+    },
+    "totalVolumes": 13,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明萬曆七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 47,
+    "title": "嘉靖浦江志略",
+    "fullTitle": "嘉靖浦江志略八卷   （浙江）",
+    "authors": [
+      {
+        "name": "程嗣功",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 19,
+      "end": 19,
+      "count": 1,
+      "raw": "第19册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 48,
+    "title": "万历新昌县志",
+    "fullTitle": "万历新昌县志十三卷首一卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 19,
+      "end": 19,
+      "count": 1,
+      "raw": "第19册"
+    },
+    "totalVolumes": 13,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明万历七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 49,
+    "title": "永樂溫州府樂清府志",
+    "fullTitle": "永樂溫州府樂清府志八卷   （浙江）",
+    "authors": [
+      {
+        "name": "佚名",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 20,
+      "end": 20,
+      "count": 1,
+      "raw": "第20册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明永樂間年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 50,
+    "title": "永乐温州府乐清府志",
+    "fullTitle": "永乐温州府乐清府志八卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 20,
+      "end": 20,
+      "count": 1,
+      "raw": "第20册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明永乐间年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 51,
+    "title": "嘉靖武康县志",
+    "fullTitle": "嘉靖武康县志八卷   （浙江）",
+    "authors": [],
+    "volumes": {
+      "start": 20,
+      "end": 20,
+      "count": 1,
+      "raw": "第20册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 52,
+    "title": "嘉靖武康縣誌",
+    "fullTitle": "嘉靖武康縣誌八卷   （浙江）",
+    "authors": [
+      {
+        "name": "程嗣功",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 20,
+      "end": 20,
+      "count": 1,
+      "raw": "第20册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 53,
+    "title": "弘治徽州府志",
+    "fullTitle": "弘治徽州府志十二卷上   （安徽）",
+    "authors": [
+      {
+        "name": "彭澤",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 21,
+      "end": 21,
+      "count": 1,
+      "raw": "第21册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 54,
+    "title": "弘治徽州府志",
+    "fullTitle": "弘治徽州府志十二卷下   （安徽）",
+    "authors": [
+      {
+        "name": "彭澤",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 22,
+      "end": 22,
+      "count": 1,
+      "raw": "第22册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 55,
+    "title": "嘉靖宁国府志",
+    "fullTitle": "嘉靖宁国府志十卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 23,
+      "end": 23,
+      "count": 1,
+      "raw": "第23册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十五年黎晨校刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 56,
+    "title": "嘉靖宿州志",
+    "fullTitle": "嘉靖宿州志八卷   （安徽）",
+    "authors": [
+      {
+        "name": "余鍧",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 23,
+      "end": 23,
+      "count": 1,
+      "raw": "第23册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 57,
+    "title": "嘉靖甯國府志",
+    "fullTitle": "嘉靖甯國府志十卷   （安徽）",
+    "authors": [
+      {
+        "name": "黎晨",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 23,
+      "end": 23,
+      "count": 1,
+      "raw": "第23册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十五年黎晨校刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 58,
+    "title": "嘉靖池州府志",
+    "fullTitle": "嘉靖池州府志九卷   （安徽）",
+    "authors": [
+      {
+        "name": "王崇",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 24,
+      "end": 24,
+      "count": 1,
+      "raw": "第24册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 59,
+    "title": "正德颍州志",
+    "fullTitle": "正德颍州志六卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 24,
+      "end": 24,
+      "count": 1,
+      "raw": "第24册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 60,
+    "title": "正德潁州志",
+    "fullTitle": "正德潁州志六卷   （安徽）",
+    "authors": [
+      {
+        "name": "劉節",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 24,
+      "end": 24,
+      "count": 1,
+      "raw": "第24册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 61,
+    "title": "嘉靖壽州志",
+    "fullTitle": "嘉靖壽州志八卷   （安徽）",
+    "authors": [
+      {
+        "name": "栗永祿",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 25,
+      "end": 25,
+      "count": 1,
+      "raw": "第25册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 62,
+    "title": "嘉靖铜陵县志",
+    "fullTitle": "嘉靖铜陵县志八卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 25,
+      "end": 25,
+      "count": 1,
+      "raw": "第25册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖四十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 63,
+    "title": "嘉靖寿州志",
+    "fullTitle": "嘉靖寿州志八卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 25,
+      "end": 25,
+      "count": 1,
+      "raw": "第25册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 64,
+    "title": "嘉靖銅陵縣誌",
+    "fullTitle": "嘉靖銅陵縣誌八卷   （安徽）",
+    "authors": [
+      {
+        "name": "李士元",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 25,
+      "end": 25,
+      "count": 1,
+      "raw": "第25册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖四十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 65,
+    "title": "嘉靖建平县志",
+    "fullTitle": "嘉靖建平县志九卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 26,
+      "end": 26,
+      "count": 1,
+      "raw": "第26册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 66,
+    "title": "嘉靖皇明天长志",
+    "fullTitle": "嘉靖皇明天长志七卷   （安徽）",
+    "authors": [],
+    "volumes": {
+      "start": 26,
+      "end": 26,
+      "count": 1,
+      "raw": "第26册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 67,
+    "title": "嘉靖皇明天長志",
+    "fullTitle": "嘉靖皇明天長志七卷   （安徽）",
+    "authors": [
+      {
+        "name": "邵時敏",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 26,
+      "end": 26,
+      "count": 1,
+      "raw": "第26册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 68,
+    "title": "嘉靖建平縣誌",
+    "fullTitle": "嘉靖建平縣誌九卷   （安徽）",
+    "authors": [
+      {
+        "name": "連礦",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 26,
+      "end": 26,
+      "count": 1,
+      "raw": "第26册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 69,
+    "title": "嘉靖建宁府志",
+    "fullTitle": "嘉靖建宁府志二十一卷上   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 27,
+      "end": 27,
+      "count": 1,
+      "raw": "第27册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 70,
+    "title": "嘉靖建寧府志",
+    "fullTitle": "嘉靖建寧府志二十一卷上   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 27,
+      "end": 27,
+      "count": 1,
+      "raw": "第27册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 71,
+    "title": "嘉靖建宁府志",
+    "fullTitle": "嘉靖建宁府志二十一卷下   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 28,
+      "end": 28,
+      "count": 1,
+      "raw": "第28册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 72,
+    "title": "嘉靖建寧府志",
+    "fullTitle": "嘉靖建寧府志二十一卷下   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 28,
+      "end": 28,
+      "count": 1,
+      "raw": "第28册"
+    },
+    "totalVolumes": 21,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 73,
+    "title": "嘉靖延平府志",
+    "fullTitle": "嘉靖延平府志二十三卷   （福建）",
+    "authors": [
+      {
+        "name": "陳能",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 29,
+      "end": 29,
+      "count": 1,
+      "raw": "第29册"
+    },
+    "totalVolumes": 23,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 74,
+    "title": "嘉靖邵武府志",
+    "fullTitle": "嘉靖邵武府志十五卷   （福建）",
+    "authors": [
+      {
+        "name": "邢址",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 30,
+      "end": 30,
+      "count": 1,
+      "raw": "第30册"
+    },
+    "totalVolumes": 15,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 75,
+    "title": "嘉靖建陽縣誌",
+    "fullTitle": "嘉靖建陽縣誌十六卷   （福建）",
+    "authors": [
+      {
+        "name": "馮繼科",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 31,
+      "end": 31,
+      "count": 1,
+      "raw": "第31册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖三十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 76,
+    "title": "嘉靖建阳县志",
+    "fullTitle": "嘉靖建阳县志十六卷   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 31,
+      "end": 31,
+      "count": 1,
+      "raw": "第31册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖三十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 77,
+    "title": "嘉靖龙溪县志",
+    "fullTitle": "嘉靖龙溪县志八卷   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 32,
+      "end": 32,
+      "count": 1,
+      "raw": "第32册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 78,
+    "title": "嘉靖惠安县志",
+    "fullTitle": "嘉靖惠安县志十三卷   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 32,
+      "end": 32,
+      "count": 1,
+      "raw": "第32册"
+    },
+    "totalVolumes": 13,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 79,
+    "title": "嘉靖龍溪縣誌",
+    "fullTitle": "嘉靖龍溪縣誌八卷   （福建）",
+    "authors": [
+      {
+        "name": "劉天授",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 32,
+      "end": 32,
+      "count": 1,
+      "raw": "第32册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 80,
+    "title": "嘉靖惠安縣誌",
+    "fullTitle": "嘉靖惠安縣誌十三卷   （福建）",
+    "authors": [
+      {
+        "name": "莫尚簡",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 32,
+      "end": 32,
+      "count": 1,
+      "raw": "第32册"
+    },
+    "totalVolumes": 13,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 81,
+    "title": "嘉靖安溪县志",
+    "fullTitle": "嘉靖安溪县志八卷   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 33,
+      "end": 33,
+      "count": 1,
+      "raw": "第33册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 82,
+    "title": "嘉靖尤溪县志",
+    "fullTitle": "嘉靖尤溪县志七卷   （福建）",
+    "authors": [],
+    "volumes": {
+      "start": 33,
+      "end": 33,
+      "count": 1,
+      "raw": "第33册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖六年修九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 83,
+    "title": "嘉靖安溪縣誌",
+    "fullTitle": "嘉靖安溪縣誌八卷   （福建）",
+    "authors": [
+      {
+        "name": "汪瑀",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 33,
+      "end": 33,
+      "count": 1,
+      "raw": "第33册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 84,
+    "title": "嘉靖尤溪縣誌",
+    "fullTitle": "嘉靖尤溪縣誌七卷   （福建）",
+    "authors": [
+      {
+        "name": "李文袞",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 33,
+      "end": 33,
+      "count": 1,
+      "raw": "第33册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖六年修九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 85,
+    "title": "正德建昌府志",
+    "fullTitle": "正德建昌府志十九卷   （江西）",
+    "authors": [
+      {
+        "name": "夏良勝",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 34,
+      "end": 34,
+      "count": 1,
+      "raw": "第34册"
+    },
+    "totalVolumes": 19,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 86,
+    "title": "隆慶臨江府志",
+    "fullTitle": "隆慶臨江府志十四卷   （江西）",
+    "authors": [
+      {
+        "name": "管大勳",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 35,
+      "end": 35,
+      "count": 1,
+      "raw": "第35册"
+    },
+    "totalVolumes": 14,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 87,
+    "title": "隆庆临江府志",
+    "fullTitle": "隆庆临江府志十四卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 35,
+      "end": 35,
+      "count": 1,
+      "raw": "第35册"
+    },
+    "totalVolumes": 14,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 88,
+    "title": "嘉靖九江府志",
+    "fullTitle": "嘉靖九江府志十六卷   （江西）",
+    "authors": [
+      {
+        "name": "馮曾",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 36,
+      "end": 36,
+      "count": 1,
+      "raw": "第36册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 89,
+    "title": "正德袁州府志",
+    "fullTitle": "正德袁州府志十四卷   （江西）",
+    "authors": [
+      {
+        "name": "嚴嵩",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 37,
+      "end": 37,
+      "count": 1,
+      "raw": "第37册"
+    },
+    "totalVolumes": 14,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 90,
+    "title": "嘉靖赣州府志",
+    "fullTitle": "嘉靖赣州府志十二卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 38,
+      "end": 38,
+      "count": 1,
+      "raw": "第38册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 91,
+    "title": "嘉靖贛州府志",
+    "fullTitle": "嘉靖贛州府志十二卷   （江西）",
+    "authors": [
+      {
+        "name": "康河",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 38,
+      "end": 38,
+      "count": 1,
+      "raw": "第38册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 92,
+    "title": "嘉靖永豐縣誌",
+    "fullTitle": "嘉靖永豐縣誌四卷   （江西）",
+    "authors": [
+      {
+        "name": "管景",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 39,
+      "end": 39,
+      "count": 1,
+      "raw": "第39册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 93,
+    "title": "正德南康府志",
+    "fullTitle": "正德南康府志十卷   （江西）",
+    "authors": [
+      {
+        "name": "陳霖",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 39,
+      "end": 39,
+      "count": 1,
+      "raw": "第39册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 94,
+    "title": "嘉靖永丰县志",
+    "fullTitle": "嘉靖永丰县志四卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 39,
+      "end": 39,
+      "count": 1,
+      "raw": "第39册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖二十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 95,
+    "title": "隆慶瑞昌府志",
+    "fullTitle": "隆慶瑞昌府志十八卷   （江西）",
+    "authors": [
+      {
+        "name": "劉儲",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 96,
+    "title": "嘉靖瑞金县志",
+    "fullTitle": "嘉靖瑞金县志八卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 97,
+    "title": "嘉靖东乡县志",
+    "fullTitle": "嘉靖东乡县志二卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "明嘉靖三年刻十五年补刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 98,
+    "title": "隆庆瑞昌府志",
+    "fullTitle": "隆庆瑞昌府志十八卷   （江西）",
+    "authors": [],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 99,
+    "title": "嘉靖東鄉縣誌",
+    "fullTitle": "嘉靖東鄉縣誌二卷   （江西）",
+    "authors": [
+      {
+        "name": "秦鎰",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "明嘉靖三年刻十五年補刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 100,
+    "title": "嘉靖瑞金縣誌",
+    "fullTitle": "嘉靖瑞金縣誌八卷   （江西）",
+    "authors": [
+      {
+        "name": "趙勳",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 40,
+      "end": 40,
+      "count": 1,
+      "raw": "第40册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十二年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 101,
+    "title": "嘉靖青州府志",
+    "fullTitle": "嘉靖青州府志十八卷上   （山東）",
+    "authors": [
+      {
+        "name": "杜思",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 41,
+      "end": 41,
+      "count": 1,
+      "raw": "第41册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖四十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 102,
+    "title": "嘉靖青州府志",
+    "fullTitle": "嘉靖青州府志十八卷上   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 41,
+      "end": 41,
+      "count": 1,
+      "raw": "第41册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖四十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 103,
+    "title": "嘉靖青州府志",
+    "fullTitle": "嘉靖青州府志十八卷下   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 42,
+      "end": 42,
+      "count": 1,
+      "raw": "第42册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖四十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 104,
+    "title": "嘉靖青州府志",
+    "fullTitle": "嘉靖青州府志十八卷下   （山東）",
+    "authors": [
+      {
+        "name": "杜思",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 42,
+      "end": 42,
+      "count": 1,
+      "raw": "第42册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖四十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 105,
+    "title": "嘉靖萊蕪縣誌",
+    "fullTitle": "嘉靖萊蕪縣誌八卷   （山東）",
+    "authors": [
+      {
+        "name": "陳甘雨",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 106,
+    "title": "嘉靖淄川縣誌",
+    "fullTitle": "嘉靖淄川縣誌十八卷   （山東）",
+    "authors": [
+      {
+        "name": "王琮",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 107,
+    "title": "嘉靖夏津縣誌",
+    "fullTitle": "嘉靖夏津縣誌二卷   （山東）",
+    "authors": [
+      {
+        "name": "易時中",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 108,
+    "title": "嘉靖淄川县志",
+    "fullTitle": "嘉靖淄川县志十八卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖二十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 109,
+    "title": "嘉靖臨朐縣誌",
+    "fullTitle": "嘉靖臨朐縣誌四卷   （山東）",
+    "authors": [
+      {
+        "name": "王家士",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 110,
+    "title": "嘉靖莱芜县志",
+    "fullTitle": "嘉靖莱芜县志八卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 111,
+    "title": "嘉靖临朐县志",
+    "fullTitle": "嘉靖临朐县志四卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 112,
+    "title": "嘉靖夏津县志",
+    "fullTitle": "嘉靖夏津县志二卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 43,
+      "end": 43,
+      "count": 1,
+      "raw": "第43册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 113,
+    "title": "嘉靖武定州志",
+    "fullTitle": "嘉靖武定州志二卷   （山東）",
+    "authors": [
+      {
+        "name": "鄭希僑",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 114,
+    "title": "正德莘县志",
+    "fullTitle": "正德莘县志十卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德十年原刻嘉靖间增刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 115,
+    "title": "嘉靖武城县志",
+    "fullTitle": "嘉靖武城县志十卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 116,
+    "title": "嘉靖武城縣誌",
+    "fullTitle": "嘉靖武城縣誌十卷   （山東）",
+    "authors": [
+      {
+        "name": "尤麒",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 117,
+    "title": "嘉靖武定州志",
+    "fullTitle": "嘉靖武定州志二卷   （山东）",
+    "authors": [],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 118,
+    "title": "正德莘縣誌",
+    "fullTitle": "正德莘縣誌十卷   （山東）",
+    "authors": [
+      {
+        "name": "吳宗器",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 44,
+      "end": 44,
+      "count": 1,
+      "raw": "第44册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十年原刻嘉靖間增刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 119,
+    "title": "嘉靖彰德府志",
+    "fullTitle": "嘉靖彰德府志八卷   （河南）",
+    "authors": [
+      {
+        "name": "崔銑",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 45,
+      "end": 45,
+      "count": 1,
+      "raw": "第45册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 120,
+    "title": "嘉靖襄城县志",
+    "fullTitle": "嘉靖襄城县志八卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 45,
+      "end": 45,
+      "count": 1,
+      "raw": "第45册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 121,
+    "title": "嘉靖襄城縣誌",
+    "fullTitle": "嘉靖襄城縣誌八卷   （河南）",
+    "authors": [
+      {
+        "name": "林鸞",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 45,
+      "end": 45,
+      "count": 1,
+      "raw": "第45册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 122,
+    "title": "嘉靖開州志",
+    "fullTitle": "嘉靖開州志十卷   （河南）",
+    "authors": [
+      {
+        "name": "孫巨鯨",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 46,
+      "end": 46,
+      "count": 1,
+      "raw": "第46册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 123,
+    "title": "正德汝州志",
+    "fullTitle": "正德汝州志八卷   （河南）",
+    "authors": [
+      {
+        "name": "王雄",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 46,
+      "end": 46,
+      "count": 1,
+      "raw": "第46册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 124,
+    "title": "嘉靖开州志",
+    "fullTitle": "嘉靖开州志十卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 46,
+      "end": 46,
+      "count": 1,
+      "raw": "第46册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 125,
+    "title": "嘉靖许州志",
+    "fullTitle": "嘉靖许州志八卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 47,
+      "end": 47,
+      "count": 1,
+      "raw": "第47册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 126,
+    "title": "嘉靖許州志",
+    "fullTitle": "嘉靖許州志八卷   （河南）",
+    "authors": [
+      {
+        "name": "張良知",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 47,
+      "end": 47,
+      "count": 1,
+      "raw": "第47册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 127,
+    "title": "嘉靖光山縣誌",
+    "fullTitle": "嘉靖光山縣誌九卷   （河南）",
+    "authors": [
+      {
+        "name": "沉紹慶",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 47,
+      "end": 47,
+      "count": 1,
+      "raw": "第47册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 128,
+    "title": "嘉靖光山县志",
+    "fullTitle": "嘉靖光山县志九卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 47,
+      "end": 47,
+      "count": 1,
+      "raw": "第47册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 129,
+    "title": "嘉靖夏邑縣誌",
+    "fullTitle": "嘉靖夏邑縣誌八卷   （河南）",
+    "authors": [
+      {
+        "name": "鄭相",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 48,
+      "end": 48,
+      "count": 1,
+      "raw": "第48册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 130,
+    "title": "嘉靖邓州志",
+    "fullTitle": "嘉靖邓州志十六卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 48,
+      "end": 48,
+      "count": 1,
+      "raw": "第48册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖四十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 131,
+    "title": "嘉靖夏邑县志",
+    "fullTitle": "嘉靖夏邑县志八卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 48,
+      "end": 48,
+      "count": 1,
+      "raw": "第48册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 132,
+    "title": "嘉靖鄧州志",
+    "fullTitle": "嘉靖鄧州志十六卷   （河南）",
+    "authors": [
+      {
+        "name": "潘庭楠",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 48,
+      "end": 48,
+      "count": 1,
+      "raw": "第48册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖四十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 133,
+    "title": "嘉靖尉氏县志",
+    "fullTitle": "嘉靖尉氏县志五卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 49,
+      "end": 49,
+      "count": 1,
+      "raw": "第49册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 134,
+    "title": "正德新鄉縣誌",
+    "fullTitle": "正德新鄉縣誌六卷   （河南）",
+    "authors": [
+      {
+        "name": "儲珊",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 49,
+      "end": 49,
+      "count": 1,
+      "raw": "第49册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德元年修明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 135,
+    "title": "正德新乡县志",
+    "fullTitle": "正德新乡县志六卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 49,
+      "end": 49,
+      "count": 1,
+      "raw": "第49册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德元年修明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 136,
+    "title": "嘉靖尉氏縣誌",
+    "fullTitle": "嘉靖尉氏縣誌五卷   （河南）",
+    "authors": [
+      {
+        "name": "曾嘉誥",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 49,
+      "end": 49,
+      "count": 1,
+      "raw": "第49册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十七年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 137,
+    "title": "正德長垣縣誌",
+    "fullTitle": "正德長垣縣誌九卷   （河南）",
+    "authors": [
+      {
+        "name": "杜緯",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 50,
+      "end": 50,
+      "count": 1,
+      "raw": "第50册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十年重刻正德本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 138,
+    "title": "嘉靖鲁山县志",
+    "fullTitle": "嘉靖鲁山县志十卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 50,
+      "end": 50,
+      "count": 1,
+      "raw": "第50册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 139,
+    "title": "正德长垣县志",
+    "fullTitle": "正德长垣县志九卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 50,
+      "end": 50,
+      "count": 1,
+      "raw": "第50册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十年重刻正德本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 140,
+    "title": "嘉靖魯山縣誌",
+    "fullTitle": "嘉靖魯山縣誌十卷   （河南）",
+    "authors": [
+      {
+        "name": "姚卿",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 50,
+      "end": 50,
+      "count": 1,
+      "raw": "第50册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 141,
+    "title": "嘉靖固始縣誌",
+    "fullTitle": "嘉靖固始縣誌十卷   （河南）",
+    "authors": [
+      {
+        "name": "張梯",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 51,
+      "end": 51,
+      "count": 1,
+      "raw": "第51册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十一年南坰草堂補刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 142,
+    "title": "嘉靖鄢陵志",
+    "fullTitle": "嘉靖鄢陵志八卷   （河南）",
+    "authors": [
+      {
+        "name": "劉訒",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 51,
+      "end": 51,
+      "count": 1,
+      "raw": "第51册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 143,
+    "title": "嘉靖固始县志",
+    "fullTitle": "嘉靖固始县志十卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 51,
+      "end": 51,
+      "count": 1,
+      "raw": "第51册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十一年南垧草堂补刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 144,
+    "title": "嘉靖内黄县志",
+    "fullTitle": "嘉靖内黄县志九卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 145,
+    "title": "嘉靖蘭陽縣誌",
+    "fullTitle": "嘉靖蘭陽縣誌十卷   （河南）",
+    "authors": [
+      {
+        "name": "褚宦",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 146,
+    "title": "弘治偃師縣誌",
+    "fullTitle": "弘治偃師縣誌四卷   （河南）",
+    "authors": [
+      {
+        "name": "魏津",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治十七年修明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 147,
+    "title": "嘉靖內黃縣誌",
+    "fullTitle": "嘉靖內黃縣誌九卷   （河南）",
+    "authors": [
+      {
+        "name": "董弦等",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 148,
+    "title": "嘉靖兰阳县志",
+    "fullTitle": "嘉靖兰阳县志十卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 149,
+    "title": "弘治偃师县志",
+    "fullTitle": "弘治偃师县志四卷   （河南）",
+    "authors": [],
+    "volumes": {
+      "start": 52,
+      "end": 52,
+      "count": 1,
+      "raw": "第52册"
+    },
+    "totalVolumes": 4,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明弘治十七年修明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 150,
+    "title": "弘治黄州府志",
+    "fullTitle": "弘治黄州府志十卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 53,
+      "end": 53,
+      "count": 1,
+      "raw": "第53册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明弘治十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 151,
+    "title": "弘治黃州府志",
+    "fullTitle": "弘治黃州府志十卷   （湖北）",
+    "authors": [
+      {
+        "name": "盧希哲",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 53,
+      "end": 53,
+      "count": 1,
+      "raw": "第53册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明弘治十三年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 152,
+    "title": "嘉靖汉阳府志",
+    "fullTitle": "嘉靖汉阳府志十卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 54,
+      "end": 54,
+      "count": 1,
+      "raw": "第54册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 153,
+    "title": "嘉靖沔阳志",
+    "fullTitle": "嘉靖沔阳志十八卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 54,
+      "end": 54,
+      "count": 1,
+      "raw": "第54册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 154,
+    "title": "嘉靖沔陽志",
+    "fullTitle": "嘉靖沔陽志十八卷   （湖北）",
+    "authors": [
+      {
+        "name": "魯儲",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 54,
+      "end": 54,
+      "count": 1,
+      "raw": "第54册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 155,
+    "title": "嘉靖漢陽府志",
+    "fullTitle": "嘉靖漢陽府志十卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 54,
+      "end": 54,
+      "count": 1,
+      "raw": "第54册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 156,
+    "title": "嘉靖应山县志",
+    "fullTitle": "嘉靖应山县志三卷　　（湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 3,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 157,
+    "title": "嘉靖應山縣誌",
+    "fullTitle": "嘉靖應山縣誌三卷　　（湖北）",
+    "authors": [
+      {
+        "name": "顏木",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 3,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 158,
+    "title": "嘉靖蘄州志",
+    "fullTitle": "嘉靖蘄州志九卷   （湖北）",
+    "authors": [
+      {
+        "name": "甘澤",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖九年修十五年補刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 159,
+    "title": "正德光化縣誌",
+    "fullTitle": "正德光化縣誌六卷末一卷   （湖北）",
+    "authors": [
+      {
+        "name": "曹璘",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 160,
+    "title": "正德光化县志",
+    "fullTitle": "正德光化县志六卷末一卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 161,
+    "title": "嘉靖蕲州志",
+    "fullTitle": "嘉靖蕲州志九卷   （湖北）",
+    "authors": [],
+    "volumes": {
+      "start": 55,
+      "end": 55,
+      "count": 1,
+      "raw": "第55册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖九年修十五年补刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 162,
+    "title": "嘉靖常德府志",
+    "fullTitle": "嘉靖常德府志二十卷　　　（湖南）",
+    "authors": [
+      {
+        "name": "陳洪謨",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 56,
+      "end": 56,
+      "count": 1,
+      "raw": "第56册"
+    },
+    "totalVolumes": 20,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 163,
+    "title": "嘉靖岳州府志",
+    "fullTitle": "嘉靖岳州府志十八卷　　　（湖南）",
+    "authors": [],
+    "volumes": {
+      "start": 57,
+      "end": 57,
+      "count": 1,
+      "raw": "第57册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆间刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 164,
+    "title": "嘉靖嶽州府志",
+    "fullTitle": "嘉靖嶽州府志十八卷　　　（湖南）",
+    "authors": [
+      {
+        "name": "鐘崇文",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 57,
+      "end": 57,
+      "count": 1,
+      "raw": "第57册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶間刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 165,
+    "title": "万历郴州志",
+    "fullTitle": "万历郴州志二十卷　　　（湖南）",
+    "authors": [],
+    "volumes": {
+      "start": 58,
+      "end": 58,
+      "count": 1,
+      "raw": "第58册"
+    },
+    "totalVolumes": 20,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明万历四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 166,
+    "title": "萬曆郴州志",
+    "fullTitle": "萬曆郴州志二十卷　　　（湖南）",
+    "authors": [
+      {
+        "name": "胡漢",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 58,
+      "end": 58,
+      "count": 1,
+      "raw": "第58册"
+    },
+    "totalVolumes": 20,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明萬曆四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 167,
+    "title": "万历慈利县志",
+    "fullTitle": "万历慈利县志十八卷　　　（湖南）",
+    "authors": [],
+    "volumes": {
+      "start": 59,
+      "end": 59,
+      "count": 1,
+      "raw": "第59册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明万历元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 168,
+    "title": "萬曆慈利縣誌",
+    "fullTitle": "萬曆慈利縣誌十八卷　　　（湖南）",
+    "authors": [
+      {
+        "name": "陳光前",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 59,
+      "end": 59,
+      "count": 1,
+      "raw": "第59册"
+    },
+    "totalVolumes": 18,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明萬曆元年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 169,
+    "title": "嘉靖衡州府志",
+    "fullTitle": "嘉靖衡州府志九卷　　　（湖南）",
+    "authors": [
+      {
+        "name": "楊珮",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 59,
+      "end": 59,
+      "count": 1,
+      "raw": "第59册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 170,
+    "title": "正德瓊台志",
+    "fullTitle": "正德瓊台志四十四卷上存卷　　（廣東）",
+    "authors": [
+      {
+        "name": "唐胄",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 60,
+      "end": 60,
+      "count": 1,
+      "raw": "第60册"
+    },
+    "totalVolumes": 44,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 171,
+    "title": "正德琼台志",
+    "fullTitle": "正德琼台志四十四卷上存卷　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 60,
+      "end": 60,
+      "count": 1,
+      "raw": "第60册"
+    },
+    "totalVolumes": 44,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 172,
+    "title": "正德瓊台志",
+    "fullTitle": "正德瓊台志四十四卷下存卷　　（廣東）",
+    "authors": [
+      {
+        "name": "唐胄",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 61,
+      "end": 61,
+      "count": 1,
+      "raw": "第61册"
+    },
+    "totalVolumes": 44,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 173,
+    "title": "正德琼台志",
+    "fullTitle": "正德琼台志四十四卷下存卷　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 61,
+      "end": 61,
+      "count": 1,
+      "raw": "第61册"
+    },
+    "totalVolumes": 44,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明正德十六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 174,
+    "title": "嘉靖惠州府志",
+    "fullTitle": "嘉靖惠州府志十六卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "姚良弼",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 62,
+      "end": 62,
+      "count": 1,
+      "raw": "第62册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十五年藍印本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 175,
+    "title": "嘉靖惠州府志",
+    "fullTitle": "嘉靖惠州府志十六卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 62,
+      "end": 62,
+      "count": 1,
+      "raw": "第62册"
+    },
+    "totalVolumes": 16,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十五年蓝印本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 176,
+    "title": "隆庆潮阳县志",
+    "fullTitle": "隆庆潮阳县志十五卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 63,
+      "end": 63,
+      "count": 1,
+      "raw": "第63册"
+    },
+    "totalVolumes": 15,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明隆庆六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 177,
+    "title": "嘉靖廣東韶州府翁源縣誌不分卷　　　（廣東）",
+    "fullTitle": "嘉靖廣東韶州府翁源縣誌不分卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "李孔明",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 63,
+      "end": 63,
+      "count": 1,
+      "raw": "第63册"
+    },
+    "totalVolumes": 0,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十六年修烏絲欄明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 178,
+    "title": "隆慶潮陽縣誌",
+    "fullTitle": "隆慶潮陽縣誌十五卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "黃一龍",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 63,
+      "end": 63,
+      "count": 1,
+      "raw": "第63册"
+    },
+    "totalVolumes": 15,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明隆慶六年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 179,
+    "title": "嘉靖广东韶州府翁源县志不分卷　　　（广东）",
+    "fullTitle": "嘉靖广东韶州府翁源县志不分卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 63,
+      "end": 63,
+      "count": 1,
+      "raw": "第63册"
+    },
+    "totalVolumes": 0,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十六年修乌丝栏明抄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 180,
+    "title": "嘉靖仁化县志",
+    "fullTitle": "嘉靖仁化县志五卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖三十六年蓝丝栏本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 181,
+    "title": "嘉靖钦州志",
+    "fullTitle": "嘉靖钦州志九卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 182,
+    "title": "嘉靖惠志略不分卷　　　（廣東）",
+    "fullTitle": "嘉靖惠志略不分卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "楊載鳴",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 0,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 183,
+    "title": "嘉靖仁化縣誌",
+    "fullTitle": "嘉靖仁化縣誌五卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "胡居安",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖三十六年藍絲欄本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 184,
+    "title": "嘉靖欽州志",
+    "fullTitle": "嘉靖欽州志九卷　　　（廣東）",
+    "authors": [
+      {
+        "name": "林希元",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 185,
+    "title": "嘉靖惠志略不分卷　　　（广东）",
+    "fullTitle": "嘉靖惠志略不分卷　　　（广东）",
+    "authors": [],
+    "volumes": {
+      "start": 64,
+      "end": 64,
+      "count": 1,
+      "raw": "第64册"
+    },
+    "totalVolumes": 0,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 186,
+    "title": "正德夔州府志",
+    "fullTitle": "正德夔州府志十二卷首一卷　　　（四川）",
+    "authors": [
+      {
+        "name": "吳潛",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 65,
+      "end": 65,
+      "count": 1,
+      "raw": "第65册"
+    },
+    "totalVolumes": 12,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明正德八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 187,
+    "title": "嘉靖馬湖府志",
+    "fullTitle": "嘉靖馬湖府志七卷　　　（四川）",
+    "authors": [
+      {
+        "name": "余承勳",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖三十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 188,
+    "title": "嘉靖雲陽縣誌",
+    "fullTitle": "嘉靖雲陽縣誌二卷　　　（四川）",
+    "authors": [
+      {
+        "name": "楊鸞",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 189,
+    "title": "嘉靖洪雅县志",
+    "fullTitle": "嘉靖洪雅县志五卷　　　（四川）",
+    "authors": [],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖四十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 190,
+    "title": "嘉靖云阳县志",
+    "fullTitle": "嘉靖云阳县志二卷　　　（四川）",
+    "authors": [],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 191,
+    "title": "嘉靖洪雅縣誌",
+    "fullTitle": "嘉靖洪雅縣誌五卷　　　（四川）",
+    "authors": [
+      {
+        "name": "束載",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 5,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖四十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 192,
+    "title": "嘉靖马湖府志",
+    "fullTitle": "嘉靖马湖府志七卷　　　（四川）",
+    "authors": [],
+    "volumes": {
+      "start": 66,
+      "end": 66,
+      "count": 1,
+      "raw": "第66册"
+    },
+    "totalVolumes": 7,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖三十四年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 193,
+    "title": "嘉靖思南府志",
+    "fullTitle": "嘉靖思南府志九卷　　　（贵州）",
+    "authors": [],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 194,
+    "title": "嘉靖寻甸府志",
+    "fullTitle": "嘉靖寻甸府志二卷　　　（云南）",
+    "authors": [],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 195,
+    "title": "嘉靖思南府志",
+    "fullTitle": "嘉靖思南府志九卷　　　（貴州）",
+    "authors": [
+      {
+        "name": "鐘添",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 9,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖十五年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 196,
+    "title": "嘉靖普安州志",
+    "fullTitle": "嘉靖普安州志十卷　　　（貴州）",
+    "authors": [
+      {
+        "name": "高廷愉",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉??靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 197,
+    "title": "嘉靖尋甸府志",
+    "fullTitle": "嘉靖尋甸府志二卷　　　（雲南）",
+    "authors": [
+      {
+        "name": "王尚用",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 2,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖二十九年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 198,
+    "title": "嘉靖普安州志",
+    "fullTitle": "嘉靖普安州志十卷　　　（贵州）",
+    "authors": [],
+    "volumes": {
+      "start": 67,
+      "end": 67,
+      "count": 1,
+      "raw": "第67册"
+    },
+    "totalVolumes": 10,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉​​靖二十八年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 199,
+    "title": "嘉靖略阳县志",
+    "fullTitle": "嘉靖略阳县志六卷　　　（陕西）",
+    "authors": [],
+    "volumes": {
+      "start": 68,
+      "end": 68,
+      "count": 1,
+      "raw": "第68册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 200,
+    "title": "嘉靖略陽縣誌",
+    "fullTitle": "嘉靖略陽縣誌六卷　　　（陝西）",
+    "authors": [
+      {
+        "name": "李遇春",
+        "dynasty": "明",
+        "role": "纂"
+      }
+    ],
+    "volumes": {
+      "start": 68,
+      "end": 68,
+      "count": 1,
+      "raw": "第68册"
+    },
+    "totalVolumes": 6,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖三十一年刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 201,
+    "title": "嘉靖寧夏新志",
+    "fullTitle": "嘉靖寧夏新志八卷　　　（甘肅）",
+    "authors": [
+      {
+        "name": "楊守禮",
+        "dynasty": "明",
+        "role": "修"
+      }
+    ],
+    "volumes": {
+      "start": 68,
+      "end": 68,
+      "count": 1,
+      "raw": "第68册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "據明嘉靖十九年修刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  },
+  {
+    "id": 202,
+    "title": "嘉靖宁夏新志",
+    "fullTitle": "嘉靖宁夏新志八卷　　　（甘肃）",
+    "authors": [],
+    "volumes": {
+      "start": 68,
+      "end": 68,
+      "count": 1,
+      "raw": "第68册"
+    },
+    "totalVolumes": 8,
+    "category": null,
+    "series": "天一阁藏明代方志选刊",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "据明嘉靖十九年修刻本影印本",
+    "publisher": "上海书店",
+    "publishPlace": "上海",
+    "publishYear": "1982",
+    "notes": ""
+  }
+]
