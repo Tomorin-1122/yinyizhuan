@@ -837,8 +837,8 @@ export default function HistoryPage() {
       {analyzeResult && (
         <div className="mb-6 border-2 border-accent-600 bg-accent-50 dark:bg-gray-800 p-6">
           <div className="flex justify-between items-start mb-4">
-            <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100">📊 历史记录分析</h3>
-            <button onClick={() => setAnalyzeResult(null)} className="text-ink-400 hover:text-ink-700 dark:text-gray-500">✕</button>
+            <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100">历史记录分析</h3>
+            <button onClick={() => setAnalyzeResult(null)} className="text-ink-400 hover:text-ink-700 dark:text-gray-500">关闭</button>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div className="bg-white dark:bg-gray-700 p-3 text-center">
@@ -858,18 +858,61 @@ export default function HistoryPage() {
               <div className="text-xs text-ink-500 dark:text-gray-400">最多文献类型</div>
             </div>
           </div>
+
+          {/* 最多作者 */}
+          {analyzeResult.topAuthors?.length > 0 && (
+            <div className="mb-3">
+              <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">引用最多作者</div>
+              <div className="flex flex-wrap gap-2">
+                {analyzeResult.topAuthors.map((a: { name: string; count: number }) => (
+                  <span key={a.name} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                    {a.name} <span className="text-accent-600 font-bold">{a.count}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 月度分布 */}
+          {Object.keys(analyzeResult.byMonth || {}).length > 0 && (
+            <div className="mb-3">
+              <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">月份分布</div>
+              <div className="flex flex-wrap gap-2">
+                {Object.entries(analyzeResult.byMonth).sort().map(([k, v]) => (
+                  <span key={k} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                    {k} <span className="text-accent-600 font-bold">{v as number}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 最忙碌日期 */}
+          {analyzeResult.topDays?.length > 0 && (
+            <div className="mb-3">
+              <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">最忙碌日期</div>
+              <div className="flex flex-wrap gap-2">
+                {analyzeResult.topDays.map(([day, count]: [string, number]) => (
+                  <span key={day} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                    {day} <span className="text-accent-600 font-bold">{count}条</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
           <details className="text-sm text-ink-700 dark:text-gray-300">
-            <summary className="cursor-pointer font-display font-bold mb-2">详细分布</summary>
+            <summary className="cursor-pointer font-display font-bold mb-2">详细分类</summary>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-2">
               <div>
-                <div className="font-bold text-xs text-ink-500 dark:text-gray-400 mb-1">格式分布</div>
-                {Object.entries(analyzeResult.byFormat || {}).map(([k,v]) => (
+                <div className="font-bold text-xs text-ink-500 dark:text-gray-400 mb-1">转换格式</div>
+                {Object.entries(analyzeResult.byFormat || {}).map(([k, v]) => (
                   <div key={k} className="flex justify-between py-0.5"><span>{k}</span><span className="text-accent-600 font-bold">{v as number}</span></div>
                 ))}
               </div>
               <div>
                 <div className="font-bold text-xs text-ink-500 dark:text-gray-400 mb-1">文献类型</div>
-                {Object.entries(analyzeResult.byType || {}).map(([k,v]) => (
+                {Object.entries(analyzeResult.byType || {}).map(([k, v]) => (
                   <div key={k} className="flex justify-between py-0.5"><span>{k}</span><span className="text-accent-600 font-bold">{v as number}</span></div>
                 ))}
               </div>
