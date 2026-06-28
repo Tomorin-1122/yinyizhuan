@@ -2,6 +2,9 @@
 node_modules/
 dist/
 
+# API key (skill)
+.yinyizhuan-key
+
 # Environment
 .env
 .env.local
