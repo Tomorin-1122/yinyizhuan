@@ -11,6 +11,7 @@ interface AncientBook {
   totalVolumes: number
   series: string
   publisher: string
+  publishPlace?: string
   publishYear: string
   version: string
 }

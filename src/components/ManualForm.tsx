@@ -184,8 +184,10 @@ export default function ManualForm({
             if (book.publisher) {
               updateField('publisher', book.publisher)
             }
-            // 设置出版地（四库全书默认台北）
-            updateField('publishPlace', '台北')
+            // 设置出版地（从数据中获取）
+            if (book.publishPlace) {
+              updateField('publishPlace', book.publishPlace)
+            }
             
             if (book.publishYear) {
               const years = book.publishYear.match(/\d{4}/g)
