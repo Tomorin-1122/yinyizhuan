@@ -459,6 +459,11 @@ export default function HistoryPage() {
   }
 
   const handleAnalyze = async () => {
+    // 10 分钟内不重复调用 API
+    if (analyzeResult?._ts && Date.now() - analyzeResult._ts < 10 * 60 * 1000) {
+      showToast('已有最近分析结果')
+      return
+    }
     const data = records.map(r => ({
       targetFormat: r.targetFormat,
       citationType: r.citation?.type || 'unknown',
@@ -476,7 +481,7 @@ export default function HistoryPage() {
       })
       const json = await res.json()
       if (json.success) {
-        setAnalyzeResult(json.data)
+        setAnalyzeResult({ ...json.data, _ts: Date.now() })
         showToast('分析完成')
       } else {
         showToast('分析失败: ' + json.error)
@@ -486,6 +491,11 @@ export default function HistoryPage() {
     } finally {
       setAnalyzeLoading(false)
     }
+  }
+
+  const searchByTag = (keyword: string) => {
+    setSearchKeyword(keyword)
+    setSearchType('all')
   }
 
   const handleExportJSON = () => {
@@ -610,7 +620,7 @@ export default function HistoryPage() {
             <IconDownload className="w-4 h-4" />CSV
           </button>
           <button onClick={handleAnalyze} className="btn-ghost text-sm" disabled={records.length === 0 || analyzeLoading}>
-            {analyzeLoading ? '分析中...' : '📊 分析'}
+            {analyzeLoading ? '分析中...' : '分析'}
           </button>
           {selected.size > 0 && (
             <button onClick={handleExportWord} className="btn-ghost text-sm text-ink-700 dark:text-gray-200">
@@ -865,9 +875,11 @@ export default function HistoryPage() {
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">引用最多作者</div>
               <div className="flex flex-wrap gap-2">
                 {analyzeResult.topAuthors.map((a: { name: string; count: number }) => (
-                  <span key={a.name} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                  <button key={a.name}
+                    onClick={() => searchByTag(a.name)}
+                    className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600 hover:border-accent-400 hover:text-accent-600 cursor-pointer">
                     {a.name} <span className="text-accent-600 font-bold">{a.count}</span>
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -879,9 +891,11 @@ export default function HistoryPage() {
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">月份分布</div>
               <div className="flex flex-wrap gap-2">
                 {Object.entries(analyzeResult.byMonth).sort().map(([k, v]) => (
-                  <span key={k} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                  <button key={k}
+                    onClick={() => searchByTag(k)}
+                    className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600 hover:border-accent-400 hover:text-accent-600 cursor-pointer">
                     {k} <span className="text-accent-600 font-bold">{v as number}</span>
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>
@@ -893,9 +907,11 @@ export default function HistoryPage() {
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">最忙碌日期</div>
               <div className="flex flex-wrap gap-2">
                 {analyzeResult.topDays.map(([day, count]: [string, number]) => (
-                  <span key={day} className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600">
+                  <button key={day}
+                    onClick={() => searchByTag(day)}
+                    className="bg-white dark:bg-gray-700 px-2 py-0.5 text-sm border border-ink-200 dark:border-gray-600 hover:border-accent-400 hover:text-accent-600 cursor-pointer">
                     {day} <span className="text-accent-600 font-bold">{count}条</span>
-                  </span>
+                  </button>
                 ))}
               </div>
             </div>
