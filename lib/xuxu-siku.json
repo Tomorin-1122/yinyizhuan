@@ -8793,34 +8793,6 @@
     "notes": ""
   },
   {
-    "id": 318,
-    "title": "禹贡说",
-    "fullTitle": "禹贡说一卷",
-    "authors": [
-      {
-        "name": "倪文蔚",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 55,
-      "end": 55,
-      "count": 1,
-      "raw": "第0055册（经部）"
-    },
-    "totalVolumes": 1,
-    "category": "经",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "清光绪十四年南菁书院刻皇清经解续编本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
     "id": 319,
     "title": "禹贡郑氏略例",
     "fullTitle": "禹贡郑氏略例一卷",
@@ -10409,34 +10381,6 @@
     "type": "ancient",
     "subType": "collection",
     "version": "上海辞书出版社图书馆藏清嘉庆刻本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
-    "id": 376,
-    "title": "诗问",
-    "fullTitle": "诗问七卷",
-    "authors": [
-      {
-        "name": "郝懿行",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 65,
-      "end": 65,
-      "count": 1,
-      "raw": "第0065册（经部）"
-    },
-    "totalVolumes": 7,
-    "category": "经",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "清光绪八年东路厅署刻郝氏遗书本",
     "publisher": "上海古籍出版社",
     "publishPlace": "上海",
     "publishYear": "2002",
@@ -12748,34 +12692,6 @@
     "type": "ancient",
     "subType": "collection",
     "version": "湖北省图书馆藏清刻三礼郑注考本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
-    "id": 460,
-    "title": "周礼学",
-    "fullTitle": "周礼学一卷",
-    "authors": [
-      {
-        "name": "沈梦兰",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 81,
-      "end": 81,
-      "count": 1,
-      "raw": "第0081册（经部）"
-    },
-    "totalVolumes": 1,
-    "category": "经",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "复旦大学图书馆藏清光绪十七年祁县县署刻所愿学斋书钞本",
     "publisher": "上海古籍出版社",
     "publishPlace": "上海",
     "publishYear": "2002",
@@ -15191,34 +15107,6 @@
     "type": "ancient",
     "subType": "collection",
     "version": "复旦大学图书馆藏清光绪十六年刻学古堂日记本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
-    "id": 549,
-    "title": "礼记郑读考",
-    "fullTitle": "礼记郑读考一卷",
-    "authors": [
-      {
-        "name": "俞樾",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 106,
-      "end": 106,
-      "count": 1,
-      "raw": "第0106册（经部）"
-    },
-    "totalVolumes": 1,
-    "category": "经",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "清光绪二十五年刻春在堂全书俞楼杂纂本",
     "publisher": "上海古籍出版社",
     "publishPlace": "上海",
     "publishYear": "2002",
@@ -54628,34 +54516,6 @@
     "notes": ""
   },
   {
-    "id": 1962,
-    "title": "使琉球录",
-    "fullTitle": "使琉球录一卷",
-    "authors": [
-      {
-        "name": "陈侃",
-        "dynasty": "明",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 742,
-      "end": 742,
-      "count": 1,
-      "raw": "第0742册（史部）"
-    },
-    "totalVolumes": 1,
-    "category": "史",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "上海古籍出版社藏民国二十六年商务印书馆国立北平图书馆善本丛书第一集明嘉靖刻本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
     "id": 1963,
     "title": "海国图志",
     "fullTitle": "海国图志一百卷",
@@ -73391,34 +73251,6 @@
     "type": "ancient",
     "subType": "collection",
     "version": "天津图书馆藏清光绪三年宗源瀚严州府刻本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
-    "id": 2633,
-    "title": "蚕桑辑要",
-    "fullTitle": "蚕桑辑要一卷",
-    "authors": [
-      {
-        "name": "沈秉成",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 978,
-      "end": 978,
-      "count": 1,
-      "raw": "第0978册（子部）"
-    },
-    "totalVolumes": 1,
-    "category": "子",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "浙江省图书馆藏清同治十年常镇通海道署刻本",
     "publisher": "上海古籍出版社",
     "publishPlace": "上海",
     "publishYear": "2002",
@@ -93762,34 +93594,6 @@
     "type": "ancient",
     "subType": "collection",
     "version": "清康熙五十七年棣华书屋刻本",
-    "publisher": "上海古籍出版社",
-    "publishPlace": "上海",
-    "publishYear": "2002",
-    "notes": ""
-  },
-  {
-    "id": 3372,
-    "title": "菊谱",
-    "fullTitle": "菊谱二卷",
-    "authors": [
-      {
-        "name": "叶天培",
-        "dynasty": "清",
-        "role": "撰"
-      }
-    ],
-    "volumes": {
-      "start": 1116,
-      "end": 1116,
-      "count": 1,
-      "raw": "第1116册（子部）"
-    },
-    "totalVolumes": 2,
-    "category": "子",
-    "series": "续修四库全书",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "北京大学图书馆藏清乾隆刻本",
     "publisher": "上海古籍出版社",
     "publishPlace": "上海",
     "publishYear": "2002",

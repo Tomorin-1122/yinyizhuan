@@ -164,6 +164,23 @@ def transform_record(record, config):
     # 提取书名和总卷数
     title = record['fullTitle']
     total_volumes = 0
+    province = None
+    
+    # 方志丛书特殊处理：提取省份信息
+    if config['name'] in ['天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编']:
+        # 匹配"（省份）"格式
+        province_match = re.search(r'[（(]([^）)]+)[）)]', title)
+        if province_match:
+            province = province_match.group(1)
+            # 从书名中移除省份信息
+            title = re.sub(r'[（(][^）)]+[）)]', '', title).strip()
+    
+    # 中国方志丛书特殊处理：从册数中提取地区信息
+    if config['name'] == '中国方志丛书':
+        # 匹配"[华中·安徽]"格式
+        region_match = re.search(r'\[([^\]]+)\]', record['volumes'])
+        if region_match:
+            province = region_match.group(1)
     
     volume_match = re.search(r'^(.+?)([一二三四五六七八九十百千]+)卷', title)
     if volume_match:
@@ -178,7 +195,7 @@ def transform_record(record, config):
         else:
             book_name = title
     
-    return {
+    result = {
         'id': record['id'],
         'title': book_name,
         'fullTitle': record['fullTitle'],
@@ -195,6 +212,12 @@ def transform_record(record, config):
         'publishYear': config['publishYear'],
         'notes': record.get('notes', '')
     }
+    
+    # 添加省份字段（如果有）
+    if province:
+        result['province'] = province
+    
+    return result
 
 def fetch_series(series_id, config):
     """爬取单个丛书"""
@@ -213,12 +236,39 @@ def fetch_series(series_id, config):
     transformed = [transform_record(r, config) for r in records]
     return transformed
 
+def deduplicate_records(records):
+    """去除重复记录（繁简体两个版本）"""
+    seen = set()
+    unique_records = []
+    
+    for record in records:
+        # 使用书名+册数作为唯一标识
+        key = f"{record['title']}_{record['volumes'].get('raw', '')}"
+        
+        # 简化key，去除空格和特殊字符
+        key = re.sub(r'\s+', '', key)
+        
+        if key not in seen:
+            seen.add(key)
+            unique_records.append(record)
+    
+    return unique_records
+
 def main():
     all_records = []
     series_stats = {}
     
     for series_id, config in SERIES_CONFIG.items():
         records = fetch_series(series_id, config)
+        
+        # 去重
+        original_count = len(records)
+        records = deduplicate_records(records)
+        deduplicated_count = original_count - len(records)
+        
+        if deduplicated_count > 0:
+            print(f"去重: {original_count} -> {len(records)} (去除 {deduplicated_count} 条重复)")
+        
         all_records.extend(records)
         series_stats[config['name']] = len(records)
         

@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "title": "嘉靖蠡县志       （河北）",
+    "title": "嘉靖蠡县志",
     "fullTitle": "嘉靖蠡县志       （河北）",
     "authors": [],
     "volumes": {
@@ -19,11 +19,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 2,
-    "title": "嘉靖蠡縣誌       （河北）",
+    "title": "嘉靖蠡縣誌",
     "fullTitle": "嘉靖蠡縣誌       （河北）",
     "authors": [
       {
@@ -47,11 +48,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 3,
-    "title": "嘉靖清苑县志     （河北）",
+    "title": "嘉靖清苑县志",
     "fullTitle": "嘉靖清苑县志     （河北）",
     "authors": [],
     "volumes": {
@@ -69,11 +71,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 4,
-    "title": "嘉靖清苑縣誌     （河北）",
+    "title": "嘉靖清苑縣誌",
     "fullTitle": "嘉靖清苑縣誌     （河北）",
     "authors": [
       {
@@ -97,11 +100,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 5,
-    "title": "嘉靖獲鹿縣誌     （河北）",
+    "title": "嘉靖獲鹿縣誌",
     "fullTitle": "嘉靖獲鹿縣誌     （河北）",
     "authors": [
       {
@@ -125,11 +129,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 6,
-    "title": "嘉靖获鹿县志     （河北）",
+    "title": "嘉靖获鹿县志",
     "fullTitle": "嘉靖获鹿县志     （河北）",
     "authors": [],
     "volumes": {
@@ -147,11 +152,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 7,
-    "title": "嘉靖威县志       （河北）",
+    "title": "嘉靖威县志",
     "fullTitle": "嘉靖威县志       （河北）",
     "authors": [],
     "volumes": {
@@ -169,11 +175,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 8,
-    "title": "正德趙州志       （河北）",
+    "title": "正德趙州志",
     "fullTitle": "正德趙州志       （河北）",
     "authors": [
       {
@@ -197,11 +204,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 9,
-    "title": "正德赵州志       （河北）",
+    "title": "正德赵州志",
     "fullTitle": "正德赵州志       （河北）",
     "authors": [],
     "volumes": {
@@ -219,11 +227,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 10,
-    "title": "嘉靖威縣誌       （河北）",
+    "title": "嘉靖威縣誌",
     "fullTitle": "嘉靖威縣誌       （河北）",
     "authors": [
       {
@@ -247,11 +256,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 11,
-    "title": "正德臨漳縣誌     （河北）",
+    "title": "正德臨漳縣誌",
     "fullTitle": "正德臨漳縣誌     （河北）",
     "authors": [
       {
@@ -275,11 +285,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 12,
-    "title": "嘉靖磁州志       （河北）",
+    "title": "嘉靖磁州志",
     "fullTitle": "嘉靖磁州志       （河北）",
     "authors": [
       {
@@ -303,11 +314,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 13,
-    "title": "正德临漳县志     （河北）",
+    "title": "正德临漳县志",
     "fullTitle": "正德临漳县志     （河北）",
     "authors": [],
     "volumes": {
@@ -325,11 +337,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 14,
-    "title": "弘治永平府志     （河北）",
+    "title": "弘治永平府志",
     "fullTitle": "弘治永平府志     （河北）",
     "authors": [
       {
@@ -353,11 +366,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 15,
-    "title": "嘉靖武安县志     （河北）",
+    "title": "嘉靖武安县志",
     "fullTitle": "嘉靖武安县志     （河北）",
     "authors": [],
     "volumes": {
@@ -375,11 +389,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 16,
-    "title": "嘉靖曲沃县志     （山西）",
+    "title": "嘉靖曲沃县志",
     "fullTitle": "嘉靖曲沃县志     （山西）",
     "authors": [],
     "volumes": {
@@ -397,11 +412,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山西"
   },
   {
     "id": 17,
-    "title": "嘉靖翼城县志     （山西）",
+    "title": "嘉靖翼城县志",
     "fullTitle": "嘉靖翼城县志     （山西）",
     "authors": [],
     "volumes": {
@@ -419,11 +435,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山西"
   },
   {
     "id": 18,
-    "title": "嘉靖武安縣誌     （河北）",
+    "title": "嘉靖武安縣誌",
     "fullTitle": "嘉靖武安縣誌     （河北）",
     "authors": [
       {
@@ -447,11 +464,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 19,
-    "title": "嘉靖涉縣誌       （河北）",
+    "title": "嘉靖涉縣誌",
     "fullTitle": "嘉靖涉縣誌       （河北）",
     "authors": [
       {
@@ -475,11 +493,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 20,
-    "title": "嘉靖曲沃縣誌     （山西）",
+    "title": "嘉靖曲沃縣誌",
     "fullTitle": "嘉靖曲沃縣誌     （山西）",
     "authors": [
       {
@@ -503,11 +522,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山西"
   },
   {
     "id": 21,
-    "title": "嘉靖翼城縣誌     （山西）",
+    "title": "嘉靖翼城縣誌",
     "fullTitle": "嘉靖翼城縣誌     （山西）",
     "authors": [
       {
@@ -531,11 +551,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山西"
   },
   {
     "id": 22,
-    "title": "嘉靖涉县志       （河北）",
+    "title": "嘉靖涉县志",
     "fullTitle": "嘉靖涉县志       （河北）",
     "authors": [],
     "volumes": {
@@ -553,11 +574,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河北"
   },
   {
     "id": 23,
-    "title": "正德松江府志 上  （上海）",
+    "title": "正德松江府志 上",
     "fullTitle": "正德松江府志 上  （上海）",
     "authors": [],
     "volumes": {
@@ -575,11 +597,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "上海"
   },
   {
     "id": 24,
-    "title": "正德松江府志 下  （上海）",
+    "title": "正德松江府志 下",
     "fullTitle": "正德松江府志 下  （上海）",
     "authors": [],
     "volumes": {
@@ -597,11 +620,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "上海"
   },
   {
     "id": 25,
-    "title": "萬曆江浦縣誌     （江蘇）",
+    "title": "萬曆江浦縣誌",
     "fullTitle": "萬曆江浦縣誌     （江蘇）",
     "authors": [
       {
@@ -625,11 +649,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 26,
-    "title": "弘治上海志       （上海）",
+    "title": "弘治上海志",
     "fullTitle": "弘治上海志       （上海）",
     "authors": [
       {
@@ -653,11 +678,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "上海"
   },
   {
     "id": 27,
-    "title": "嘉靖六合縣誌     （江蘇）",
+    "title": "嘉靖六合縣誌",
     "fullTitle": "嘉靖六合縣誌     （江蘇）",
     "authors": [
       {
@@ -681,11 +707,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 28,
-    "title": "嘉靖六合县志     （江苏）",
+    "title": "嘉靖六合县志",
     "fullTitle": "嘉靖六合县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -703,11 +730,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 29,
-    "title": "万历江浦县志     （江苏）",
+    "title": "万历江浦县志",
     "fullTitle": "万历江浦县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -725,11 +753,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 30,
-    "title": "萬曆宿遷縣誌     （江蘇）",
+    "title": "萬曆宿遷縣誌",
     "fullTitle": "萬曆宿遷縣誌     （江蘇）",
     "authors": [
       {
@@ -753,11 +782,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 31,
-    "title": "万历宿迁县志     （江苏）",
+    "title": "万历宿迁县志",
     "fullTitle": "万历宿迁县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -775,11 +805,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 32,
-    "title": "万历淮安府志     （江苏）",
+    "title": "万历淮安府志",
     "fullTitle": "万历淮安府志     （江苏）",
     "authors": [],
     "volumes": {
@@ -797,11 +828,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 33,
-    "title": "萬曆淮安府志     （江蘇）",
+    "title": "萬曆淮安府志",
     "fullTitle": "萬曆淮安府志     （江蘇）",
     "authors": [
       {
@@ -825,11 +857,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 34,
-    "title": "隆庆宝应县志     （江苏）",
+    "title": "隆庆宝应县志",
     "fullTitle": "隆庆宝应县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -847,11 +880,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 35,
-    "title": "隆慶寶應縣誌     （江蘇）",
+    "title": "隆慶寶應縣誌",
     "fullTitle": "隆慶寶應縣誌     （江蘇）",
     "authors": [
       {
@@ -875,11 +909,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 36,
-    "title": "嘉靖沛縣誌       （江蘇）",
+    "title": "嘉靖沛縣誌",
     "fullTitle": "嘉靖沛縣誌       （江蘇）",
     "authors": [
       {
@@ -903,11 +938,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 37,
-    "title": "嘉靖沛县志       （江苏）",
+    "title": "嘉靖沛县志",
     "fullTitle": "嘉靖沛县志       （江苏）",
     "authors": [],
     "volumes": {
@@ -925,11 +961,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 38,
-    "title": "嘉靖通州志       （江苏）",
+    "title": "嘉靖通州志",
     "fullTitle": "嘉靖通州志       （江苏）",
     "authors": [],
     "volumes": {
@@ -947,39 +984,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 39,
-    "title": "嘉靖通州志       （江蘇）",
-    "fullTitle": "嘉靖通州志       （江蘇）",
-    "authors": [
-      {
-        "name": "鐘汪",
-        "dynasty": "明",
-        "role": "修"
-      }
-    ],
-    "volumes": {
-      "start": 10,
-      "end": 10,
-      "count": 1,
-      "raw": "续编第10册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "據明嘉靖九年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 40,
-    "title": "嘉靖吳邑志       （江蘇）",
+    "title": "嘉靖吳邑志",
     "fullTitle": "嘉靖吳邑志       （江蘇）",
     "authors": [],
     "volumes": {
@@ -997,11 +1007,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 41,
-    "title": "嘉靖重修如皋县志 （江苏）",
+    "title": "嘉靖重修如皋县志",
     "fullTitle": "嘉靖重修如皋县志 （江苏）",
     "authors": [],
     "volumes": {
@@ -1019,11 +1030,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 42,
-    "title": "嘉靖吴邑志       （江苏）",
+    "title": "嘉靖吴邑志",
     "fullTitle": "嘉靖吴邑志       （江苏）",
     "authors": [],
     "volumes": {
@@ -1041,11 +1053,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 43,
-    "title": "嘉靖重修如皋縣誌 （江蘇）",
+    "title": "嘉靖重修如皋縣誌",
     "fullTitle": "嘉靖重修如皋縣誌 （江蘇）",
     "authors": [
       {
@@ -1069,11 +1082,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 44,
-    "title": "正德姑蘇志 一    （江蘇）",
+    "title": "正德姑蘇志 一",
     "fullTitle": "正德姑蘇志 一    （江蘇）",
     "authors": [
       {
@@ -1097,11 +1111,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 45,
-    "title": "正德姑苏志 一    （江苏）",
+    "title": "正德姑苏志 一",
     "fullTitle": "正德姑苏志 一    （江苏）",
     "authors": [],
     "volumes": {
@@ -1119,11 +1134,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 46,
-    "title": "正德姑苏志 二    （江苏）",
+    "title": "正德姑苏志 二",
     "fullTitle": "正德姑苏志 二    （江苏）",
     "authors": [],
     "volumes": {
@@ -1141,11 +1157,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 47,
-    "title": "正德姑蘇志 二    （江蘇）",
+    "title": "正德姑蘇志 二",
     "fullTitle": "正德姑蘇志 二    （江蘇）",
     "authors": [
       {
@@ -1169,11 +1186,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 48,
-    "title": "正德姑蘇志 三    （江蘇）",
+    "title": "正德姑蘇志 三",
     "fullTitle": "正德姑蘇志 三    （江蘇）",
     "authors": [
       {
@@ -1197,11 +1215,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 49,
-    "title": "正德姑苏志 三    （江苏）",
+    "title": "正德姑苏志 三",
     "fullTitle": "正德姑苏志 三    （江苏）",
     "authors": [],
     "volumes": {
@@ -1219,11 +1238,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 50,
-    "title": "正德姑苏志 四    （江苏）",
+    "title": "正德姑苏志 四",
     "fullTitle": "正德姑苏志 四    （江苏）",
     "authors": [],
     "volumes": {
@@ -1241,11 +1261,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 51,
-    "title": "正德姑蘇志 四    （江蘇）",
+    "title": "正德姑蘇志 四",
     "fullTitle": "正德姑蘇志 四    （江蘇）",
     "authors": [
       {
@@ -1269,11 +1290,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 52,
-    "title": "崇禎吳縣誌 一    （江蘇）",
+    "title": "崇禎吳縣誌 一",
     "fullTitle": "崇禎吳縣誌 一    （江蘇）",
     "authors": [
       {
@@ -1297,11 +1319,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 53,
-    "title": "崇祯吴县志 一    （江苏）",
+    "title": "崇祯吴县志 一",
     "fullTitle": "崇祯吴县志 一    （江苏）",
     "authors": [],
     "volumes": {
@@ -1319,11 +1342,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 54,
-    "title": "崇禎吳縣誌 二    （江蘇）",
+    "title": "崇禎吳縣誌 二",
     "fullTitle": "崇禎吳縣誌 二    （江蘇）",
     "authors": [
       {
@@ -1347,11 +1371,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 55,
-    "title": "崇祯吴县志 二    （江苏）",
+    "title": "崇祯吴县志 二",
     "fullTitle": "崇祯吴县志 二    （江苏）",
     "authors": [],
     "volumes": {
@@ -1369,11 +1394,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 56,
-    "title": "崇祯吴县志 三    （江苏）",
+    "title": "崇祯吴县志 三",
     "fullTitle": "崇祯吴县志 三    （江苏）",
     "authors": [],
     "volumes": {
@@ -1391,11 +1417,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 57,
-    "title": "崇禎吳縣誌 三    （江蘇）",
+    "title": "崇禎吳縣誌 三",
     "fullTitle": "崇禎吳縣誌 三    （江蘇）",
     "authors": [
       {
@@ -1419,11 +1446,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 58,
-    "title": "崇祯吴县志 四    （江苏）",
+    "title": "崇祯吴县志 四",
     "fullTitle": "崇祯吴县志 四    （江苏）",
     "authors": [],
     "volumes": {
@@ -1441,11 +1469,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 59,
-    "title": "崇禎吳縣誌 四    （江蘇）",
+    "title": "崇禎吳縣誌 四",
     "fullTitle": "崇禎吳縣誌 四    （江蘇）",
     "authors": [
       {
@@ -1469,11 +1498,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 60,
-    "title": "崇禎吳縣誌 五    （江蘇）",
+    "title": "崇禎吳縣誌 五",
     "fullTitle": "崇禎吳縣誌 五    （江蘇）",
     "authors": [
       {
@@ -1497,11 +1527,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 61,
-    "title": "崇祯吴县志 五    （江苏）",
+    "title": "崇祯吴县志 五",
     "fullTitle": "崇祯吴县志 五    （江苏）",
     "authors": [],
     "volumes": {
@@ -1519,11 +1550,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 62,
-    "title": "嘉靖太仓州志     （江苏）",
+    "title": "嘉靖太仓州志",
     "fullTitle": "嘉靖太仓州志     （江苏）",
     "authors": [],
     "volumes": {
@@ -1541,11 +1573,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 63,
-    "title": "嘉靖太倉州志     （江蘇）",
+    "title": "嘉靖太倉州志",
     "fullTitle": "嘉靖太倉州志     （江蘇）",
     "authors": [
       {
@@ -1569,11 +1602,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 64,
-    "title": "成化重修毗陵志  上 （江苏）",
+    "title": "成化重修毗陵志  上",
     "fullTitle": "成化重修毗陵志  上 （江苏）",
     "authors": [],
     "volumes": {
@@ -1591,39 +1625,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 65,
-    "title": "成化重修毗陵志  上 （江蘇）",
-    "fullTitle": "成化重修毗陵志  上 （江蘇）",
-    "authors": [
-      {
-        "name": "卓天錫",
-        "dynasty": "明",
-        "role": "修"
-      }
-    ],
-    "volumes": {
-      "start": 21,
-      "end": 21,
-      "count": 1,
-      "raw": "续编第21册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "據明成化十九年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 66,
-    "title": "正德常州府志续集 （江苏)",
+    "title": "正德常州府志续集",
     "fullTitle": "正德常州府志续集 （江苏)",
     "authors": [],
     "volumes": {
@@ -1641,11 +1648,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 67,
-    "title": "正德常州府志續集 （江蘇)",
+    "title": "正德常州府志續集",
     "fullTitle": "正德常州府志續集 （江蘇)",
     "authors": [
       {
@@ -1669,11 +1677,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 68,
-    "title": "成化重修毗陵志  下 （江苏）",
+    "title": "成化重修毗陵志  下",
     "fullTitle": "成化重修毗陵志  下 （江苏）",
     "authors": [],
     "volumes": {
@@ -1691,39 +1700,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 69,
-    "title": "成化重修毗陵志  下 （江蘇）",
-    "fullTitle": "成化重修毗陵志  下 （江蘇）",
-    "authors": [
-      {
-        "name": "卓天錫",
-        "dynasty": "明",
-        "role": "修"
-      }
-    ],
-    "volumes": {
-      "start": 22,
-      "end": 22,
-      "count": 1,
-      "raw": "续编第22册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "據明成化十九年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 70,
-    "title": "萬曆丹徒縣誌     （江蘇）",
+    "title": "萬曆丹徒縣誌",
     "fullTitle": "萬曆丹徒縣誌     （江蘇）",
     "authors": [
       {
@@ -1747,11 +1729,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 71,
-    "title": "万历丹徒县志     （江苏）",
+    "title": "万历丹徒县志",
     "fullTitle": "万历丹徒县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -1769,11 +1752,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 72,
-    "title": "隆慶長洲縣誌     （江蘇）",
+    "title": "隆慶長洲縣誌",
     "fullTitle": "隆慶長洲縣誌     （江蘇）",
     "authors": [
       {
@@ -1797,11 +1781,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江蘇"
   },
   {
     "id": 73,
-    "title": "隆庆长洲县志     （江苏）",
+    "title": "隆庆长洲县志",
     "fullTitle": "隆庆长洲县志     （江苏）",
     "authors": [],
     "volumes": {
@@ -1819,11 +1804,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江苏"
   },
   {
     "id": 74,
-    "title": "嘉靖浙江通志 上  （浙江）",
+    "title": "嘉靖浙江通志 上",
     "fullTitle": "嘉靖浙江通志 上  （浙江）",
     "authors": [
       {
@@ -1847,11 +1833,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 75,
-    "title": "嘉靖浙江通志 中  （浙江）",
+    "title": "嘉靖浙江通志 中",
     "fullTitle": "嘉靖浙江通志 中  （浙江）",
     "authors": [
       {
@@ -1875,11 +1862,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 76,
-    "title": "嘉靖浙江通志 下  （浙江）",
+    "title": "嘉靖浙江通志 下",
     "fullTitle": "嘉靖浙江通志 下  （浙江）",
     "authors": [
       {
@@ -1903,11 +1891,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 77,
-    "title": "天启平湖县志     （浙江）",
+    "title": "天启平湖县志",
     "fullTitle": "天启平湖县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -1925,11 +1914,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 78,
-    "title": "天啟平湖縣誌     （浙江）",
+    "title": "天啟平湖縣誌",
     "fullTitle": "天啟平湖縣誌     （浙江）",
     "authors": [
       {
@@ -1953,11 +1943,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 79,
-    "title": "萬曆會稽縣誌     （浙江）",
+    "title": "萬曆會稽縣誌",
     "fullTitle": "萬曆會稽縣誌     （浙江）",
     "authors": [
       {
@@ -1981,11 +1972,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 80,
-    "title": "嘉靖安吉州志     （浙江）",
+    "title": "嘉靖安吉州志",
     "fullTitle": "嘉靖安吉州志     （浙江）",
     "authors": [
       {
@@ -2009,11 +2001,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 81,
-    "title": "万历会稽县志     （浙江）",
+    "title": "万历会稽县志",
     "fullTitle": "万历会稽县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2031,11 +2024,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 82,
-    "title": "嘉靖定海县志     （浙江）",
+    "title": "嘉靖定海县志",
     "fullTitle": "嘉靖定海县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2053,11 +2047,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 83,
-    "title": "嘉靖蕭山縣誌     （浙江）",
+    "title": "嘉靖蕭山縣誌",
     "fullTitle": "嘉靖蕭山縣誌     （浙江）",
     "authors": [
       {
@@ -2081,11 +2076,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 84,
-    "title": "嘉靖定海縣誌     （浙江）",
+    "title": "嘉靖定海縣誌",
     "fullTitle": "嘉靖定海縣誌     （浙江）",
     "authors": [
       {
@@ -2109,11 +2105,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 85,
-    "title": "嘉靖萧山县志     （浙江）",
+    "title": "嘉靖萧山县志",
     "fullTitle": "嘉靖萧山县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2131,11 +2128,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 86,
-    "title": "正德永康縣誌     （浙江）",
+    "title": "正德永康縣誌",
     "fullTitle": "正德永康縣誌     （浙江）",
     "authors": [],
     "volumes": {
@@ -2153,11 +2151,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 87,
-    "title": "正德永康县志     （浙江）",
+    "title": "正德永康县志",
     "fullTitle": "正德永康县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2175,11 +2174,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 88,
-    "title": "嘉靖象山县志     （浙江）",
+    "title": "嘉靖象山县志",
     "fullTitle": "嘉靖象山县志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2197,11 +2197,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 89,
-    "title": "嘉靖象山縣誌     （浙江）",
+    "title": "嘉靖象山縣誌",
     "fullTitle": "嘉靖象山縣誌     （浙江）",
     "authors": [
       {
@@ -2225,11 +2226,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 90,
-    "title": "弘治衢州府志     （浙江）",
+    "title": "弘治衢州府志",
     "fullTitle": "弘治衢州府志     （浙江）",
     "authors": [
       {
@@ -2253,11 +2255,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 91,
-    "title": "弘治温州府志     （浙江）",
+    "title": "弘治温州府志",
     "fullTitle": "弘治温州府志     （浙江）",
     "authors": [],
     "volumes": {
@@ -2275,11 +2278,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 92,
-    "title": "弘治溫州府志     （浙江）",
+    "title": "弘治溫州府志",
     "fullTitle": "弘治溫州府志     （浙江）",
     "authors": [
       {
@@ -2303,11 +2307,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "浙江"
   },
   {
     "id": 93,
-    "title": "成化中都志  上   （安徽）",
+    "title": "成化中都志  上",
     "fullTitle": "成化中都志  上   （安徽）",
     "authors": [
       {
@@ -2331,11 +2336,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 94,
-    "title": "成化中都志  下   （安徽）",
+    "title": "成化中都志  下",
     "fullTitle": "成化中都志  下   （安徽）",
     "authors": [
       {
@@ -2359,11 +2365,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 95,
-    "title": "嘉靖颍州志       （安徽）",
+    "title": "嘉靖颍州志",
     "fullTitle": "嘉靖颍州志       （安徽）",
     "authors": [],
     "volumes": {
@@ -2381,11 +2388,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 96,
-    "title": "嘉靖怀远县志     （安徽）",
+    "title": "嘉靖怀远县志",
     "fullTitle": "嘉靖怀远县志     （安徽）",
     "authors": [],
     "volumes": {
@@ -2403,11 +2411,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 97,
-    "title": "嘉靖懷遠縣誌     （安徽）",
+    "title": "嘉靖懷遠縣誌",
     "fullTitle": "嘉靖懷遠縣誌     （安徽）",
     "authors": [],
     "volumes": {
@@ -2425,11 +2434,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 98,
-    "title": "弘治直隶凤阳府宿州志  （安徽）",
+    "title": "弘治直隶凤阳府宿州志",
     "fullTitle": "弘治直隶凤阳府宿州志  （安徽）",
     "authors": [],
     "volumes": {
@@ -2447,11 +2457,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 99,
-    "title": "弘治直隸鳳陽府宿州志  （安徽）",
+    "title": "弘治直隸鳳陽府宿州志",
     "fullTitle": "弘治直隸鳳陽府宿州志  （安徽）",
     "authors": [
       {
@@ -2475,11 +2486,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 100,
-    "title": "嘉靖潁州志       （安徽）",
+    "title": "嘉靖潁州志",
     "fullTitle": "嘉靖潁州志       （安徽）",
     "authors": [
       {
@@ -2503,11 +2515,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 101,
-    "title": "嘉靖甯國縣誌     （安徽）",
+    "title": "嘉靖甯國縣誌",
     "fullTitle": "嘉靖甯國縣誌     （安徽）",
     "authors": [
       {
@@ -2531,11 +2544,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 102,
-    "title": "嘉靖涇縣誌       （安徽）",
+    "title": "嘉靖涇縣誌",
     "fullTitle": "嘉靖涇縣誌       （安徽）",
     "authors": [
       {
@@ -2559,11 +2573,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 103,
-    "title": "嘉靖宁国县志     （安徽）",
+    "title": "嘉靖宁国县志",
     "fullTitle": "嘉靖宁国县志     （安徽）",
     "authors": [],
     "volumes": {
@@ -2581,11 +2596,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 104,
-    "title": "嘉靖泾县志       （安徽）",
+    "title": "嘉靖泾县志",
     "fullTitle": "嘉靖泾县志       （安徽）",
     "authors": [],
     "volumes": {
@@ -2603,11 +2619,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "安徽"
   },
   {
     "id": 105,
-    "title": "弘治将乐县志     （福建）",
+    "title": "弘治将乐县志",
     "fullTitle": "弘治将乐县志     （福建）",
     "authors": [],
     "volumes": {
@@ -2625,11 +2642,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 106,
-    "title": "弘治將樂縣誌     （福建）",
+    "title": "弘治將樂縣誌",
     "fullTitle": "弘治將樂縣誌     （福建）",
     "authors": [
       {
@@ -2653,11 +2671,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 107,
-    "title": "正德順昌邑志     （福建）",
+    "title": "正德順昌邑志",
     "fullTitle": "正德順昌邑志     （福建）",
     "authors": [
       {
@@ -2681,11 +2700,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 108,
-    "title": "正德顺昌邑志     （福建）",
+    "title": "正德顺昌邑志",
     "fullTitle": "正德顺昌邑志     （福建）",
     "authors": [],
     "volumes": {
@@ -2703,11 +2723,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 109,
-    "title": "嘉靖漳平縣誌     （福建）",
+    "title": "嘉靖漳平縣誌",
     "fullTitle": "嘉靖漳平縣誌     （福建）",
     "authors": [
       {
@@ -2731,11 +2752,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 110,
-    "title": "嘉靖漳平县志     （福建）",
+    "title": "嘉靖漳平县志",
     "fullTitle": "嘉靖漳平县志     （福建）",
     "authors": [],
     "volumes": {
@@ -2753,11 +2775,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 111,
-    "title": "嘉靖长泰县志     （福建）",
+    "title": "嘉靖长泰县志",
     "fullTitle": "嘉靖长泰县志     （福建）",
     "authors": [],
     "volumes": {
@@ -2775,11 +2798,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 112,
-    "title": "嘉靖建宁县志     （福建）",
+    "title": "嘉靖建宁县志",
     "fullTitle": "嘉靖建宁县志     （福建）",
     "authors": [],
     "volumes": {
@@ -2797,11 +2821,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 113,
-    "title": "嘉靖清流县志     （福建）",
+    "title": "嘉靖清流县志",
     "fullTitle": "嘉靖清流县志     （福建）",
     "authors": [],
     "volumes": {
@@ -2819,11 +2844,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 114,
-    "title": "嘉靖長泰縣誌     （福建）",
+    "title": "嘉靖長泰縣誌",
     "fullTitle": "嘉靖長泰縣誌     （福建）",
     "authors": [
       {
@@ -2847,11 +2873,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 115,
-    "title": "嘉靖建甯縣誌     （福建）",
+    "title": "嘉靖建甯縣誌",
     "fullTitle": "嘉靖建甯縣誌     （福建）",
     "authors": [
       {
@@ -2875,11 +2902,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 116,
-    "title": "嘉靖清流縣誌     （福建）",
+    "title": "嘉靖清流縣誌",
     "fullTitle": "嘉靖清流縣誌     （福建）",
     "authors": [
       {
@@ -2903,11 +2931,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 117,
-    "title": "嘉靖汀州府志 上  （福建）",
+    "title": "嘉靖汀州府志 上",
     "fullTitle": "嘉靖汀州府志 上  （福建）",
     "authors": [
       {
@@ -2931,11 +2960,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 118,
-    "title": "嘉靖汀州府志 下  （福建）",
+    "title": "嘉靖汀州府志 下",
     "fullTitle": "嘉靖汀州府志 下  （福建）",
     "authors": [
       {
@@ -2959,11 +2989,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 119,
-    "title": "嘉靖甯德縣誌     （福建）",
+    "title": "嘉靖甯德縣誌",
     "fullTitle": "嘉靖甯德縣誌     （福建）",
     "authors": [
       {
@@ -2987,11 +3018,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 120,
-    "title": "嘉靖福宁州志     （福建）",
+    "title": "嘉靖福宁州志",
     "fullTitle": "嘉靖福宁州志     （福建）",
     "authors": [],
     "volumes": {
@@ -3009,11 +3041,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 121,
-    "title": "嘉靖宁德县志     （福建）",
+    "title": "嘉靖宁德县志",
     "fullTitle": "嘉靖宁德县志     （福建）",
     "authors": [],
     "volumes": {
@@ -3031,11 +3064,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 122,
-    "title": "嘉靖福寧州志     （福建）",
+    "title": "嘉靖福寧州志",
     "fullTitle": "嘉靖福寧州志     （福建）",
     "authors": [
       {
@@ -3059,11 +3093,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "福建"
   },
   {
     "id": 123,
-    "title": "嘉靖丰乘         （江西）",
+    "title": "嘉靖丰乘",
     "fullTitle": "嘉靖丰乘         （江西）",
     "authors": [],
     "volumes": {
@@ -3081,11 +3116,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 124,
-    "title": "嘉靖武宁县志     （江西）",
+    "title": "嘉靖武宁县志",
     "fullTitle": "嘉靖武宁县志     （江西）",
     "authors": [],
     "volumes": {
@@ -3103,11 +3139,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 125,
-    "title": "嘉靖武寧縣誌     （江西）",
+    "title": "嘉靖武寧縣誌",
     "fullTitle": "嘉靖武寧縣誌     （江西）",
     "authors": [
       {
@@ -3131,11 +3168,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 126,
-    "title": "嘉靖豐乘         （江西）",
+    "title": "嘉靖豐乘",
     "fullTitle": "嘉靖豐乘         （江西）",
     "authors": [
       {
@@ -3159,11 +3197,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 127,
-    "title": "正德瑞州府志     （江西）",
+    "title": "正德瑞州府志",
     "fullTitle": "正德瑞州府志     （江西）",
     "authors": [
       {
@@ -3187,11 +3226,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 128,
-    "title": "嘉靖宁州志       （江西）",
+    "title": "嘉靖宁州志",
     "fullTitle": "嘉靖宁州志       （江西）",
     "authors": [],
     "volumes": {
@@ -3209,11 +3249,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 129,
-    "title": "嘉靖寧州志       （江西）",
+    "title": "嘉靖寧州志",
     "fullTitle": "嘉靖寧州志       （江西）",
     "authors": [
       {
@@ -3237,11 +3278,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 130,
-    "title": "嘉靖南康县志     （江西）",
+    "title": "嘉靖南康县志",
     "fullTitle": "嘉靖南康县志     （江西）",
     "authors": [],
     "volumes": {
@@ -3259,11 +3301,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 131,
-    "title": "正德饶州府志     （江西）",
+    "title": "正德饶州府志",
     "fullTitle": "正德饶州府志     （江西）",
     "authors": [],
     "volumes": {
@@ -3281,11 +3324,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 132,
-    "title": "正德饒州府志     （江西）",
+    "title": "正德饒州府志",
     "fullTitle": "正德饒州府志     （江西）",
     "authors": [
       {
@@ -3309,11 +3353,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 133,
-    "title": "嘉靖南康縣誌     （江西）",
+    "title": "嘉靖南康縣誌",
     "fullTitle": "嘉靖南康縣誌     （江西）",
     "authors": [
       {
@@ -3337,11 +3382,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 134,
-    "title": "嘉靖广信府志     （江西）",
+    "title": "嘉靖广信府志",
     "fullTitle": "嘉靖广信府志     （江西）",
     "authors": [],
     "volumes": {
@@ -3359,11 +3405,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 135,
-    "title": "嘉靖廣信府志     （江西）",
+    "title": "嘉靖廣信府志",
     "fullTitle": "嘉靖廣信府志     （江西）",
     "authors": [
       {
@@ -3387,11 +3434,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 136,
-    "title": "嘉靖鉛山縣誌     （江西）",
+    "title": "嘉靖鉛山縣誌",
     "fullTitle": "嘉靖鉛山縣誌     （江西）",
     "authors": [
       {
@@ -3415,11 +3463,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 137,
-    "title": "嘉靖铅山县志     （江西）",
+    "title": "嘉靖铅山县志",
     "fullTitle": "嘉靖铅山县志     （江西）",
     "authors": [],
     "volumes": {
@@ -3437,11 +3486,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 138,
-    "title": "正德新城县志     （江西）",
+    "title": "正德新城县志",
     "fullTitle": "正德新城县志     （江西）",
     "authors": [],
     "volumes": {
@@ -3459,11 +3509,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 139,
-    "title": "正德新城縣誌     （江西）",
+    "title": "正德新城縣誌",
     "fullTitle": "正德新城縣誌     （江西）",
     "authors": [
       {
@@ -3487,11 +3538,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 140,
-    "title": "弘治抚州府志  上 （江西）",
+    "title": "弘治抚州府志  上",
     "fullTitle": "弘治抚州府志  上 （江西）",
     "authors": [],
     "volumes": {
@@ -3509,11 +3561,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 141,
-    "title": "弘治撫州府志  上 （江西）",
+    "title": "弘治撫州府志  上",
     "fullTitle": "弘治撫州府志  上 （江西）",
     "authors": [
       {
@@ -3537,11 +3590,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 142,
-    "title": "弘治撫州府志  下 （江西）",
+    "title": "弘治撫州府志  下",
     "fullTitle": "弘治撫州府志  下 （江西）",
     "authors": [
       {
@@ -3565,11 +3619,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 143,
-    "title": "弘治抚州府志  下 （江西）",
+    "title": "弘治抚州府志  下",
     "fullTitle": "弘治抚州府志  下 （江西）",
     "authors": [],
     "volumes": {
@@ -3587,11 +3642,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 144,
-    "title": "嘉靖临江府志     （江西）",
+    "title": "嘉靖临江府志",
     "fullTitle": "嘉靖临江府志     （江西）",
     "authors": [],
     "volumes": {
@@ -3609,11 +3665,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 145,
-    "title": "嘉靖臨江府志     （江西）",
+    "title": "嘉靖臨江府志",
     "fullTitle": "嘉靖臨江府志     （江西）",
     "authors": [
       {
@@ -3637,11 +3694,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 146,
-    "title": "嘉靖袁州府志     （江西）",
+    "title": "嘉靖袁州府志",
     "fullTitle": "嘉靖袁州府志     （江西）",
     "authors": [
       {
@@ -3665,11 +3723,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 147,
-    "title": "嘉靖南安府志     （江西）",
+    "title": "嘉靖南安府志",
     "fullTitle": "嘉靖南安府志     （江西）",
     "authors": [
       {
@@ -3693,11 +3752,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "江西"
   },
   {
     "id": 148,
-    "title": "嘉靖山东通志  上 （山东）",
+    "title": "嘉靖山东通志  上",
     "fullTitle": "嘉靖山东通志  上 （山东）",
     "authors": [],
     "volumes": {
@@ -3715,11 +3775,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 149,
-    "title": "嘉靖山東通志  上 （山東）",
+    "title": "嘉靖山東通志  上",
     "fullTitle": "嘉靖山東通志  上 （山東）",
     "authors": [
       {
@@ -3743,11 +3804,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 150,
-    "title": "嘉靖山東通志  下 （山東）",
+    "title": "嘉靖山東通志  下",
     "fullTitle": "嘉靖山東通志  下 （山東）",
     "authors": [
       {
@@ -3771,11 +3833,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 151,
-    "title": "嘉靖山东通志  下 （山东）",
+    "title": "嘉靖山东通志  下",
     "fullTitle": "嘉靖山东通志  下 （山东）",
     "authors": [],
     "volumes": {
@@ -3793,11 +3856,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 152,
-    "title": "万历兖州府志  一 （山东）",
+    "title": "万历兖州府志  一",
     "fullTitle": "万历兖州府志  一 （山东）",
     "authors": [],
     "volumes": {
@@ -3815,11 +3879,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 153,
-    "title": "萬曆兗州府志  一 （山東）",
+    "title": "萬曆兗州府志  一",
     "fullTitle": "萬曆兗州府志  一 （山東）",
     "authors": [],
     "volumes": {
@@ -3837,11 +3902,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 154,
-    "title": "万历兖州府志  二 （山东）",
+    "title": "万历兖州府志  二",
     "fullTitle": "万历兖州府志  二 （山东）",
     "authors": [],
     "volumes": {
@@ -3859,11 +3925,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 155,
-    "title": "萬曆兗州府志  二 （山東）",
+    "title": "萬曆兗州府志  二",
     "fullTitle": "萬曆兗州府志  二 （山東）",
     "authors": [],
     "volumes": {
@@ -3881,11 +3948,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 156,
-    "title": "万历兖州府志  三 （山东）",
+    "title": "万历兖州府志  三",
     "fullTitle": "万历兖州府志  三 （山东）",
     "authors": [],
     "volumes": {
@@ -3903,11 +3971,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 157,
-    "title": "萬曆兗州府志  三 （山東）",
+    "title": "萬曆兗州府志  三",
     "fullTitle": "萬曆兗州府志  三 （山東）",
     "authors": [],
     "volumes": {
@@ -3925,11 +3994,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 158,
-    "title": "萬曆兗州府志  四 （山東）",
+    "title": "萬曆兗州府志  四",
     "fullTitle": "萬曆兗州府志  四 （山東）",
     "authors": [],
     "volumes": {
@@ -3947,11 +4017,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 159,
-    "title": "万历兖州府志  四 （山东）",
+    "title": "万历兖州府志  四",
     "fullTitle": "万历兖州府志  四 （山东）",
     "authors": [],
     "volumes": {
@@ -3969,11 +4040,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 160,
-    "title": "嘉靖宁海州志     （山东）",
+    "title": "嘉靖宁海州志",
     "fullTitle": "嘉靖宁海州志     （山东）",
     "authors": [],
     "volumes": {
@@ -3991,11 +4063,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 161,
-    "title": "嘉靖德州志       （山東）",
+    "title": "嘉靖德州志",
     "fullTitle": "嘉靖德州志       （山東）",
     "authors": [
       {
@@ -4019,11 +4092,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 162,
-    "title": "嘉靖昌樂縣誌     （山東）",
+    "title": "嘉靖昌樂縣誌",
     "fullTitle": "嘉靖昌樂縣誌     （山東）",
     "authors": [
       {
@@ -4047,11 +4121,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 163,
-    "title": "嘉靖寧海州志     （山東）",
+    "title": "嘉靖寧海州志",
     "fullTitle": "嘉靖寧海州志     （山東）",
     "authors": [
       {
@@ -4075,11 +4150,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 164,
-    "title": "嘉靖章丘縣誌     （山東）",
+    "title": "嘉靖章丘縣誌",
     "fullTitle": "嘉靖章丘縣誌     （山東）",
     "authors": [
       {
@@ -4103,11 +4179,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山東"
   },
   {
     "id": 165,
-    "title": "嘉靖章丘县志     （山东）",
+    "title": "嘉靖章丘县志",
     "fullTitle": "嘉靖章丘县志     （山东）",
     "authors": [],
     "volumes": {
@@ -4125,33 +4202,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 166,
-    "title": "嘉靖德州志       （山东）",
-    "fullTitle": "嘉靖德州志       （山东）",
-    "authors": [],
-    "volumes": {
-      "start": 57,
-      "end": 57,
-      "count": 1,
-      "raw": "续编第57册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "据明嘉靖七年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 167,
-    "title": "嘉靖昌乐县志     （山东）",
+    "title": "嘉靖昌乐县志",
     "fullTitle": "嘉靖昌乐县志     （山东）",
     "authors": [],
     "volumes": {
@@ -4169,11 +4225,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "山东"
   },
   {
     "id": 168,
-    "title": "嘉靖阳武县志     （河南）",
+    "title": "嘉靖阳武县志",
     "fullTitle": "嘉靖阳武县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4191,11 +4248,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 169,
-    "title": "嘉靖通許縣誌     （河南）",
+    "title": "嘉靖通許縣誌",
     "fullTitle": "嘉靖通許縣誌     （河南）",
     "authors": [
       {
@@ -4219,11 +4277,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 170,
-    "title": "嘉靖太康縣誌     （河南）",
+    "title": "嘉靖太康縣誌",
     "fullTitle": "嘉靖太康縣誌     （河南）",
     "authors": [
       {
@@ -4247,11 +4306,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 171,
-    "title": "嘉靖陽武縣誌     （河南）",
+    "title": "嘉靖陽武縣誌",
     "fullTitle": "嘉靖陽武縣誌     （河南）",
     "authors": [
       {
@@ -4275,11 +4335,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 172,
-    "title": "嘉靖沈丘縣誌     （河南）",
+    "title": "嘉靖沈丘縣誌",
     "fullTitle": "嘉靖沈丘縣誌     （河南）",
     "authors": [
       {
@@ -4303,11 +4364,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 173,
-    "title": "嘉靖通许县志     （河南）",
+    "title": "嘉靖通许县志",
     "fullTitle": "嘉靖通许县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4325,11 +4387,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 174,
-    "title": "嘉靖太康县志     （河南）",
+    "title": "嘉靖太康县志",
     "fullTitle": "嘉靖太康县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4347,11 +4410,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 175,
-    "title": "嘉靖沈丘县志     （河南）",
+    "title": "嘉靖沈丘县志",
     "fullTitle": "嘉靖沈丘县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4369,11 +4433,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 176,
-    "title": "嘉靖儀封縣誌     （河南）",
+    "title": "嘉靖儀封縣誌",
     "fullTitle": "嘉靖儀封縣誌     （河南）",
     "authors": [],
     "volumes": {
@@ -4391,11 +4456,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 177,
-    "title": "嘉靖郾城縣誌     （河南）",
+    "title": "嘉靖郾城縣誌",
     "fullTitle": "嘉靖郾城縣誌     （河南）",
     "authors": [
       {
@@ -4419,11 +4485,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 178,
-    "title": "嘉靖鞏縣志       （河南）",
+    "title": "嘉靖鞏縣志",
     "fullTitle": "嘉靖鞏縣志       （河南）",
     "authors": [
       {
@@ -4447,11 +4514,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 179,
-    "title": "嘉靖巩县志       （河南）",
+    "title": "嘉靖巩县志",
     "fullTitle": "嘉靖巩县志       （河南）",
     "authors": [],
     "volumes": {
@@ -4469,11 +4537,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 180,
-    "title": "嘉靖郾城县志     （河南）",
+    "title": "嘉靖郾城县志",
     "fullTitle": "嘉靖郾城县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4491,11 +4560,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 181,
-    "title": "嘉靖仪封县志     （河南）",
+    "title": "嘉靖仪封县志",
     "fullTitle": "嘉靖仪封县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4513,11 +4583,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 182,
-    "title": "嘉靖归德志       （河南）",
+    "title": "嘉靖归德志",
     "fullTitle": "嘉靖归德志       （河南）",
     "authors": [],
     "volumes": {
@@ -4535,11 +4606,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 183,
-    "title": "嘉靖永城县志     （河南）",
+    "title": "嘉靖永城县志",
     "fullTitle": "嘉靖永城县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4557,11 +4629,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 184,
-    "title": "嘉靖真阳县志     （河南）",
+    "title": "嘉靖真阳县志",
     "fullTitle": "嘉靖真阳县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4579,11 +4652,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 185,
-    "title": "嘉靖商城縣誌     （河南）",
+    "title": "嘉靖商城縣誌",
     "fullTitle": "嘉靖商城縣誌     （河南）",
     "authors": [],
     "volumes": {
@@ -4601,11 +4675,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 186,
-    "title": "嘉靖真陽縣誌     （河南）",
+    "title": "嘉靖真陽縣誌",
     "fullTitle": "嘉靖真陽縣誌     （河南）",
     "authors": [
       {
@@ -4629,11 +4704,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 187,
-    "title": "嘉靖永城縣誌     （河南）",
+    "title": "嘉靖永城縣誌",
     "fullTitle": "嘉靖永城縣誌     （河南）",
     "authors": [
       {
@@ -4657,11 +4733,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 188,
-    "title": "嘉靖歸德志       （河南）",
+    "title": "嘉靖歸德志",
     "fullTitle": "嘉靖歸德志       （河南）",
     "authors": [
       {
@@ -4685,11 +4762,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 189,
-    "title": "嘉靖商城县志     （河南）",
+    "title": "嘉靖商城县志",
     "fullTitle": "嘉靖商城县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4707,11 +4785,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 190,
-    "title": "嘉靖輝縣誌       （河南）",
+    "title": "嘉靖輝縣誌",
     "fullTitle": "嘉靖輝縣誌       （河南）",
     "authors": [
       {
@@ -4735,11 +4814,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 191,
-    "title": "嘉靖辉县志       （河南）",
+    "title": "嘉靖辉县志",
     "fullTitle": "嘉靖辉县志       （河南）",
     "authors": [],
     "volumes": {
@@ -4757,11 +4837,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 192,
-    "title": "嘉靖范县志       （河南）",
+    "title": "嘉靖范县志",
     "fullTitle": "嘉靖范县志       （河南）",
     "authors": [],
     "volumes": {
@@ -4779,11 +4860,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 193,
-    "title": "嘉靖范縣誌       （河南）",
+    "title": "嘉靖范縣誌",
     "fullTitle": "嘉靖范縣誌       （河南）",
     "authors": [
       {
@@ -4807,11 +4889,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 194,
-    "title": "嘉靖濮州志       （河南）",
+    "title": "嘉靖濮州志",
     "fullTitle": "嘉靖濮州志       （河南）",
     "authors": [
       {
@@ -4835,11 +4918,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 195,
-    "title": "嘉靖归州志       （河南）",
+    "title": "嘉靖归州志",
     "fullTitle": "嘉靖归州志       （河南）",
     "authors": [],
     "volumes": {
@@ -4857,11 +4941,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 196,
-    "title": "嘉靖巴东县志     （河南）",
+    "title": "嘉靖巴东县志",
     "fullTitle": "嘉靖巴东县志     （河南）",
     "authors": [],
     "volumes": {
@@ -4879,11 +4964,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 197,
-    "title": "嘉靖巴東縣誌     （河南）",
+    "title": "嘉靖巴東縣誌",
     "fullTitle": "嘉靖巴東縣誌     （河南）",
     "authors": [
       {
@@ -4907,11 +4993,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 198,
-    "title": "嘉靖歸州志       （河南）",
+    "title": "嘉靖歸州志",
     "fullTitle": "嘉靖歸州志       （河南）",
     "authors": [
       {
@@ -4935,11 +5022,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 199,
-    "title": "嘉靖歸州全志     （河南）",
+    "title": "嘉靖歸州全志",
     "fullTitle": "嘉靖歸州全志     （河南）",
     "authors": [
       {
@@ -4963,11 +5051,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 200,
-    "title": "弘治夷陵州志     （河南）",
+    "title": "弘治夷陵州志",
     "fullTitle": "弘治夷陵州志     （河南）",
     "authors": [
       {
@@ -4991,11 +5080,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 201,
-    "title": "嘉靖羅田縣誌     （河南）",
+    "title": "嘉靖羅田縣誌",
     "fullTitle": "嘉靖羅田縣誌     （河南）",
     "authors": [
       {
@@ -5019,11 +5109,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 202,
-    "title": "嘉靖归州全志     （河南）",
+    "title": "嘉靖归州全志",
     "fullTitle": "嘉靖归州全志     （河南）",
     "authors": [],
     "volumes": {
@@ -5041,11 +5132,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 203,
-    "title": "嘉靖罗田县志     （河南）",
+    "title": "嘉靖罗田县志",
     "fullTitle": "嘉靖罗田县志     （河南）",
     "authors": [],
     "volumes": {
@@ -5063,11 +5155,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "河南"
   },
   {
     "id": 204,
-    "title": "弘治岳州府志     （湖南）",
+    "title": "弘治岳州府志",
     "fullTitle": "弘治岳州府志     （湖南）",
     "authors": [],
     "volumes": {
@@ -5085,11 +5178,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "湖南"
   },
   {
     "id": 205,
-    "title": "弘治嶽州府志     （湖南）",
+    "title": "弘治嶽州府志",
     "fullTitle": "弘治嶽州府志     （湖南）",
     "authors": [
       {
@@ -5113,11 +5207,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "湖南"
   },
   {
     "id": 206,
-    "title": "嘉靖茶陵州志     （湖南）",
+    "title": "嘉靖茶陵州志",
     "fullTitle": "嘉靖茶陵州志     （湖南）",
     "authors": [
       {
@@ -5141,11 +5236,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "湖南"
   },
   {
     "id": 207,
-    "title": "弘治永州府志     （湖南）",
+    "title": "弘治永州府志",
     "fullTitle": "弘治永州府志     （湖南）",
     "authors": [
       {
@@ -5169,11 +5265,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "湖南"
   },
   {
     "id": 208,
-    "title": "嘉靖增城縣誌     （廣東）",
+    "title": "嘉靖增城縣誌",
     "fullTitle": "嘉靖增城縣誌     （廣東）",
     "authors": [
       {
@@ -5197,11 +5294,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 209,
-    "title": "嘉靖德慶州志     （廣東）",
+    "title": "嘉靖德慶州志",
     "fullTitle": "嘉靖德慶州志     （廣東）",
     "authors": [
       {
@@ -5225,11 +5323,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 210,
-    "title": "嘉靖德庆州志     （广东）",
+    "title": "嘉靖德庆州志",
     "fullTitle": "嘉靖德庆州志     （广东）",
     "authors": [],
     "volumes": {
@@ -5247,11 +5346,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 211,
-    "title": "嘉靖增城县志     （广东）",
+    "title": "嘉靖增城县志",
     "fullTitle": "嘉靖增城县志     （广东）",
     "authors": [],
     "volumes": {
@@ -5269,11 +5369,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 212,
-    "title": "嘉靖惠大記       （廣東）",
+    "title": "嘉靖惠大記",
     "fullTitle": "嘉靖惠大記       （廣東）",
     "authors": [],
     "volumes": {
@@ -5291,11 +5392,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 213,
-    "title": "嘉靖興寧縣誌     （廣東）",
+    "title": "嘉靖興寧縣誌",
     "fullTitle": "嘉靖興寧縣誌     （廣東）",
     "authors": [
       {
@@ -5319,11 +5421,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 214,
-    "title": "嘉靖南雄府志     （廣東）",
+    "title": "嘉靖南雄府志",
     "fullTitle": "嘉靖南雄府志     （廣東）",
     "authors": [
       {
@@ -5347,33 +5450,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 215,
-    "title": "嘉靖南雄府志     （广东）",
-    "fullTitle": "嘉靖南雄府志     （广东）",
-    "authors": [],
-    "volumes": {
-      "start": 66,
-      "end": 66,
-      "count": 1,
-      "raw": "续编第66册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "据明嘉靖二十一年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 216,
-    "title": "嘉靖始兴县志     （广东）",
+    "title": "嘉靖始兴县志",
     "fullTitle": "嘉靖始兴县志     （广东）",
     "authors": [],
     "volumes": {
@@ -5391,11 +5473,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 217,
-    "title": "嘉靖惠大记       （广东）",
+    "title": "嘉靖惠大记",
     "fullTitle": "嘉靖惠大记       （广东）",
     "authors": [],
     "volumes": {
@@ -5413,11 +5496,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 218,
-    "title": "嘉靖兴宁县志     （广东）",
+    "title": "嘉靖兴宁县志",
     "fullTitle": "嘉靖兴宁县志     （广东）",
     "authors": [],
     "volumes": {
@@ -5435,11 +5519,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 219,
-    "title": "嘉靖始興縣誌     （廣東）",
+    "title": "嘉靖始興縣誌",
     "fullTitle": "嘉靖始興縣誌     （廣東）",
     "authors": [
       {
@@ -5463,11 +5548,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 220,
-    "title": "嘉靖南寧府志     （廣東）",
+    "title": "嘉靖南寧府志",
     "fullTitle": "嘉靖南寧府志     （廣東）",
     "authors": [
       {
@@ -5491,11 +5577,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "廣東"
   },
   {
     "id": 221,
-    "title": "萬曆營山縣誌     （四川）",
+    "title": "萬曆營山縣誌",
     "fullTitle": "萬曆營山縣誌     （四川）",
     "authors": [
       {
@@ -5519,11 +5606,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "四川"
   },
   {
     "id": 222,
-    "title": "万历营山县志     （四川）",
+    "title": "万历营山县志",
     "fullTitle": "万历营山县志     （四川）",
     "authors": [],
     "volumes": {
@@ -5541,11 +5629,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "四川"
   },
   {
     "id": 223,
-    "title": "嘉靖南宁府志     （广东）",
+    "title": "嘉靖南宁府志",
     "fullTitle": "嘉靖南宁府志     （广东）",
     "authors": [],
     "volumes": {
@@ -5563,11 +5652,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "广东"
   },
   {
     "id": 224,
-    "title": "正德蓬州志       （四川）",
+    "title": "正德蓬州志",
     "fullTitle": "正德蓬州志       （四川）",
     "authors": [
       {
@@ -5591,11 +5681,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "四川"
   },
   {
     "id": 225,
-    "title": "嘉靖贵州通志 上  （贵州）",
+    "title": "嘉靖贵州通志 上",
     "fullTitle": "嘉靖贵州通志 上  （贵州）",
     "authors": [],
     "volumes": {
@@ -5613,11 +5704,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "贵州"
   },
   {
     "id": 226,
-    "title": "嘉靖貴州通志 上  （貴州）",
+    "title": "嘉靖貴州通志 上",
     "fullTitle": "嘉靖貴州通志 上  （貴州）",
     "authors": [
       {
@@ -5641,11 +5733,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "貴州"
   },
   {
     "id": 227,
-    "title": "嘉靖貴州通志 下  （貴州）",
+    "title": "嘉靖貴州通志 下",
     "fullTitle": "嘉靖貴州通志 下  （貴州）",
     "authors": [
       {
@@ -5669,11 +5762,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "貴州"
   },
   {
     "id": 228,
-    "title": "嘉靖贵州通志 下  （贵州）",
+    "title": "嘉靖贵州通志 下",
     "fullTitle": "嘉靖贵州通志 下  （贵州）",
     "authors": [],
     "volumes": {
@@ -5691,11 +5785,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "贵州"
   },
   {
     "id": 229,
-    "title": "正德云南志   上  （云南）",
+    "title": "正德云南志   上",
     "fullTitle": "正德云南志   上  （云南）",
     "authors": [],
     "volumes": {
@@ -5713,11 +5808,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "云南"
   },
   {
     "id": 230,
-    "title": "正德雲南志   上  （雲南）",
+    "title": "正德雲南志   上",
     "fullTitle": "正德雲南志   上  （雲南）",
     "authors": [
       {
@@ -5741,11 +5837,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "雲南"
   },
   {
     "id": 231,
-    "title": "正德雲南志   下  （雲南）",
+    "title": "正德雲南志   下",
     "fullTitle": "正德雲南志   下  （雲南）",
     "authors": [
       {
@@ -5769,11 +5866,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "雲南"
   },
   {
     "id": 232,
-    "title": "正德云南志   下  （云南）",
+    "title": "正德云南志   下",
     "fullTitle": "正德云南志   下  （云南）",
     "authors": [],
     "volumes": {
@@ -5791,11 +5889,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "云南"
   },
   {
     "id": 233,
-    "title": "嘉靖耀州志       （陝西）",
+    "title": "嘉靖耀州志",
     "fullTitle": "嘉靖耀州志       （陝西）",
     "authors": [
       {
@@ -5819,11 +5918,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "陝西"
   },
   {
     "id": 234,
-    "title": "弘治寧夏新志     （寧夏）",
+    "title": "弘治寧夏新志",
     "fullTitle": "弘治寧夏新志     （寧夏）",
     "authors": [
       {
@@ -5847,11 +5947,12 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "寧夏"
   },
   {
     "id": 235,
-    "title": "弘治宁夏新志     （宁夏）",
+    "title": "弘治宁夏新志",
     "fullTitle": "弘治宁夏新志     （宁夏）",
     "authors": [],
     "volumes": {
@@ -5869,28 +5970,7 @@
     "publisher": "上海书店",
     "publishPlace": "上海",
     "publishYear": "1990",
-    "notes": ""
-  },
-  {
-    "id": 236,
-    "title": "嘉靖耀州志       （陕西）",
-    "fullTitle": "嘉靖耀州志       （陕西）",
-    "authors": [],
-    "volumes": {
-      "start": 72,
-      "end": 72,
-      "count": 1,
-      "raw": "续编第72册"
-    },
-    "totalVolumes": 0,
-    "category": null,
-    "series": "天一阁藏明代方志选刊续编",
-    "type": "ancient",
-    "subType": "collection",
-    "version": "据明嘉靖六年修二十年刻本影印",
-    "publisher": "上海书店",
-    "publishPlace": "上海",
-    "publishYear": "1990",
-    "notes": ""
+    "notes": "",
+    "province": "宁夏"
   }
 ]
