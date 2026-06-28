@@ -517,6 +517,48 @@ export default function HistoryPage() {
     setSearchType('all')
   }
 
+  const copyReport = async () => {
+    if (!analyzeResult) return
+    const a = analyzeResult
+    const lines = [
+      '引易转 历史记录分析报告',
+      '─────────────────',
+      `总转换次数：${a.total}`,
+      `不同作者数：${a.uniqueAuthors}`,
+      '',
+      '引用最多作者：',
+      ...(a.topAuthors || []).map((x: { name: string; count: number }) => `  ${x.name}（${x.count}次）`),
+      '',
+      '月份分布：',
+      ...Object.entries(a.byMonth || {}).sort().map(([k, v]) => `  ${k}：${v}次`),
+      '',
+      '最忙碌日期：',
+      ...(a.topDays || []).map(([d, c]: [string, number]) => `  ${d}：${c}条`),
+      '',
+      '转换格式：',
+      ...Object.entries(a.byFormat || {}).map(([k, v]) => `  ${k}：${v}次`),
+      '',
+      '文献类型：',
+      ...Object.entries(a.byType || {}).map(([k, v]) => `  ${k}：${v}次`),
+    ]
+    await copyToClipboard(lines.join('\n'))
+    showToast('报告已复制到剪贴板')
+  }
+
+  const copyAllRecords = async () => {
+    const data = records.map(r => ({
+      原文: r.rawInput || '',
+      转换结果: r.result,
+      格式: getFormatName(r.targetFormat),
+      类型: getCitationTypeName(r.citation?.type || 'book'),
+      作者: (r.citation?.authors || []).map(a => a.name).join('、'),
+      标题: r.citation?.title || '',
+      时间: formatTimestamp(r.timestamp),
+    }))
+    await copyToClipboard(JSON.stringify(data, null, 2))
+    showToast(`已复制 ${records.length} 条记录到剪贴板`)
+  }
+
   const handleExportJSON = () => {
     const data = selected.size > 0
       ? JSON.stringify(records.filter(r => selected.has(r.id)), null, 2)
@@ -870,7 +912,15 @@ export default function HistoryPage() {
         <div className="mb-6 border-2 border-accent-600 bg-accent-50 dark:bg-gray-800 p-6">
           <div className="flex justify-between items-start mb-4">
             <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100">历史记录分析</h3>
-            <button onClick={() => setAnalyzeResult(null)} className="text-ink-400 hover:text-ink-700 dark:text-gray-500">关闭</button>
+            <div className="flex items-center gap-2">
+              <button onClick={copyReport} className="btn-ghost text-xs text-ink-500 dark:text-gray-400 hover:text-accent-600">
+                复制报告
+              </button>
+              <button onClick={copyAllRecords} className="btn-ghost text-xs text-ink-500 dark:text-gray-400 hover:text-accent-600">
+                复制全部记录
+              </button>
+              <button onClick={() => setAnalyzeResult(null)} className="text-ink-400 hover:text-ink-700 dark:text-gray-500">关闭</button>
+            </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
             <div className="bg-white dark:bg-gray-700 p-3 text-center">
