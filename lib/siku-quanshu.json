@@ -1,0 +1,296 @@
+[
+  {
+    "id": 1,
+    "title": "钦定四库全书总目",
+    "fullTitle": "钦定四库全书总目二百卷卷首四卷",
+    "authors": [
+      {
+        "name": "永瑢",
+        "dynasty": "清",
+        "role": "撰"
+      },
+      {
+        "name": "纪昀",
+        "dynasty": "清",
+        "role": "撰"
+      }
+    ],
+    "volumes": {
+      "start": 1,
+      "end": 5,
+      "count": 5,
+      "raw": "第0001-0005册（经部）"
+    },
+    "totalVolumes": 200,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 2,
+    "title": "库抽毁书提要书名及著者姓名索引(钦定四库全书总目附)",
+    "fullTitle": "库抽毁书提要书名及著者姓名索引(钦定四库全书总目附)",
+    "authors": [
+      {
+        "name": "王重民",
+        "dynasty": "清",
+        "role": "辑"
+      }
+    ],
+    "volumes": {
+      "start": 5,
+      "end": 5,
+      "count": 1,
+      "raw": "第0005册（经部）"
+    },
+    "totalVolumes": 0,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 3,
+    "title": "钦定四库全书简明目录",
+    "fullTitle": "钦定四库全书简明目录二十卷书名及著者姓名索引附补遗一卷",
+    "authors": [
+      {
+        "name": "永瑢",
+        "dynasty": "清",
+        "role": "撰"
+      },
+      {
+        "name": "纪昀",
+        "dynasty": "清",
+        "role": "撰"
+      }
+    ],
+    "volumes": {
+      "start": 6,
+      "end": 6,
+      "count": 1,
+      "raw": "第0006册（经部）"
+    },
+    "totalVolumes": 20,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 4,
+    "title": "周易郑康成注",
+    "fullTitle": "周易郑康成注一卷",
+    "authors": [
+      {
+        "name": "郑玄",
+        "dynasty": "汉",
+        "role": "撰"
+      },
+      {
+        "name": "王应麟",
+        "dynasty": "宋",
+        "role": "编"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 1,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 5,
+    "title": "子夏易传",
+    "fullTitle": "子夏易传十一卷",
+    "authors": [
+      {
+        "name": "卜子夏",
+        "dynasty": "周",
+        "role": "撰"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 11,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 6,
+    "title": "周易略例",
+    "fullTitle": "周易略例一卷(周易注疏附)",
+    "authors": [
+      {
+        "name": "邢昺",
+        "dynasty": "晋",
+        "role": "注"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 1,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 7,
+    "title": "周易注疏考证",
+    "fullTitle": "周易注疏考证一卷(周易注疏附)",
+    "authors": [],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 1,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 8,
+    "title": "周易集解",
+    "fullTitle": "周易集解十七卷",
+    "authors": [
+      {
+        "name": "李鼎祚",
+        "dynasty": "唐",
+        "role": "撰"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 17,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 9,
+    "title": "周易注疏",
+    "fullTitle": "周易注疏十三卷附周易略例附考证一卷",
+    "authors": [
+      {
+        "name": "王弼",
+        "dynasty": "魏",
+        "role": "注"
+      },
+      {
+        "name": "韩康伯",
+        "dynasty": "晋",
+        "role": "注"
+      },
+      {
+        "name": "孔颖达",
+        "dynasty": "唐",
+        "role": "疏"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 13,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  },
+  {
+    "id": 10,
+    "title": "周易注",
+    "fullTitle": "周易注十卷",
+    "authors": [
+      {
+        "name": "王弼",
+        "dynasty": "魏",
+        "role": "撰"
+      },
+      {
+        "name": "韩康伯",
+        "dynasty": "晋",
+        "role": "撰"
+      }
+    ],
+    "volumes": {
+      "start": 7,
+      "end": 7,
+      "count": 1,
+      "raw": "第0007册（经部）"
+    },
+    "totalVolumes": 10,
+    "category": "经",
+    "series": "景印文渊阁四库全书",
+    "type": "ancient",
+    "subType": "collection",
+    "version": "影印本",
+    "publisher": "台湾商务印书馆",
+    "publishYear": "1983-1986",
+    "notes": ""
+  }
+]

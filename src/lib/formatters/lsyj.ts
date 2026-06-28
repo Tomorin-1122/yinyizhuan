@@ -540,6 +540,7 @@ function formatAncientGazetteer(c: Citation): string {
 
 // ─── 常用基本典籍 ───────────────────────────────
 // 规范：《旧唐书》卷9《玄宗纪下》，北京：中华书局，1975年标点本，上册，第233页。
+// 丛书规范：(唐)李鼎祚撰：《周易集解》卷三《篇名/部类》，《景印文渊阁四库全书》第7册，台北：台湾商务印书馆，1986年，第X页。
 function formatAncientClassic(c: Citation): string {
   const parts: string[] = []
   // 典籍一般不标作者
@@ -549,13 +550,23 @@ function formatAncientClassic(c: Citation): string {
   parts.push(processBookTitleMarks(`《${c.title}》`))
   if (c.volume) parts.push(formatVolume(c.volume))
   if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+  // 丛书信息（如有）
+  if (c.seriesName) {
+    let seriesPart = processBookTitleMarks(`《${c.seriesName}》`)
+    if (c.seriesVolume) seriesPart += formatSeriesVolume(c.seriesVolume)
+    parts.push(seriesPart)
+  }
   if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
   if (c.publishYear) {
     const editionTag = c.ancientEdition ? `${c.publishYear}年${c.ancientEdition}` : `${c.publishYear}年`
     parts.push(editionTag)
   }
   if (c.bookletVolume) parts.push(formatBooklet(c.bookletVolume))
-  if (c.pages) parts.push(pageStr(c.pages, 'zh'))
+  // 页码 + 栏（格式：第X页上栏）
+  if (c.pages) {
+    const col = c.column ? c.column : ''
+    parts.push(pageStr(c.pages, 'zh') + col)
+  }
   return joinAncientParts(parts) + '。'
 }
 

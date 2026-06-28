@@ -3,6 +3,7 @@ import { Citation, CitationType, Author } from '../lib/types'
 import { IconPlus, IconMinus } from './Icons'
 import { FieldError } from '../lib/validate'
 import { lookupPlace } from '../lib/publisher-places'
+import AncientBookSearch from './AncientBookSearch'
 
 const CITATION_TYPES: { value: CitationType; label: string }[] = [
   { value: 'book', label: '著作' },
@@ -158,14 +159,63 @@ export default function ManualForm({
         </div>
       )}
 
+      {/* Ancient book search — when classic is selected */}
+      {c.type === 'ancient' && c.ancientSubType === 'classic' && (
+        <AncientBookSearch
+          onSelect={(book) => {
+            // 自动填充表单
+            updateField('title', book.title)
+            
+            // 设置作者和朝代 - 使用 updateField 更新整个 authors 数组
+            if (book.authors && book.authors.length > 0) {
+              const newAuthors = book.authors.map(a => ({
+                name: a.name || '',
+                role: a.role || '撰'
+              }))
+              updateField('authors', newAuthors)
+              
+              // 设置朝代（第一个作者的朝代）
+              if (book.authors[0].dynasty) {
+                updateField('dynasty', book.authors[0].dynasty)
+              }
+            }
+            
+            // 设置出版信息
+            if (book.publisher) {
+              updateField('publisher', book.publisher)
+            }
+            // 设置出版地（四库全书默认台北）
+            updateField('publishPlace', '台北')
+            
+            if (book.publishYear) {
+              const years = book.publishYear.match(/\d{4}/g)
+              if (years) {
+                updateField('publishYear', years[years.length - 1])
+              }
+            }
+            
+            // 设置丛书信息
+            if (book.series) {
+              updateField('seriesName', book.series)
+            }
+            if (book.volumes?.start) {
+              updateField('seriesVolume', `第${book.volumes.start}册`)
+            }
+            
+            // 设置册数（如果有总卷数）
+            if (book.totalVolumes && book.totalVolumes > 0) {
+              // 提示用户需要输入卷次
+              updateField('volume', '')
+            }
+          }}
+        />
+      )}
+
       {/* Authors */}
       <div>
         <div className="flex items-center justify-between mb-1">
           <label className="text-sm font-medium text-ink-800">
             责任者(作者)
-            {c.type === 'ancient' && ['gazetteer', 'classic', 'chronicle'].includes(c.ancientSubType || '') && (
-              <span className="text-xs text-ink-400 ml-2">（此类一般不标作者，可留空）</span>
-            )}
           </label>
           <button onClick={addAuthor} className="btn-ghost text-xs py-1 px-2">
             <IconPlus className="w-3 h-3" />添加
@@ -632,22 +682,22 @@ export default function ManualForm({
             </div>
           )}
 
-          {/* 9. 丛书名/丛书册数（析出/地方志） */}
-          {['extract', 'gazetteer'].includes(c.ancientSubType || '') && (
+          {/* 9. 丛书名/丛书册数（析出/地方志/常用基本典籍） */}
+          {['extract', 'gazetteer', 'classic'].includes(c.ancientSubType || '') && (
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-ink-800 mb-1">丛书名</label>
-                <input value={c.seriesName || ''} onChange={e => updateField('seriesName', e.target.value)} className="input-field" placeholder="稀见中国地方志汇刊" />
+                <input value={c.seriesName || ''} onChange={e => updateField('seriesName', e.target.value)} className="input-field" placeholder="景印文渊阁四库全书" />
               </div>
               <div>
                 <label className="block text-sm font-medium text-ink-800 mb-1">丛书册数</label>
-                <input value={c.seriesVolume || ''} onChange={e => updateField('seriesVolume', e.target.value)} className="input-field" placeholder="42 / 88" />
+                <input value={c.seriesVolume || ''} onChange={e => updateField('seriesVolume', e.target.value)} className="input-field" placeholder="第7册" />
               </div>
             </div>
           )}
 
-          {/* 10. 单书册数（影印本/典籍/编年体） */}
-          {['reprint', 'classic', 'chronicle'].includes(c.ancientSubType || '') && (
+          {/* 10. 单书册数（影印本/编年体，不含常用基本典籍） */}
+          {['reprint', 'chronicle'].includes(c.ancientSubType || '') && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">册数</label>
               <input
@@ -688,8 +738,8 @@ export default function ManualForm({
             </div>
           )}
 
-          {/* 12. 栏（仅影印本） */}
-          {c.ancientSubType === 'reprint' && (
+          {/* 12. 栏（影印本/常用基本典籍） */}
+          {['reprint', 'classic'].includes(c.ancientSubType || '') && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">栏（可选）</label>
               <select
