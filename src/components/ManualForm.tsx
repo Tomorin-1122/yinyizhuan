@@ -72,6 +72,10 @@ export default function ManualForm({
   errors.forEach(e => { errorMap[e.field] = e.message })
   const showBookFields = ['book', 'diary', 'classic'].includes(c.type)
   const showChapterFields = c.type === 'chapter'
+  
+  // 判断是否是方志丛书
+  const isFangzhi = c.type === 'ancient' && c.ancientSubType === 'classic' && 
+    ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
 
   // 追踪 publishPlace 是否为自动补全
   const isAutoFilledRef = useRef(false)
@@ -167,7 +171,10 @@ export default function ManualForm({
             updateField('title', book.title)
             
             // 设置作者和朝代 - 使用 updateField 更新整个 authors 数组
-            if (book.authors && book.authors.length > 0) {
+            // 注意：方志丛书默认不标作者，明清方志用年号+题名
+            const isFangzhi = ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(book.series)
+            
+            if (!isFangzhi && book.authors && book.authors.length > 0) {
               const newAuthors = book.authors.map(a => ({
                 name: a.name || '',
                 role: a.role || '撰'
@@ -178,6 +185,11 @@ export default function ManualForm({
               if (book.authors[0].dynasty) {
                 updateField('dynasty', book.authors[0].dynasty)
               }
+            }
+            
+            // 方志丛书：设置年号
+            if (isFangzhi && book.era) {
+              updateField('dynasty', book.era)
             }
             
             // 设置出版信息
@@ -204,6 +216,34 @@ export default function ManualForm({
               updateField('seriesVolume', `第${book.volumes.start}册`)
             }
             
+            // 中国方志丛书：设置编号（使用 bookletVolume 字段）
+            if (book.number) {
+              updateField('bookletVolume', book.number)
+            }
+            
+            // 中国方志丛书：从版本字段中提取年号
+            if (book.series === '中国方志丛书' && !book.era && book.version) {
+              // 从版本中提取年号（如"民国年间抄本" -> "民国"）
+              const eraMatch = book.version.match(/^(嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启)/)
+              if (eraMatch) {
+                updateField('dynasty', eraMatch[1])
+              }
+            }
+            
+            // 设置版本描述（去掉"据"或"據"字，以及"明"字开头）
+            if (book.version) {
+              let version = book.version
+              // 去掉"据"或"據"字开头
+              if (version.startsWith('据') || version.startsWith('據')) {
+                version = version.substring(1)
+              }
+              // 去掉"明"字开头（如果版本以"明"开头）
+              if (version.startsWith('明')) {
+                version = version.substring(1)
+              }
+              updateField('ancientEdition', version)
+            }
+            
             // 设置册数（如果有总卷数）
             if (book.totalVolumes && book.totalVolumes > 0) {
               // 提示用户需要输入卷次
@@ -213,61 +253,81 @@ export default function ManualForm({
         />
       )}
 
-      {/* Authors */}
-      <div>
-        <div className="flex items-center justify-between mb-1">
-          <label className="text-sm font-medium text-ink-800">
-            责任者(作者)
+      {/* Authors - 方志丛书只显示年号，不显示作者 */}
+      {isFangzhi ? (
+        <div>
+          <label className="block text-sm font-medium text-ink-800 mb-1">
+            年号
+            <span className="text-xs text-ink-400 ml-2">（方志默认不标作者）</span>
           </label>
-          <button onClick={addAuthor} className="btn-ghost text-xs py-1 px-2">
-            <IconPlus className="w-3 h-3" />添加
-          </button>
+          <input
+            value={c.dynasty || ''}
+            onChange={e => updateField('dynasty', e.target.value)}
+            className="input-field"
+            placeholder="万历"
+          />
         </div>
-        {errorMap.authors && <p className="text-red-500 text-xs mb-1">{errorMap.authors}</p>}
-        {c.authors.map((a, i) => (
-          <div key={i} className="flex gap-2 mb-2">
-            {c.type === 'ancient' && i === 0 && (
-              <input
-                value={c.dynasty || ''}
-                onChange={e => updateField('dynasty', e.target.value)}
-                className="input-field w-16"
-                placeholder="明"
-              />
-            )}
-            <input
-              value={a.name}
-              onChange={e => updateAuthor(i, 'name', e.target.value)}
-              className={`input-field flex-1 ${errorMap.authors ? 'border-red-500 ring-1 ring-red-500' : ''}`}
-              placeholder={c.language === 'zh' ? '姓名' : 'Full Name'}
-            />
-            <input
-              value={a.role || ''}
-              onChange={e => updateAuthor(i, 'role', e.target.value)}
-              className="input-field w-20"
-              placeholder="著"
-            />
-            {c.authors.length > 1 && (
-              <button onClick={() => removeAuthor(i)} className="btn-ghost text-vermilion-600 px-2">
-                <IconMinus className="w-4 h-4" />
-              </button>
-            )}
+      ) : (
+        <div>
+          <div className="flex items-center justify-between mb-1">
+            <label className="text-sm font-medium text-ink-800">
+              责任者(作者)
+            </label>
+            <button onClick={addAuthor} className="btn-ghost text-xs py-1 px-2">
+              <IconPlus className="w-3 h-3" />添加
+            </button>
           </div>
-        ))}
-        {c.type === 'ancient' && (
-          <p className="text-xs text-ink-400 mt-1">年代选填</p>
-        )}
-      </div>
+          {errorMap.authors && <p className="text-red-500 text-xs mb-1">{errorMap.authors}</p>}
+          {c.authors.map((a, i) => (
+            <div key={i} className="flex gap-2 mb-2">
+              {c.type === 'ancient' && i === 0 && (
+                <input
+                  value={c.dynasty || ''}
+                  onChange={e => updateField('dynasty', e.target.value)}
+                  className="input-field w-16"
+                  placeholder="明"
+                />
+              )}
+              <input
+                value={a.name}
+                onChange={e => updateAuthor(i, 'name', e.target.value)}
+                className={`input-field flex-1 ${errorMap.authors ? 'border-red-500 ring-1 ring-red-500' : ''}`}
+                placeholder={c.language === 'zh' ? '姓名' : 'Full Name'}
+              />
+              <input
+                value={a.role || ''}
+                onChange={e => updateAuthor(i, 'role', e.target.value)}
+                className="input-field w-20"
+                placeholder="著"
+              />
+              {c.authors.length > 1 && (
+                <button onClick={() => removeAuthor(i)} className="btn-ghost text-vermilion-600 px-2">
+                  <IconMinus className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          ))}
+          {c.type === 'ancient' && (
+            <p className="text-xs text-ink-400 mt-1">年代选填</p>
+          )}
+        </div>
+      )}
 
       {/* Title */}
       <div>
-        <label className="block text-sm font-medium text-ink-800 mb-1">文献题名</label>
+        <label className="block text-sm font-medium text-ink-800 mb-1">
+          {isFangzhi ? '题名' : '文献题名'}
+        </label>
         <input
           value={c.title}
           onChange={e => updateField('title', e.target.value)}
           className={`input-field ${errorMap.title ? 'border-red-500 ring-1 ring-red-500' : ''}`}
-          placeholder={c.language === 'zh' ? '如：中国古代史研究' : 'Title of the Work'}
+          placeholder={isFangzhi ? '武康县志' : (c.language === 'zh' ? '如：中国古代史研究' : 'Title of the Work')}
         />
         {errorMap.title && <p className="text-red-500 text-xs mt-1">{errorMap.title}</p>}
+        {isFangzhi && (
+          <p className="text-xs text-ink-400 mt-1">年号+题名，如"万历《嘉兴府志》"</p>
+        )}
       </div>
 
       {/* Book fields */}
@@ -532,6 +592,20 @@ export default function ManualForm({
             </div>
           )}
 
+          {/* 3.5 方志丛书编号（仅方志丛书显示） */}
+          {isFangzhi && c.seriesName === '中国方志丛书' && (
+            <div>
+              <label className="block text-sm font-medium text-ink-800 mb-1">编号</label>
+              <input
+                value={c.bookletVolume || ''}
+                onChange={e => updateField('bookletVolume', e.target.value)}
+                className="input-field"
+                placeholder="华中地方第505号"
+              />
+              <p className="text-xs text-ink-400 mt-1">中国方志丛书编号</p>
+            </div>
+          )}
+
           {/* 4. 部类（仅析出文献） */}
           {c.ancientSubType === 'extract' && (
             <div>
@@ -545,19 +619,22 @@ export default function ManualForm({
             </div>
           )}
 
-          {/* 5. 版本信息/标注（刻本/点校本/影印本/典籍） */}
+          {/* 5. 版本信息/标注（刻本/点校本/影印本/典籍/方志） */}
           {['blockprint', 'punctuated', 'reprint', 'classic'].includes(c.ancientSubType || '') && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">
-                {VERSION_LABELS[c.ancientSubType || ''] || '版本信息'}
+                {isFangzhi ? '版本' : (VERSION_LABELS[c.ancientSubType || ''] || '版本信息')}
+                {isFangzhi && (
+                  <span className="text-xs text-ink-400 ml-2">（可编辑）</span>
+                )}
               </label>
-              {c.ancientSubType === 'blockprint' ? (
-                // 刻本版本信息自由度高，保留文本输入
+              {c.ancientSubType === 'blockprint' || isFangzhi ? (
+                // 刻本和方志版本信息自由度高，保留文本输入
                 <input
                   value={c.ancientEdition || ''}
                   onChange={e => updateField('ancientEdition', e.target.value)}
                   className="input-field"
-                  placeholder="光绪三年苏州文学山房活字本"
+                  placeholder={isFangzhi ? '影印正德十年刻本' : '光绪三年苏州文学山房活字本'}
                 />
               ) : (
                 <>

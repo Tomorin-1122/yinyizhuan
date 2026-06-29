@@ -14,6 +14,10 @@ interface AncientBook {
   publishPlace?: string
   publishYear: string
   version: string
+  // 方志相关字段
+  era?: string        // 年号（嘉靖、万历、民国等）
+  province?: string   // 省份
+  number?: string     // 编号（华中地方第XXX号）
 }
 
 // 生成《历史研究》格式引用

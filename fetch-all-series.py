@@ -155,6 +155,37 @@ def extract_category(volumes_str):
         return match.group(1)
     return None
 
+def extract_era(title, version=''):
+    """从书名或版本中提取年号"""
+    # 优先从书名中提取
+    era_pattern = r'^(嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启)'
+    match = re.search(era_pattern, title)
+    if match:
+        return match.group(1)
+    
+    # 从版本中提取（如"民国年间抄本"、"清光绪二十一年刊本"、"明嘉靖二十九年刊本"）
+    if version:
+        # 匹配"民国"或"清"+"年号"或"明"+"年号"模式
+        version_era_match = re.search(r'(民国|清(光绪|宣统|同治|咸丰|道光|嘉庆|乾隆|雍正|康熙)|明(嘉靖|万历|正德|弘治|隆庆|天启|崇祯))', version)
+        if version_era_match:
+            era = version_era_match.group(1)
+            # 如果是"清+年号"或"明+年号"模式，只返回年号部分
+            if era.startswith('清') or era.startswith('明'):
+                return era[1:]
+            return era
+    
+    return None
+
+def extract_number_from_volumes(volumes_str):
+    """从册数提取编号"""
+    # 匹配 [华中·江西]第0789册 格式
+    match = re.search(r'\[([^\]]+)\]第(\d+)册', volumes_str)
+    if match:
+        region = match.group(1).replace('&middot;', '·')
+        number = match.group(2)
+        return f'{region}地方第{number.lstrip("0")}号'
+    return None
+
 def transform_record(record, config):
     """转换记录格式"""
     authors = extract_authors(record['author'])
@@ -165,6 +196,8 @@ def transform_record(record, config):
     title = record['fullTitle']
     total_volumes = 0
     province = None
+    era = None
+    number = None
     
     # 方志丛书特殊处理：提取省份信息
     if config['name'] in ['天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编']:
@@ -175,12 +208,17 @@ def transform_record(record, config):
             # 从书名中移除省份信息
             title = re.sub(r'[（(][^）)]+[）)]', '', title).strip()
     
-    # 中国方志丛书特殊处理：从册数中提取地区信息
+    # 中国方志丛书特殊处理：从册数中提取地区信息和编号
     if config['name'] == '中国方志丛书':
         # 匹配"[华中·安徽]"格式
         region_match = re.search(r'\[([^\]]+)\]', record['volumes'])
         if region_match:
-            province = region_match.group(1)
+            province = region_match.group(1).replace('&middot;', '·')
+        # 提取编号
+        number = extract_number_from_volumes(record['volumes'])
+    
+    # 提取年号（优先从书名，其次从版本）
+    era = extract_era(title, record.get('version', ''))
     
     volume_match = re.search(r'^(.+?)([一二三四五六七八九十百千]+)卷', title)
     if volume_match:
@@ -213,9 +251,13 @@ def transform_record(record, config):
         'notes': record.get('notes', '')
     }
     
-    # 添加省份字段（如果有）
+    # 添加方志相关字段
+    if era:
+        result['era'] = era
     if province:
         result['province'] = province
+    if number:
+        result['number'] = number
     
     return result
 

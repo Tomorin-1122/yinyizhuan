@@ -541,27 +541,72 @@ function formatAncientGazetteer(c: Citation): string {
 // ─── 常用基本典籍 ───────────────────────────────
 // 规范：《旧唐书》卷9《玄宗纪下》，北京：中华书局，1975年标点本，上册，第233页。
 // 丛书规范：(唐)李鼎祚撰：《周易集解》卷三《篇名/部类》，《景印文渊阁四库全书》第7册，台北：台湾商务印书馆，1986年，第X页。
+// 方志规范：万历《嘉兴府志》卷5《田赋》，《中国方志丛书》华中地方第505号影印万历二十八年刊本，台北：成文出版社，1983年，第268-269页。
 function formatAncientClassic(c: Citation): string {
   const parts: string[] = []
-  // 典籍一般不标作者
-  const dyn = dynastyPrefix(c)
-  const auth = authorStr(c)
-  if (dyn || auth) parts.push(dyn + auth + '：')
-  parts.push(processBookTitleMarks(`《${c.title}》`))
-  if (c.volume) parts.push(formatVolume(c.volume))
-  if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
-  // 丛书信息（如有）
-  if (c.seriesName) {
-    let seriesPart = processBookTitleMarks(`《${c.seriesName}》`)
-    if (c.seriesVolume) seriesPart += formatSeriesVolume(c.seriesVolume)
-    parts.push(seriesPart)
+  
+  // 判断是否是方志丛书
+  const isFangzhi = ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
+  
+  if (isFangzhi) {
+    // 方志格式：年号《题名》卷次《篇名》
+    // 注意：书名可能已包含年号（如"正德瑞州府志"），需要去除
+    let title = c.title
+    let era = c.dynasty || ''  // 年号（嘉靖、万历、民国等）
+    
+    // 如果书名以年号开头，去除书名中的年号
+    if (era && title.startsWith(era)) {
+      title = title.substring(era.length)
+    }
+    
+    parts.push(`${era}${processBookTitleMarks(`《${title}》`)}`)
+    if (c.volume) parts.push(formatVolume(c.volume))
+    if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+    
+    // 丛书信息
+    if (c.seriesName) {
+      let seriesPart = processBookTitleMarks(`《${c.seriesName}》`)
+      // 中国方志丛书用编号，天一阁用册数
+      if (c.seriesName === '中国方志丛书' && c.bookletVolume) {
+        // bookletVolume 存储的是编号，如"华中地方第505号"
+        seriesPart += c.bookletVolume
+      } else if (c.seriesVolume) {
+        seriesPart += formatSeriesVolume(c.seriesVolume)
+      }
+      // 版本信息紧跟在册数/编号后面，中间不加逗号
+      if (c.ancientEdition) {
+        seriesPart += c.ancientEdition
+      }
+      parts.push(seriesPart)
+    }
+  } else {
+    // 普通典籍格式
+    const dyn = dynastyPrefix(c)
+    const auth = authorStr(c)
+    if (dyn || auth) parts.push(dyn + auth + '：')
+    parts.push(processBookTitleMarks(`《${c.title}》`))
+    if (c.volume) parts.push(formatVolume(c.volume))
+    if (c.section) parts.push(processBookTitleMarks(`《${c.section}》`))
+    // 丛书信息（如有）
+    if (c.seriesName) {
+      let seriesPart = processBookTitleMarks(`《${c.seriesName}》`)
+      if (c.seriesVolume) seriesPart += formatSeriesVolume(c.seriesVolume)
+      parts.push(seriesPart)
+    }
   }
+  
+  // 出版信息（通用）
   if (c.publishPlace && c.publisher) parts.push(`${c.publishPlace}：${c.publisher}`)
   if (c.publishYear) {
-    const editionTag = c.ancientEdition ? `${c.publishYear}年${c.ancientEdition}` : `${c.publishYear}年`
-    parts.push(editionTag)
+    // 对于方志丛书，版本信息已经在前面添加过了，不再重复
+    if (isFangzhi) {
+      parts.push(`${c.publishYear}年`)
+    } else {
+      const editionTag = c.ancientEdition ? `${c.publishYear}年${c.ancientEdition}` : `${c.publishYear}年`
+      parts.push(editionTag)
+    }
   }
-  if (c.bookletVolume) parts.push(formatBooklet(c.bookletVolume))
+  if (c.bookletVolume && !isFangzhi) parts.push(formatBooklet(c.bookletVolume))
   // 页码 + 栏（格式：第X页上栏）
   if (c.pages) {
     const col = c.column ? c.column : ''
