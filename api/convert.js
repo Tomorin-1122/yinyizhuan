@@ -1,8 +1,10 @@
 const { parseCitationText } = require('../lib/parser');
 const { formatCitation } = require('../lib/formatters');
 const { checkApiKey } = require('../lib/auth');
+const { rateLimitMiddleware } = require('../lib/rate-limit');
 
 const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
+const checkLimit = rateLimitMiddleware({ max: 60, windowMs: 60_000 });
 
 function setCorsHeaders(res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -18,6 +20,7 @@ module.exports = async function handler(request, response) {
   }
 
   if (!checkApiKey(request, response)) return;
+  if (!checkLimit(request, response)) return;
 
   if (request.method !== 'POST') {
     return response.status(405).json({
