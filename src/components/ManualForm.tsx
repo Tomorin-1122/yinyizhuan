@@ -76,6 +76,12 @@ export default function ManualForm({
   // 判断是否是方志丛书
   const isFangzhi = c.type === 'ancient' && c.ancientSubType === 'classic' && 
     ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
+  
+  // 版本字段使用自由文本输入的丛书（方志 + 四库全书系列）
+  const isFreeEditVersion = isFangzhi || (
+    c.type === 'ancient' && c.ancientSubType === 'classic' &&
+    ['景印文渊阁四库全书', '续修四库全书'].includes(c.seriesName || '')
+  )
 
   // 追踪 publishPlace 是否为自动补全
   const isAutoFilledRef = useRef(false)
@@ -196,9 +202,11 @@ export default function ManualForm({
             if (book.publisher) {
               updateField('publisher', book.publisher)
             }
-            // 设置出版地（从数据中获取）
-            if (book.publishPlace) {
-              updateField('publishPlace', book.publishPlace)
+            // 设置出版地（从数据中获取，或从出版社映射表降级）
+            const resolvedPlace = book.publishPlace || (book.publisher ? lookupPlace(book.publisher) : '')
+            if (resolvedPlace) {
+              updateField('publishPlace', resolvedPlace)
+              isAutoFilledRef.current = !book.publishPlace
             }
             
             if (book.publishYear) {
@@ -207,6 +215,9 @@ export default function ManualForm({
                 updateField('publishYear', years[years.length - 1])
               }
             }
+            
+            // 设置古籍子类型为"常用基本典籍"
+            updateField('ancientSubType', 'classic')
             
             // 设置丛书信息
             if (book.series) {
@@ -619,22 +630,22 @@ export default function ManualForm({
             </div>
           )}
 
-          {/* 5. 版本信息/标注（刻本/点校本/影印本/典籍/方志） */}
+          {/* 5. 版本信息/标注（刻本/点校本/影印本/典籍/方志/四库全书） */}
           {['blockprint', 'punctuated', 'reprint', 'classic'].includes(c.ancientSubType || '') && (
             <div>
               <label className="block text-sm font-medium text-ink-800 mb-1">
-                {isFangzhi ? '版本' : (VERSION_LABELS[c.ancientSubType || ''] || '版本信息')}
-                {isFangzhi && (
+                {isFreeEditVersion ? '版本' : (VERSION_LABELS[c.ancientSubType || ''] || '版本信息')}
+                {isFreeEditVersion && (
                   <span className="text-xs text-ink-400 ml-2">（可编辑）</span>
                 )}
               </label>
-              {c.ancientSubType === 'blockprint' || isFangzhi ? (
+              {c.ancientSubType === 'blockprint' || isFreeEditVersion ? (
                 // 刻本和方志版本信息自由度高，保留文本输入
                 <input
                   value={c.ancientEdition || ''}
                   onChange={e => updateField('ancientEdition', e.target.value)}
                   className="input-field"
-                  placeholder={isFangzhi ? '影印正德十年刻本' : '光绪三年苏州文学山房活字本'}
+                  placeholder={isFreeEditVersion ? '影印本 / 国家图书馆藏万历刻本' : '光绪三年苏州文学山房活字本'}
                 />
               ) : (
                 <>
