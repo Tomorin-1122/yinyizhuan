@@ -46,3 +46,6 @@ public/ancient-books.json
 
 # External cloned repos
 CSL-Chinese-IR-CSSCI-Journals/
+
+# Product strategy deliverables (local only)
+deliverables/

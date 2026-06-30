@@ -28,14 +28,50 @@ const defaultCitation = (): Citation => ({
   title: '',
 })
 
+/** 按逗号分隔，但忽略括号内的逗号 */
+function splitIgnoringParens(text: string): string[] {
+  const result: string[] = []
+  let current = ''
+  let depth = 0
+  for (const ch of text) {
+    if (ch === '(' || ch === '（' || ch === '[') { depth++; current += ch; continue }
+    if (ch === ')' || ch === '）' || ch === ']') { depth--; current += ch; continue }
+    if ((ch === ',' || ch === '，') && depth === 0) {
+      if (current.trim()) result.push(current.trim())
+      current = ''
+      continue
+    }
+    current += ch
+  }
+  if (current.trim()) result.push(current.trim())
+  return result
+}
+
 /** 古籍后处理：从 rawText 提取版本、馆藏，从 authors 中分离朝代 */
 function postProcessAncient(c: Citation, raw: string) {
-  // 提取版本信息：匹配刻本/抄本/影印本/寫本/活字本 等关键词及其上下文
-  const versionMatch = raw.match(/([\u4e00-\u9fff\[\]\d\-—~年月間]+(?:刻本|抄本|寫本|写本|影印本|活字本|重寫本|稿本))/)
-  if (versionMatch) c.ancientEdition = versionMatch[1].trim()
-  // 提取馆藏：X馆藏 或 X图书馆藏
-  const collMatch = raw.match(/([\u4e00-\u9fff（）()]+(?:图书馆|博物院|博物馆|档案馆|文献馆|资料馆)藏)/)
-  if (collMatch) c.archiveLocation = collMatch[1].trim()
+  // 策略：标题《》之后的内容按逗号分隔
+  // 最后含"藏"的段落 = 馆藏，最后含版本关键词的段落 = 版本
+  // 注意：忽略括号内的逗号（如"明崇禎壬午(十五年, 1642)刊本"）
+  const afterTitle = raw.replace(/^.*》\s*/, '').replace(/[。.]\s*$/, '')
+  const segs = splitIgnoringParens(afterTitle)
+
+  // 馆藏：含"图书馆/博物院/博物馆/档案馆" + 末尾"藏"的段落
+  for (let i = segs.length - 1; i >= 0; i--) {
+    if (/图书馆|博物院|博物馆|档案馆|文献馆|资料馆/.test(segs[i]) && /藏$/.test(segs[i])) {
+      c.archiveLocation = segs[i].replace(/[""「」\[\]]/g, '')
+      segs.splice(i, 1)
+      break
+    }
+  }
+
+  // 版本：最后一个含版本关键词的段落
+  for (let i = segs.length - 1; i >= 0; i--) {
+    if (/刻本|刊本|抄本|寫本|写本|影印本|活字本|重寫本|稿本|底本|印本|遞修本/.test(segs[i])) {
+      c.ancientEdition = segs[i]
+      break
+    }
+  }
+
   // 从 authors 中分离朝代："(明)解縉等輯" → dynasty: "明", name: "解縉"
   c.authors = c.authors.map(a => {
     const m = /^[（(]([^）)]+)[）)]\s*(.+)$/.exec(a.name)
