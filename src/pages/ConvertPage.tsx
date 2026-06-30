@@ -28,6 +28,22 @@ const defaultCitation = (): Citation => ({
   title: '',
 })
 
+/** 古籍后处理：从 rawText 提取版本、馆藏，从 authors 中分离朝代 */
+function postProcessAncient(c: Citation, raw: string) {
+  // 提取版本信息：匹配刻本/抄本/影印本/寫本/活字本 等关键词及其上下文
+  const versionMatch = raw.match(/([\u4e00-\u9fff\[\]\d\-—~年月間]+(?:刻本|抄本|寫本|写本|影印本|活字本|重寫本|稿本))/)
+  if (versionMatch) c.ancientEdition = versionMatch[1].trim()
+  // 提取馆藏：X馆藏 或 X图书馆藏
+  const collMatch = raw.match(/([\u4e00-\u9fff（）()]+(?:图书馆|博物院|博物馆|档案馆|文献馆|资料馆)藏)/)
+  if (collMatch) c.archiveLocation = collMatch[1].trim()
+  // 从 authors 中分离朝代："(明)解縉等輯" → dynasty: "明", name: "解縉"
+  c.authors = c.authors.map(a => {
+    const m = /^[（(]([^）)]+)[）)]\s*(.+)$/.exec(a.name)
+    if (m) return { name: m[2].replace(/等.*$/, '').replace(/[撰輯編纂修注疏校译著]+$/, '').trim(), dynasty: m[1].trim(), role: a.role || '撰' }
+    return a
+  })
+}
+
 // 繁简转换：繁体转简体（模块级，无状态纯转换器，无需每次 render 重建）
 const traditionalToSimplified = Converter({ from: 'tw', to: 'cn' })
 
@@ -128,14 +144,30 @@ export default function ConvertPage() {
 
   const handleParse = () => {
     if (!pasteText.trim()) return
-    const simplifiedText = traditionalToSimplified(pasteText)
+    const isDianjin = pasteText.includes('【典津古籍】')
+    const cleanedText = isDianjin ? pasteText.replace('【典津古籍】', '').trim() : pasteText
+    const simplifiedText = traditionalToSimplified(cleanedText)
     const parsed = parseCitationText(simplifiedText)
     const c = { ...defaultCitation(), ...parsed, id: generateId() } as Citation
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
+
+    // 典津来源：标记已剥离，但强制设置为古籍刻本
+    if (isDianjin && c.type !== 'ancient') {
+      c.type = 'ancient'
+      c.ancientSubType = 'blockprint'
+    }
+
+    // 古籍后处理：从 rawText 提取版本、馆藏，从 authors 中分离朝代
+    if (c.type === 'ancient' && (parsed.rawText || isDianjin)) {
+      postProcessAncient(c, parsed.rawText || simplifiedText)
+      if (isDianjin) c.ancientSubType = 'blockprint'
+    }
+
     setCitation(c)
     setMode('manual')
-    const isDouban = /出版社[:：]/.test(simplifiedText) && /出版年[:：]/.test(simplifiedText)
-    if (isDouban) {
+    if (parsed.type === 'ancient') {
+      showToast(isDianjin ? '已从典津识别古籍，请核对版本和馆藏信息' : '已识别为古籍，请核对版本和馆藏信息后转换')
+    } else if (/出版社[:：]/.test(simplifiedText) && /出版年[:：]/.test(simplifiedText)) {
       showToast('已解析豆瓣图书信息，请补充"出版地点"后转换')
     } else {
       showToast('已解析并填充到表单，请核对后转换')
@@ -206,6 +238,10 @@ export default function ConvertPage() {
       if (items.length === 1) {
         const c = { ...defaultCitation(), ...items[0], id: generateId() } as Citation
         if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
+        // 古籍后处理
+        if (items[0].type === 'ancient' && items[0].rawText) {
+          postProcessAncient(c, items[0].rawText)
+        }
         setCitation(c)
         setMode('manual')
         showToast('已解析 1 条引用')
@@ -219,7 +255,10 @@ export default function ConvertPage() {
   const selectParsedItem = (item: Partial<Citation>) => {
     const c = { ...defaultCitation(), ...item, id: generateId() } as Citation
     if (!c.authors || c.authors.length === 0) c.authors = [{ name: '' }]
-    setCitation(c)
+    // 古籍后处理
+    if (item.type === 'ancient' && item.rawText) {
+      postProcessAncient(c, item.rawText)
+    }setCitation(c)
     setParsedItems([])
     setMode('manual')
   }

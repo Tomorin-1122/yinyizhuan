@@ -38,6 +38,9 @@ screenshot-*.png
 # Data scripts (not needed at runtime)
 fetch-all-series.py
 
+# Userscripts (local only)
+dianjin-to-yinyizhuan.user.js
+
 # Duplicate data file (same as lib/ancient-books-all.json)
 public/ancient-books.json
 

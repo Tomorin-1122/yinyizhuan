@@ -32,6 +32,11 @@ export function parseCitationText(text: string): Partial<Citation> {
   const type = detectType(singleLine, language);
   let result: Partial<Citation> = { id, language, type, rawText: singleLine };
 
+  // 古籍：自动推断子类型
+  if (type === 'ancient') {
+    result.ancientSubType = inferAncientSubType(singleLine);
+  }
+
   if (language === 'zh') {
     result = { ...result, ...parseChineseCitation(singleLine, type) };
   } else {
@@ -346,6 +351,10 @@ function detectType(text: string, lang: CitationLanguage): CitationType {
   if (/https?:\/\//.test(text)) return 'electronic';
 
   if (lang === 'zh') {
+    // 典津古籍标记 → 直接识别为古籍刻本
+    if (text.includes('【典津古籍】')) return 'ancient';
+    // 古籍版本关键词（优先于其他检测）
+    if (/刻本|抄本|寫本|写本|影印本|活字本|重寫本|稿本/.test(text)) return 'ancient';
     if (/《[^》]+》.*?\d{4}年.*?第\d+期/.test(text)) return 'journal';
     if (/报.*?\d{4}年\d{1,2}月\d{1,2}日.*?第\d+版/.test(text)) return 'newspaper';
     if (/学位论文|硕士论文|博士论文/.test(text)) return 'thesis';
@@ -360,6 +369,15 @@ function detectType(text: string, lang: CitationLanguage): CitationType {
   }
 
   return 'book';
+}
+
+/** 根据文本关键词推断古籍子类型 */
+function inferAncientSubType(text: string): Citation['ancientSubType'] {
+  if (/刻本|活字本/.test(text)) return 'blockprint';
+  if (/抄本|寫本|写本|稿本/.test(text)) return 'blockprint';
+  if (/影印本/.test(text)) return 'reprint';
+  if (/点校|标点本|整理本/.test(text)) return 'punctuated';
+  return 'blockprint';
 }
 
 // ─── 中文解析 ────────────────────────────────────────────────────
