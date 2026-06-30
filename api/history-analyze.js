@@ -23,7 +23,8 @@ module.exports = async function handler(request, response) {
     return response.status(200).end();
   }
 
-  if (!checkApiKey(request, response)) return;
+  // history-analyze 不需要 API Key（纯统计分析，无敏感操作）
+  // if (!checkApiKey(request, response)) return;
 
   try {
     const { records } = request.body;
