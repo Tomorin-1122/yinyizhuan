@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { IconHome, IconEdit, IconHistory, IconMoon, IconSun } from './Icons'
+import { IconHome, IconEdit, IconHistory, IconMoon, IconSun, IconFile } from './Icons'
 import { getTheme, toggleTheme } from '../lib/theme'
 import { useEffect, useState } from 'react'
 
@@ -21,9 +21,11 @@ const navItems = [
 export default function Layout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const [dark, setDark] = useState(getTheme() === 'dark')
+  const [showPdfNav, setShowPdfNav] = useState(false)
 
   useEffect(() => {
     setDark(getTheme() === 'dark')
+    setShowPdfNav(localStorage.getItem('yyz_pdf_beta') === 'true')
   }, [])
 
   const handleToggleTheme = () => {
@@ -44,18 +46,37 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
           <div className="flex items-center gap-2">
             <nav className="flex items-center gap-1">
-              {navItems.map(item => {
+              {navItems.slice(0, 3).map(item => {
                 const isActive = location.pathname === item.path
                 const Icon = item.icon
                 return (
                   <Link
                     key={item.path}
                     to={item.path}
-                    className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${
-                      isActive
-                        ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100'
-                        : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'
-                    }`}
+                    className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${isActive ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100' : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'}`}
+                  >
+                    <Icon className="w-4 h-4" />
+                    {item.label}
+                  </Link>
+                )
+              })}
+              {showPdfNav && (
+                <Link
+                  to="/pdf-manager"
+                  className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${location.pathname === '/pdf-manager' ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100' : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'}`}
+                >
+                  <IconFile className="w-4 h-4" />
+                  文献管理
+                </Link>
+              )}
+              {navItems.slice(3).map(item => {
+                const isActive = location.pathname === item.path
+                const Icon = item.icon
+                return (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`flex items-center gap-1.5 px-2 sm:px-4 py-2 text-sm font-medium transition-all duration-200 cursor-pointer border-b-2 -mb-[2px] ${isActive ? 'border-ink-950 dark:border-vermilion-500 text-ink-950 dark:text-gray-100' : 'border-transparent text-ink-500 dark:text-gray-400 hover:text-ink-800 dark:hover:text-gray-200 hover:border-ink-300 dark:hover:border-gray-600'}`}
                   >
                     <Icon className="w-4 h-4" />
                     {item.label}

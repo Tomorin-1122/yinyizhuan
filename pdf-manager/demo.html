@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>引易转 · PDF 管理器</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink-50: #f7f6f3; --ink-100: #eeece6; --ink-200: #ddd9cd;
+  --ink-300: #c7c0ad; --ink-400: #ada28a; --ink-500: #9a8d72;
+  --ink-600: #8d7e66; --ink-700: #756856; --ink-800: #61564a;
+  --ink-900: #50473e; --ink-950: #2a2520;
+  --vermilion-50: #fef3f2; --vermilion-100: #fee4e2;
+  --vermilion-200: #fdcdc9; --vermilion-300: #fbaba4;
+  --vermilion-400: #f67b70; --vermilion-500: #ec5244; --vermilion-600: #d93526;
+  --parchment-50: #fdfcf9; --parchment-100: #f9f6ef;
+  --bg: #ffffff; --bg-muted: var(--parchment-50);
+  --text: var(--ink-950); --text-secondary: var(--ink-500); --text-muted: var(--ink-400);
+  --border: var(--ink-200); --border-light: var(--ink-100);
+  --radius: 6px; --radius-lg: 8px;
+  --shadow-sm: 0 1px 2px rgba(42,37,32,0.04);
+  --accent: var(--vermilion-500); --accent-hover: var(--vermilion-600); --accent-bg: var(--vermilion-50);
+  --green: #0f9d58; --green-bg: #f6fdf8;
+  --blue: #1a73e8; --blue-bg: #e8f0fe;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: "Noto Sans SC", sans-serif; background: var(--bg-muted);
+  color: var(--text); line-height: 1.5; min-height: 100vh;
+}
+::selection { background: var(--vermilion-200); }
+
+/* ── Header ── */
+.header {
+  position: sticky; top: 0; z-index: 50;
+  border-bottom: 2px solid var(--border);
+  background: rgba(255,255,255,0.88); backdrop-filter: blur(10px);
+  height: 54px;
+}
+.header-inner {
+  max-width: 1152px; margin: 0 auto; padding: 0 24px;
+  height: 100%; display: flex; align-items: center; justify-content: space-between;
+}
+.logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.logo-box {
+  width: 30px; height: 30px; background: var(--ink-950);
+  display: flex; align-items: center; justify-content: center; transition: background .2s;
+}
+.logo-box span { color: #fdfcf9; font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 13px; }
+.logo:hover .logo-box { background: var(--vermilion-600); }
+.logo-text { font-family: "Noto Serif SC", serif; font-weight: 700; font-size: 19px; color: var(--ink-950); letter-spacing: .04em; }
+.nav { display: flex; align-items: center; gap: 2px; }
+.nav-item {
+  display: flex; align-items: center; gap: 5px;
+  padding: 4px 14px; height: 38px; font-size: 13px; font-weight: 500;
+  color: var(--ink-500); border-bottom: 2px solid transparent; margin-bottom: -2px;
+  cursor: default; text-decoration: none; transition: color .2s;
+  background: none; border-top: none; border-left: none; border-right: none;
+}
+.nav-item:hover { color: var(--ink-800); }
+.nav-item.active { color: var(--ink-950); border-bottom-color: var(--ink-950); }
+.nav-item svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+/* ── App ── */
+.app { max-width: 1152px; margin: 0 auto; padding: 16px 24px; }
+
+/* ── Setup ── */
+.setup-card {
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg);
+  padding: 60px 24px; text-align: center; max-width: 420px; margin: 72px auto 0;
+}
+.setup-card .icon-wrap {
+  width: 48px; height: 48px; margin: 0 auto 16px;
+  background: var(--ink-50); border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.setup-card .icon-wrap svg { width: 24px; height: 24px; color: var(--ink-600); }
+.setup-card h2 { font-family: "Noto Serif SC", serif; font-size: 18px; margin-bottom: 6px; }
+.setup-card p { font-size: 13px; color: var(--ink-500); margin-bottom: 20px; }
+
+/* ── Buttons ── */
+.btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 20px; border-radius: var(--radius);
+  font-size: 13px; font-weight: 500; cursor: pointer;
+  border: 1px solid var(--border); background: #fff; color: var(--text);
+  transition: all .12s; white-space: nowrap; font-family: inherit;
+}
+.btn:hover { background: var(--ink-50); box-shadow: var(--shadow-sm); }
+.btn-sm { padding: 5px 14px; font-size: 12px; }
+.btn-xs { padding: 3px 8px; font-size: 11px; border-radius: 4px; }
+.btn-ghost { border-color: transparent; background: transparent; }
+.btn-ghost:hover { background: var(--ink-50); }
+.btn-accent { color: var(--accent); border-color: var(--accent); }
+.btn-accent:hover { background: var(--accent-bg); }
+.btn-outline { border-color: var(--border); background: transparent; }
+.btn-outline:hover { background: var(--ink-50); border-color: var(--ink-300); }
+.btn-icon {
+  padding: 4px; border: none; background: none; cursor: pointer;
+  color: var(--ink-400); border-radius: 4px; transition: all .12s;
+  display: inline-flex; align-items: center; justify-content: center;
+}
+.btn-icon:hover { color: var(--ink-700); background: var(--ink-50); }
+
+/* ── Three Column ── */
+.three-col { display: flex; gap: 14px; align-items: stretch; }
+.col { background: #fff; border: 1px solid var(--border); border-radius: var(--radius-lg); overflow: hidden; display: flex; flex-direction: column; }
+
+/* ── Search Bar ── */
+.top-bar {
+  display: flex; gap: 10px; margin-bottom: 14px; align-items: stretch;
+}
+.top-search {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  padding: 0 14px; background: #fff; border: 1px solid var(--border);
+  border-radius: var(--radius); transition: border-color .15s, box-shadow .15s;
+}
+.top-search:focus-within { border-color: var(--ink-400); box-shadow: 0 0 0 2px var(--ink-50); }
+.top-search svg { width: 15px; height: 15px; color: var(--ink-400); flex-shrink: 0; }
+.top-search input {
+  flex: 1; border: none; outline: none; font-size: 13px; font-family: inherit;
+  color: var(--text); background: transparent; padding: 10px 0;
+}
+.top-search input::placeholder { color: var(--text-muted); }
+.filter-select {
+  display: flex; align-items: center; gap: 4px;
+  padding: 0 14px 0 10px; border-right: 1px solid var(--border-light);
+  font-size: 12px; color: var(--text-secondary); cursor: pointer;
+  user-select: none; position: relative; white-space: nowrap;
+}
+.filter-select svg { width: 12px; height: 12px; color: var(--text-muted); }
+.filter-select select {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+}
+.top-bar .file-count {
+  display: flex; align-items: center; padding: 0 16px;
+  background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 12px; color: var(--text-muted); white-space: nowrap;
+}
+
+/* ── Left: Folders ── */
+.col-tree { width: 220px; flex-shrink: 0; }
+.tree-header {
+  padding: 10px 12px; border-bottom: 1px solid var(--border-light);
+  font-size: 12px; font-weight: 600; color: var(--ink-600); letter-spacing: .03em;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.tree-scroll { flex: 1; overflow-y: auto; padding: 4px 4px 0; }
+.tree-root { margin-bottom: 1px; }
+.tree-root-header {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 8px; border-radius: 4px; font-size: 13px; font-weight: 600;
+  color: var(--ink-800); cursor: pointer; user-select: none; transition: background .1s;
+}
+.tree-root-header:hover { background: var(--ink-50); }
+.tree-root-header svg:first-child { width: 15px; height: 15px; color: var(--ink-500); flex-shrink: 0; }
+.tree-root-header .folder-count { margin-left: auto; font-size: 11px; color: var(--text-muted); font-weight: 400; }
+.tree-root-header .root-actions { display: flex; gap: 1px; margin-left: 4px; }
+.tree-root-header .root-actions button { opacity: 0; transition: opacity .12s; }
+.tree-root-header:hover .root-actions button { opacity: 1; }
+.tree-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 8px 6px 22px; border-radius: 4px; cursor: pointer;
+  font-size: 13px; transition: background .1s; user-select: none;
+}
+.tree-item:hover { background: var(--ink-50); }
+.tree-item.active { background: var(--accent-bg); color: var(--accent); font-weight: 500; }
+.tree-item .expand-icon {
+  width: 14px; height: 14px; flex-shrink: 0; color: var(--ink-400);
+  transition: transform .15s; display: flex; align-items: center; justify-content: center;
+}
+.tree-item .expand-icon.open { transform: rotate(90deg); }
+.tree-item .folder-count { margin-left: auto; font-size: 11px; color: var(--text-muted); }
+.tree-item.indent2 { padding-left: 34px; }
+.tree-add {
+  display: flex; align-items: center; justify-content: center; gap: 4px;
+  padding: 8px; margin: 4px; border-radius: 4px; cursor: pointer;
+  font-size: 12px; color: var(--text-muted); transition: all .1s;
+  border: 1px dashed var(--border); background: transparent;
+}
+.tree-add:hover { background: var(--ink-50); color: var(--ink-700); border-color: var(--ink-300); }
+.tree-add svg { width: 14px; height: 14px; }
+
+/* ── Center: File List ── */
+.col-center { flex: 1; min-width: 0; }
+.list-header {
+  display: flex; align-items: center; padding: 9px 12px;
+  border-bottom: 1px solid var(--border-light);
+}
+.list-header .label { font-size: 12px; font-weight: 600; color: var(--ink-600); }
+.list-header .count { margin-left: auto; font-size: 11px; color: var(--text-muted); }
+.list-scroll { flex: 1; overflow-y: auto; }
+.list-item {
+  display: flex; align-items: center; gap: 8px;
+  padding: 9px 12px; border-bottom: 1px solid var(--border-light);
+  cursor: pointer; transition: background .08s; user-select: none;
+}
+.list-item:last-child { border-bottom: none; }
+.list-item:hover { background: var(--ink-50); }
+.list-item.selected { background: var(--accent-bg); border-left: 2px solid var(--accent); }
+.file-icon { width: 16px; height: 16px; flex-shrink: 0; }
+.file-icon.pdf { color: var(--vermilion-500); }
+.file-icon.docx { color: var(--blue); }
+.file-icon.epub { color: var(--green); }
+.file-icon.md { color: var(--ink-500); }
+.file-icon.caj { color: #7b1fa2; }
+.list-item .info { flex: 1; min-width: 0; }
+.list-item .name {
+  font-size: 13px; font-weight: 500; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.list-item .meta { font-size: 11px; color: var(--text-secondary); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.list-item .status {
+  font-size: 11px; padding: 1px 7px; border-radius: 3px; flex-shrink: 0;
+  font-weight: 500; white-space: nowrap;
+}
+.status-linked { background: var(--green-bg); color: var(--green); }
+.status-pending { background: var(--ink-50); color: var(--ink-500); }
+
+/* ── Right: Detail ── */
+.col-right { width: 360px; flex-shrink: 0; }
+.empty-detail {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 40px 20px; text-align: center;
+}
+.empty-detail svg { width: 28px; height: 28px; color: var(--ink-300); margin-bottom: 10px; }
+.empty-detail p { font-size: 13px; color: var(--text-muted); }
+.detail-scroll { flex: 1; overflow-y: auto; }
+
+.detail-section { padding: 14px 14px 0; }
+.detail-section:last-child { padding-bottom: 14px; }
+.section-divider { border: none; height: 0; margin: 0 14px; border-top: 1px solid var(--border-light); }
+.section-title {
+  font-size: 11px; font-weight: 600; color: var(--ink-400);
+  letter-spacing: .04em; margin-bottom: 8px;
+}
+
+/* File info grid */
+.info-grid {
+  display: grid; grid-template-columns: 56px 1fr; gap: 2px 8px; font-size: 13px;
+}
+.info-grid .label { color: var(--text-secondary); }
+.info-grid .value { color: var(--text); word-break: break-all; }
+.info-grid .filename { font-size: 12px; line-height: 1.4; }
+
+/* Parsed info block (only for pending files) */
+.parsed-block {
+  margin-top: 10px; padding: 10px 12px;
+  background: var(--parchment-50); border-radius: 5px;
+  border: 1px solid var(--border-light);
+}
+.parsed-block .parsed-title {
+  font-size: 10px; font-weight: 600; color: var(--ink-400);
+  letter-spacing: .03em; margin-bottom: 5px;
+}
+.parsed-block .parsed-grid {
+  display: grid; grid-template-columns: 44px 1fr; gap: 1px 6px; font-size: 13px;
+}
+.parsed-block .parsed-grid .label { color: var(--text-secondary); }
+.confidence { display: inline-flex; align-items: center; gap: 4px; }
+.confidence .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.confidence .dot.high { background: var(--green); }
+.confidence .dot.medium { background: #f9ab00; }
+.confidence .dot.low { background: var(--ink-300); }
+
+/* Action row */
+.action-row {
+  display: flex; gap: 6px; margin-top: 10px; flex-wrap: wrap;
+}
+
+/* Record card (linked) */
+.record-card {
+  border: 1px solid var(--border-light); border-radius: 5px;
+  padding: 10px 12px; margin-bottom: 6px; transition: border-color .12s;
+}
+.record-card:hover { border-color: var(--ink-300); }
+.record-card.linked { background: var(--green-bg); border-color: #c8e6c9; }
+.record-card .row1 { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.record-card .type-tag {
+  font-size: 10px; padding: 1px 5px; background: var(--ink-100);
+  color: var(--ink-600); border-radius: 3px; font-weight: 500;
+}
+.record-card .result-text {
+  font-size: 13px; line-height: 1.6; color: var(--text); margin: 5px 0;
+  word-break: break-all;
+}
+.record-card .actions { display: flex; gap: 4px; align-items: center; justify-content: flex-end; }
+
+/* Suggested match */
+.suggested-card {
+  border: 1px solid var(--vermilion-200); border-radius: 5px;
+  padding: 10px 12px; margin-bottom: 6px; background: var(--accent-bg);
+}
+.suggested-card .row1 { display: flex; align-items: center; gap: 6px; margin-bottom: 3px; }
+.suggested-card .type-tag {
+  font-size: 10px; padding: 1px 5px; background: var(--vermilion-100);
+  color: var(--accent); border-radius: 3px; font-weight: 500;
+}
+.suggested-card .title { font-size: 13px; font-weight: 500; }
+.suggested-card .authors { font-size: 11px; color: var(--text-secondary); margin-bottom: 5px; }
+.suggested-card .actions { display: flex; gap: 4px; align-items: center; }
+
+/* Smart banner */
+.smart-banner {
+  background: var(--accent-bg); border: 1px solid var(--vermilion-200);
+  border-radius: 5px; padding: 10px 12px; margin-bottom: 8px;
+  display: flex; align-items: center; gap: 8px;
+}
+.smart-banner svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+.smart-banner .text { flex: 1; font-size: 12px; color: var(--ink-700); }
+
+/* Record list for manual link */
+.record-list { }
+.record-list-item {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 0; border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+}
+.record-list-item:last-child { border-bottom: none; }
+.record-list-item .type-tag {
+  font-size: 10px; padding: 1px 5px; background: var(--ink-100);
+  color: var(--ink-600); border-radius: 3px; font-weight: 500; flex-shrink: 0;
+}
+.record-list-item .title { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+
+/* Modal */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(42,37,32,0.35);
+  z-index: 100; display: flex; align-items: center; justify-content: center;
+}
+.modal-box {
+  background: #fff; border-radius: var(--radius-lg);
+  padding: 24px; max-width: 380px; width: 90%; box-shadow: 0 8px 30px rgba(42,37,32,0.12);
+}
+.modal-box h3 { font-size: 16px; margin-bottom: 4px; }
+.modal-box p { font-size: 13px; color: var(--text-secondary); margin-bottom: 16px; }
+.modal-box .actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(16px);
+  background: var(--ink-950); color: #fff; padding: 9px 22px;
+  border-radius: 6px; font-size: 13px; z-index: 999;
+  opacity: 0; transition: all .25s; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Animations */
+.fade-in { animation: fadeIn .35s ease-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.slide-in { animation: slideInRight .3s ease-out; }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(8px); } to { opacity: 1; transform: translateX(0); } }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">
+      <div class="logo-box"><span>引</span></div>
+      <span class="logo-text">引易转</span>
+    </a>
+    <nav class="nav">
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>首页
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>格式转换
+      </a>
+      <a class="nav-item" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>历史记录
+      </a>
+      <button class="nav-item active" style="pointer-events:none">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>PDF 管理器
+      </button>
+    </nav>
+  </div>
+</header>
+
+<div class="app" id="app"></div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Data ──
+const ROOTS = [
+  {
+    id: 'root1', name: '历史论文',
+    folders: [
+      { id: 'ming', name: '明清史', children: [
+        { id: 'ming-wang', name: '王汎森' },
+        { id: 'ming-huang', name: '黄宗智' },
+        { id: 'ming-other', name: '其他' },
+      ]},
+      { id: 'minguo', name: '近代/民国' },
+      { id: 'west', name: '海外中国研究' },
+      { id: 'theory', name: '史学理论' },
+    ]
+  },
+  {
+    id: 'root2', name: '学位论文',
+    folders: [
+      { id: 'phd', name: '博士论文' },
+      { id: 'master', name: '硕士论文' },
+    ]
+  }
+]
+
+const FILES = [
+  { id: 'p1',  name: '王汎森_历史研究的方法_2023.pdf',           folder: 'ming-wang', size: '2.4 MB', date: '2023-06-15', linked: true,  author: '王汎森',   title: '历史研究的方法',          year: '2023', confidence: 'high',   ext: 'pdf' },
+  { id: 'p2',  name: '王汎森_近代中国的知识分子与社会变迁_2021.pdf', folder: 'ming-wang', size: '3.1 MB', date: '2021-09-03', linked: true,  author: '王汎森',   title: '近代中国的知识分子与社会变迁', year: '2021', confidence: 'high',   ext: 'pdf' },
+  { id: 'p3',  name: '王汎森 - 思想史研究的新视野（2019）.pdf',    folder: 'ming-wang', size: '1.8 MB', date: '2019-12-20', linked: false, author: '王汎森',   title: '思想史研究的新视野',      year: '2019', confidence: 'high',   ext: 'pdf' },
+  { id: 'p4',  name: '黄宗智_中国研究的规范认识危机_2005.pdf',     folder: 'ming-huang', size: '4.2 MB', date: '2005-03-12', linked: true,  author: '黄宗智',   title: '中国研究的规范认识危机',    year: '2005', confidence: 'high',   ext: 'pdf' },
+  { id: 'p5',  name: 'Philip Huang - Rural China (2010).pdf',     folder: 'ming-huang', size: '5.7 MB', date: '2010-07-28', linked: false, author: 'Philip Huang', title: 'Rural China',             year: '2010', confidence: 'high',   ext: 'pdf' },
+  { id: 'p6',  name: '2023_罗志田_权势转移.pdf',                 folder: 'ming-other',  size: '2.9 MB', date: '2023-01-10', linked: false, author: '罗志田',   title: '权势转移',               year: '2023', confidence: 'high',   ext: 'pdf' },
+  { id: 'p7',  name: '[桑兵] 近代中国学术转型 [2022].pdf',       folder: 'ming-other',  size: '2.2 MB', date: '2022-05-22', linked: false, author: '桑兵',     title: '近代中国学术转型',         year: '2022', confidence: 'high',   ext: 'pdf' },
+  { id: 'p8',  name: '柯文_在中国发现历史_1997.pdf',             folder: 'west',        size: '3.5 MB', date: '1997-08-19', linked: true,  author: '柯文',     title: '在中国发现历史',           year: '1997', confidence: 'high',   ext: 'pdf' },
+  { id: 'p9',  name: '孔飞力_叫魂_1999.pdf',                     folder: 'west',        size: '4.0 MB', date: '1999-11-05', linked: true,  author: '孔飞力',   title: '叫魂',                   year: '1999', confidence: 'high',   ext: 'pdf' },
+  { id: 'p10', name: 'Eco - How to Write a Thesis (2012).pdf',   folder: 'theory',      size: '1.5 MB', date: '2012-04-30', linked: false, author: 'Umberto Eco', title: 'How to Write a Thesis',  year: '2012', confidence: 'medium', ext: 'pdf' },
+  { id: 'p11', name: '清代经济史研究综述.docx',                   folder: 'ming-other',  size: '856 KB',  date: '2022-08-14', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'docx' },
+  { id: 'p12', name: '明代地方志编纂研究.epub',                   folder: 'ming-other',  size: '1.2 MB',  date: '2021-03-09', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'epub' },
+  { id: 'p13', name: '民国社会调查数据说明.md',                    folder: 'minguo',      size: '24 KB',   date: '2023-11-02', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'md' },
+  { id: 'p14', name: '章开沅_辛亥革命史_1997.caj',                folder: 'minguo',      size: '3.8 MB',  date: '1997-06-18', linked: false, author: '章开沅',   title: '辛亥革命史',              year: '1997', confidence: 'high',   ext: 'caj' },
+  { id: 'p15', name: '近代中国商会研究_2005.caj',                 folder: 'minguo',      size: '2.1 MB',  date: '2005-09-25', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'caj' },
+  { id: 'p16', name: '明清江南市镇经济研究_2022.pdf',             folder: 'phd',         size: '15.2 MB', date: '2022-06-30', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'pdf' },
+  { id: 'p17', name: '近代中国国家建构研究_2020.pdf',             folder: 'phd',         size: '12.8 MB', date: '2020-12-15', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'pdf' },
+  { id: 'p18', name: '宋代地方行政制度研究_2019.pdf',             folder: 'phd',         size: '18.5 MB', date: '2019-06-20', linked: false, author: '', title: '', year: '', confidence: 'low', ext: 'pdf' },
+]
+
+// Linked / suggested records per file
+const RECORDS = {
+  p1: [{ id: 'r1', type: '期刊', result: '王汎森：《历史研究的方法论转向》，《历史研究》2023年第2期。', format: 'lsyj', linked: true }],
+  p4: [{ id: 'r2', type: '期刊', result: '黄宗智：《中国研究的规范认识危机》，《近代史研究》2005年第3期。', format: 'gbt7714', linked: true }],
+  p9: [{ id: 'r3', type: '专著', result: '孔飞力：《叫魂：1768年中国妖术大恐慌》，上海：上海三联书店，1999年。', format: 'lsyj', linked: true }],
+  p2: [{ id: 'r4', type: '专著', result: '王汎森：《近代中国的知识分子与社会变迁》，北京：北京大学出版社，2021年。', format: 'apa', linked: true }],
+  p8: [{ id: 'r5', type: '专著', result: '柯文：《在中国发现历史：中国中心观在美国的兴起》，北京：中华书局，1997年。', format: 'lsyj', linked: true }],
+  p3: [
+    { id: 'r6', type: '期刊',   result: '王汎森：《思想史研究中的文本分析与语境重建》，《史学月刊》2020年第4期。', format: 'lsyj', suggested: true },
+    { id: 'r7', type: '析出', result: '王汎森：《思想史研究的新视野》，载《学术史论丛》第3辑，北京：商务印书馆，2019年。', format: 'gbt7714', suggested: true },
+  ],
+  p6: [{ id: 'r8', type: '专著', result: '罗志田：《权势转移：近代中国的思想与社会》（修订版），北京：北京师范大学出版社，2023年。', format: 'lsyj', suggested: true }],
+  p10: [{ id: 'r9', type: '专著', result: 'Umberto Eco, How to Write a Thesis, Cambridge: MIT Press, 2012.', format: 'apa', suggested: true }],
+}
+
+const ALL_RECORDS = [
+  { id: 'r1', type: '期刊', title: '历史研究的方法论转向', authors: '王汎森', format: 'lsyj' },
+  { id: 'r4', type: '专著', title: '近代中国的知识分子与社会变迁', authors: '王汎森', format: 'apa' },
+  { id: 'r2', type: '期刊', title: '中国研究的规范认识危机', authors: '黄宗智', format: 'gbt7714' },
+  { id: 'r3', type: '专著', title: '叫魂：1768年中国妖术大恐慌', authors: '孔飞力', format: 'lsyj' },
+  { id: 'r8', type: '专著', title: '权势转移：近代中国的思想与社会', authors: '罗志田', format: 'lsyj' },
+  { id: 'r5', type: '专著', title: '在中国发现历史：中国中心观在美国的兴起', authors: '柯文', format: 'lsyj' },
+  { id: 'r6', type: '期刊', title: '思想史研究中的文本分析与语境重建', authors: '王汎森', format: 'lsyj' },
+  { id: 'r7', type: '析出', title: '思想史研究的新视野', authors: '王汎森', format: 'gbt7714' },
+  { id: 'r9', type: '专著', title: 'How to Write a Thesis', authors: 'Umberto Eco', format: 'apa' },
+]
+
+// ── State ──
+let state = {
+  screen: 'setup',
+  activeFolder: null,      // null = show all
+  selectedFile: null,
+  searchQuery: '',
+  folderFilter: 'all',     // 'all' | folder id
+  expandedFolders: new Set(),
+}
+
+function getAllFiles() {
+  let list = [...FILES]
+  // Apply folder filter
+  if (state.activeFolder) {
+    list = list.filter(f => f.folder === state.activeFolder)
+  }
+  if (state.folderFilter !== 'all') {
+    list = list.filter(f => f.folder === state.folderFilter)
+  }
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase()
+    list = list.filter(f => f.name.toLowerCase().includes(q))
+  }
+  return list
+}
+
+function getStatus(file) {
+  return file.linked ? { label: '已关联', cls: 'status-linked' } : { label: '待关联', cls: 'status-pending' }
+}
+
+function getFileIcon(ext, cls = '') {
+  const icons = {
+    pdf: `<svg class="file-icon pdf ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>`,
+    docx: `<svg class="file-icon docx ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><path d="M12 18v-5"/><circle cx="12" cy="18" r="1"/></svg>`,
+    epub: `<svg class="file-icon epub ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>`,
+    md: `<svg class="file-icon md ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l3-3 3 3"/></svg>`,
+    caj: `<svg class="file-icon caj ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M12 18v-5"/><circle cx="12" cy="18" r="1"/></svg>`,
+  }
+  return icons[ext] || icons.pdf
+}
+
+function folderHasFiles(folderId) {
+  return FILES.some(f => f.folder === folderId)
+}
+
+// ── Render ──
+function render() {
+  document.getElementById('app').innerHTML = state.screen === 'setup' ? setupHTML() : mainHTML()
+}
+
+function setupHTML() {
+  return `<div class="setup-card fade-in">
+    <div class="icon-wrap">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    </div>
+    <h2>选择论文文件夹</h2>
+    <p>选择存放论文的文件夹，工具将扫描并建立索引</p>
+    <button class="btn btn-primary" onclick="enterMain()">选择文件夹</button>
+  </div>`
+}
+
+function mainHTML() {
+  const files = getAllFiles()
+  // Collect unique folder IDs that have files
+  const folderOptions = [...new Set(FILES.map(f => f.folder))].sort()
+  const folderNames = {}
+  for (const root of ROOTS) {
+    for (const f of root.folders) {
+      folderNames[f.id] = f.name
+      if (f.children) for (const c of f.children) folderNames[c.id] = c.name
+    }
+  }
+  const optionsHTML = folderOptions.map(fid => `<option value="${fid}"${state.folderFilter === fid ? ' selected' : ''}>${folderNames[fid] || fid}</option>`).join('')
+
+  return `<div class="top-bar fade-in">
+    <div class="top-search">
+      <div class="filter-select">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+        <span>${state.folderFilter === 'all' ? '所有文件夹' : (folderNames[state.folderFilter] || state.folderFilter)}</span>
+        <select onchange="onFilterChange(this.value)">
+          <option value="all">所有文件夹</option>
+          ${optionsHTML}
+        </select>
+      </div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" placeholder="搜索文件名..." value="${escHtml(state.searchQuery)}" oninput="onSearch(this.value)" id="mainSearch">
+    </div>
+    <div class="file-count">${files.length} / ${FILES.length} 个文件</div>
+  </div>
+  <div class="three-col">
+    ${treeHTML()}
+    ${centerHTML(files)}
+    ${rightHTML()}
+  </div>`
+}
+
+function treeHTML() {
+  let h = `<div class="col col-tree"><div class="tree-header">文件夹</div><div class="tree-scroll">`
+  for (const root of ROOTS) {
+    const rootFileCount = FILES.filter(f => root.folders.some(rf => {
+      if (rf.children) return rf.children.some(c => c.id === f.folder)
+      return rf.id === f.folder
+    })).length
+
+    h += `<div class="tree-root">
+      <div class="tree-root-header" onclick="selectRootFolder()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+        <span>${root.name}</span>
+        <span class="folder-count">${rootFileCount}</span>
+        <span class="root-actions">
+          <button class="btn-icon" title="重新扫描" onclick="event.stopPropagation();showToast('开始扫描 ${root.name}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+          </button>
+        </span>
+      </div>`
+    for (const f of root.folders) {
+      const active = state.activeFolder === f.id ? ' active' : ''
+      const expanded = state.expandedFolders.has(f.id)
+      const hasChildren = f.children && f.children.length > 0
+      const fc = FILES.filter(fl => fl.folder === f.id).length
+      // Only show folders that have files
+      if (fc === 0 && !hasChildren) continue
+
+      h += `<div class="tree-item${active}" onclick="selectFolder('${f.id}')">
+        ${hasChildren ? `<span class="expand-icon${expanded ? ' open' : ''}" onclick="event.stopPropagation();toggleExpand('${f.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="9 18 15 12 9 6"/></svg></span>` : '<span style="width:14px"></span>'}
+        <span>${f.name}</span>
+        <span class="folder-count">${fc}</span>
+      </div>`
+
+      if (hasChildren && expanded) {
+        for (const c of f.children) {
+          const cc = FILES.filter(fl => fl.folder === c.id).length
+          if (cc === 0) continue
+          h += `<div class="tree-item indent2${state.activeFolder === c.id ? ' active' : ''}" onclick="selectFolder('${c.id}')">
+            <span>${c.name}</span>
+            <span class="folder-count">${cc}</span>
+          </div>`
+        }
+      }
+    }
+    h += `</div>`
+  }
+
+  h += `<div class="tree-add" onclick="showToast('选择新文件夹')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    <span>添加文件夹</span>
+  </div>`
+  h += `</div></div>`
+  return h
+}
+
+function centerHTML(files) {
+  let h = `<div class="col col-center">`
+  h += `<div class="list-header">
+    <span class="label">文件</span>
+    <span class="count">${files.length} 个文件</span>
+  </div>`
+  h += `<div class="list-scroll" id="fileList">`
+  for (const f of files) {
+    const sel = state.selectedFile === f.id ? ' selected' : ''
+    const st = getStatus(f)
+    h += `<div class="list-item${sel}" onclick="selectFile('${f.id}')" title="${escHtml(f.name)}">
+      ${getFileIcon(f.ext)}
+      <div class="info">
+        <div class="name">${escHtml(f.name)}</div>
+        <div class="meta">${f.size} · ${f.date}</div>
+      </div>
+      <span class="status ${st.cls}">${st.label}</span>
+    </div>`
+  }
+  if (files.length === 0) {
+    h += `<div style="text-align:center;padding:40px 20px;color:var(--text-muted);font-size:13px">无匹配文件</div>`
+  }
+  h += `</div></div>`
+  return h
+}
+
+function rightHTML() {
+  let h = `<div class="col col-right" id="rightCol">`
+  const file = FILES.find(f => f.id === state.selectedFile)
+  if (!file) {
+    h += `<div class="empty-detail">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+      <p>选择一个文件查看详情</p>
+    </div>`
+  } else {
+    h += detailHTML(file)
+  }
+  h += `</div>`
+  return h
+}
+
+function detailHTML(file) {
+  const records = RECORDS[file.id] || []
+  const linkedRecords = records.filter(r => r.linked)
+  const suggestedRecords = records.filter(r => r.suggested)
+
+  let h = `<div class="detail-scroll slide-in" id="detailScroll">`
+
+  // ── File info ──
+  h += `<div class="detail-section">
+    <div class="section-title">文件信息</div>
+    <div class="info-grid">
+      <span class="label">文件名</span><span class="value filename">${escHtml(file.name)}</span>
+      <span class="label">格式</span><span class="value">${file.ext.toUpperCase()}</span>
+      <span class="label">大小</span><span class="value">${file.size}</span>
+      <span class="label">修改日期</span><span class="value">${file.date}</span>
+    </div>`
+
+  // Parsed info: only show for unlinked files
+  if (!file.linked && file.confidence !== 'low') {
+    h += `<div class="parsed-block">
+      <div class="parsed-title">文件名解析</div>
+      <div class="parsed-grid">
+        <span class="label">作者</span><span class="value">${file.author}</span>
+        <span class="label">标题</span><span class="value">${file.title}</span>
+        <span class="label">年份</span><span class="value">${file.year}</span>
+        <span class="label">可信度</span><span class="value"><span class="confidence"><span class="dot ${file.confidence}"></span>${file.confidence === 'high' ? '高' : '中'}</span></span>
+      </div>
+    </div>`
+  }
+
+  // Action buttons (outline style, equal weight)
+  h += `<div class="action-row">
+    <button class="btn btn-sm btn-outline" onclick="showToast('在新标签页打开 ${escHtml(file.name)}')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      打开文件
+    </button>
+    <button class="btn btn-sm btn-ghost" onclick="showToast('在文件资源管理器中定位')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+      在资源管理器打开
+    </button>
+  </div>`
+  h += `</div>`
+
+  // ── Remove button (for pending files, right after file info) ──
+  if (!file.linked) {
+    h += `<div class="detail-section" style="padding-top:8px;padding-bottom:4px">
+      <button class="btn btn-xs btn-ghost" onclick="confirmRemove('${file.id}')" style="color:var(--text-muted);padding:4px 8px">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        从索引中移除
+      </button>
+    </div>`
+  }
+
+  if (!file.linked) { h += `<hr class="section-divider">` }
+
+  // ── Linked records ──
+  if (linkedRecords.length > 0) {
+    h += `<div class="detail-section">
+      <div class="section-title">关联记录</div>`
+    for (const r of linkedRecords) {
+      h += `<div class="record-card linked">
+        <div class="row1"><span class="type-tag">${r.type}</span><span style="font-size:11px;color:var(--text-secondary)">${r.format}</span></div>
+        <div class="result-text">${escHtml(r.result)}</div>
+        <div class="actions">
+          <button class="btn btn-xs btn-ghost" onclick="copyCitation('${escHtml(r.result)}',this)" style="display:inline-flex;align-items:center;gap:4px">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            复制
+          </button>
+          <button class="btn btn-xs btn-ghost" onclick="unlinkRecord('${file.id}','${r.id}')" style="color:var(--ink-400)">取消关联</button>
+        </div>
+      </div>`
+    }
+    h += `</div>`
+  }
+
+  // ── Suggested matches ──
+  if (!file.linked && suggestedRecords.length > 0) {
+    h += `<div class="detail-section">
+      <div class="smart-banner">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        <span class="text">文件名匹配到 ${suggestedRecords.length} 条记录</span>
+      </div>`
+    for (const r of suggestedRecords) {
+      h += `<div class="suggested-card">
+        <div class="row1"><span class="type-tag">${r.type}</span><span style="font-size:11px;color:var(--ink-500)">${r.format}</span></div>
+        <div class="title">${r.result.length > 50 ? r.result.slice(0, 50) + '…' : r.result}</div>
+        <div class="actions" style="margin-top:4px">
+          <button class="btn btn-xs btn-accent" onclick="confirmLink('${file.id}','${r.id}')">确认关联</button>
+          <button class="btn btn-xs btn-ghost" onclick="showToast('已忽略')">忽略</button>
+        </div>
+      </div>`
+    }
+    h += `</div>`
+  }
+
+  // ── Manual link (all records) ──
+  if (!file.linked) {
+    const notLinked = ALL_RECORDS.filter(r => !records.some(m => m.id === r.id))
+    h += `<div class="detail-section">
+      <div class="section-title">所有记录</div>
+      <input type="text" placeholder="搜索记录..." oninput="filterRecordList(this.value)" style="width:100%;padding:6px 10px;border:1px solid var(--border-light);border-radius:4px;font-size:12px;font-family:inherit;outline:none;margin-bottom:6px">
+      <div class="record-list" id="recordList">`
+    for (const r of notLinked) {
+      h += `<div class="record-list-item">
+        <span class="type-tag">${r.type}</span>
+        <span class="title">${r.title}</span>
+        <button class="btn btn-xs btn-ghost" onclick="manualLink('${file.id}','${r.id}')" style="flex-shrink:0">关联</button>
+      </div>`
+    }
+    h += `</div></div>`
+  }
+
+  h += `</div>`
+  return h
+}
+
+// ── Actions ──
+function enterMain() {
+  state.screen = 'main'
+  state.activeFolder = null
+  state.selectedFile = FILES[0].id
+  render()
+}
+
+function selectRootFolder() {
+  state.activeFolder = null
+  state.folderFilter = 'all'
+  state.selectedFile = null
+  state.searchQuery = ''
+  render()
+}
+
+function selectFolder(id) {
+  state.activeFolder = id
+  state.folderFilter = 'all'
+  state.selectedFile = null
+  state.searchQuery = ''
+  render()
+}
+
+function selectFile(id) {
+  state.selectedFile = id
+  const files = getAllFiles()
+  const center = document.querySelector('.col-center')
+  const right = document.getElementById('rightCol')
+  if (center) center.outerHTML = centerHTML(files)
+  if (right) right.outerHTML = rightHTML()
+}
+
+function toggleExpand(id) {
+  if (state.expandedFolders.has(id)) state.expandedFolders.delete(id)
+  else state.expandedFolders.add(id)
+  // Re-render tree only
+  const tree = document.querySelector('.col-tree')
+  if (tree) tree.outerHTML = treeHTML()
+}
+
+function onSearch(q) {
+  state.searchQuery = q
+  refreshCenterAndCounts()
+}
+
+function onFilterChange(val) {
+  state.folderFilter = val
+  state.selectedFile = null
+  refreshCenterAndCounts()
+  // Update filter display
+  const filterEl = document.querySelector('.filter-select span')
+  const names = {}
+  for (const root of ROOTS) {
+    for (const f of root.folders) {
+      names[f.id] = f.name
+      if (f.children) for (const c of f.children) names[c.id] = c.name
+    }
+  }
+  if (filterEl) filterEl.textContent = val === 'all' ? '所有文件夹' : (names[val] || val)
+}
+
+function refreshCenterAndCounts() {
+  const files = getAllFiles()
+  const list = document.getElementById('fileList')
+  if (!list) return
+  const countEl = document.querySelector('.top-bar .file-count')
+  if (countEl) countEl.textContent = files.length + ' / ' + FILES.length + ' 个文件'
+  const headerCount = document.querySelector('.list-header .count')
+  if (headerCount) headerCount.textContent = files.length + ' 个文件'
+  list.innerHTML = files.map(f => {
+    const sel = state.selectedFile === f.id ? ' selected' : ''
+    const st = getStatus(f)
+    return `<div class="list-item${sel}" onclick="selectFile('${f.id}')" title="${escHtml(f.name)}">
+      ${getFileIcon(f.ext)}
+      <div class="info">
+        <div class="name">${escHtml(f.name)}</div>
+        <div class="meta">${f.size} · ${f.date}</div>
+      </div>
+      <span class="status ${st.cls}">${st.label}</span>
+    </div>`
+  }).join('')
+}
+
+function filterRecordList(q) {
+  const list = document.getElementById('recordList')
+  if (!list) return
+  list.querySelectorAll('.record-list-item').forEach(item => {
+    item.style.display = !q || item.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none'
+  })
+}
+
+function confirmLink(fileId, recordId) {
+  showToast('已关联')
+  const file = FILES.find(f => f.id === fileId)
+  if (file) {
+    file.linked = true
+    const recs = RECORDS[fileId]
+    if (recs) {
+      const r = recs.find(x => x.id === recordId)
+      if (r) { r.linked = true; r.suggested = false }
+    }
+  }
+  selectFile(fileId)
+}
+
+function unlinkRecord(fileId, recordId) {
+  showToast('已取消关联')
+  const file = FILES.find(f => f.id === fileId)
+  if (file) file.linked = false
+  const recs = RECORDS[fileId]
+  if (recs) {
+    const r = recs.find(x => x.id === recordId)
+    if (r) { r.linked = false }
+  }
+  selectFile(fileId)
+}
+
+function manualLink(fileId, recordId) {
+  showToast('已关联')
+  const file = FILES.find(f => f.id === fileId)
+  if (file) file.linked = true
+  if (!RECORDS[fileId]) RECORDS[fileId] = []
+  const rec = ALL_RECORDS.find(r => r.id === recordId)
+  if (rec) {
+    RECORDS[fileId].push({
+      id: rec.id, type: rec.type,
+      result: rec.title + '（示例引用格式）',
+      format: rec.format, linked: true,
+    })
+  }
+  selectFile(fileId)
+}
+
+function copyCitation(text, btn) {
+  navigator.clipboard.writeText(text).then(() => {
+    const orig = btn.innerHTML
+    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> 已复制'
+    btn.style.color = 'var(--green)'
+    setTimeout(() => { btn.innerHTML = orig; btn.style.color = '' }, 1500)
+  }).catch(() => { showToast('已复制到剪贴板') })
+}
+
+function confirmRemove(fileId) {
+  const overlay = document.createElement('div')
+  overlay.className = 'modal-overlay'
+  overlay.innerHTML = `<div class="modal-box fade-in">
+    <h3>从索引中移除？</h3>
+    <p>该文件将从管理器的索引中移除，不会删除原始文件。之后可以通过重新扫描再次添加。</p>
+    <div class="actions">
+      <button class="btn btn-sm" onclick="this.closest('.modal-overlay').remove()">取消</button>
+      <button class="btn btn-sm" style="background:var(--vermilion-500);color:#fff;border-color:var(--vermilion-500)" onclick="doRemove('${fileId}')">确认移除</button>
+    </div>
+  </div>`
+  document.body.appendChild(overlay)
+}
+
+function doRemove(fileId) {
+  document.querySelector('.modal-overlay')?.remove()
+  showToast('已从索引中移除')
+  const idx = FILES.findIndex(f => f.id === fileId)
+  if (idx > -1) FILES.splice(idx, 1)
+  state.selectedFile = FILES.length > 0 ? FILES[0].id : null
+  render()
+}
+
+// ── Toast ──
+let toastTimer
+function showToast(msg) {
+  const el = document.getElementById('toast')
+  el.textContent = msg
+  el.classList.add('show')
+  clearTimeout(toastTimer)
+  toastTimer = setTimeout(() => el.classList.remove('show'), 2200)
+}
+
+function escHtml(s) {
+  const d = document.createElement('div')
+  d.textContent = s
+  return d.innerHTML
+}
+
+render()
+</script>
+</body>
+</html>

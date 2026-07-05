@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { IconArrowRight, IconChevronDown } from '../components/Icons'
+import { IconArrowRight, IconChevronDown, IconX } from '../components/Icons'
 
 function IconInfo({ className = 'w-5 h-5' }: { className?: string }) {
   return (
@@ -99,6 +99,8 @@ function FaqItem({ q, a }: { q: string; a: string }) {
 }
 
 export default function AboutPage() {
+  const [showBetaModal, setShowBetaModal] = useState(false)
+  const handleBetaAgree = () => { localStorage.setItem('yyz_pdf_beta', 'true'); setShowBetaModal(false); window.location.href = '/pdf-manager' }
   return (
     <div className="animate-fade-in">
       {/* Hero */}
@@ -162,7 +164,7 @@ export default function AboutPage() {
               { step: '04', title: '复制或下载', desc: '转换完成后，复制结果到剪贴板，或下载保存到本地备用。' },
             ].map((item, i) => (
               <div key={i} className="border-2 border-ink-200 dark:border-gray-700 -ml-[2px] first:ml-0 p-6 hover:border-ink-400 transition-colors">
-                <div className="font-mono text-4xl font-bold text-ink-200 dark:text-gray-700 mb-4">{item.step}</div>
+                <div className="font-mono text-4xl font-bold text-ink-200 dark:text-gray-700 mb-4" style={{cursor: item.step === '04' ? 'pointer' : undefined}} onClick={item.step === '04' ? () => setShowBetaModal(true) : undefined}>{item.step}</div>
                 <h3 className="font-display font-bold text-ink-950 dark:text-gray-100 mb-2">{item.title}</h3>
                 <p className="text-sm text-ink-600 dark:text-gray-400 leading-relaxed">{item.desc}</p>
               </div>
@@ -250,6 +252,32 @@ export default function AboutPage() {
             <DisclaimerSection />
           </div>
         </section>
+
+        {/* Beta entry modal */}
+        {showBetaModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setShowBetaModal(false)}>
+            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg p-6 max-w-md w-[90%] shadow-xl" onClick={e => e.stopPropagation()}>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-display font-bold text-lg text-ink-950 dark:text-gray-100">内测功能：本地文献管理</h3>
+                <button onClick={() => setShowBetaModal(false)} className="text-ink-400 hover:text-ink-700"><IconX className="w-5 h-5" /></button>
+              </div>
+              <div className="text-sm text-ink-600 dark:text-gray-400 leading-relaxed space-y-3 mb-6">
+                <p>此功能为小范围内测版本，允许您在浏览器中管理本地 PDF 文献，并与引易转的引用记录建立关联。</p>
+                <p className="font-medium text-ink-800 dark:text-gray-200">使用须知：</p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>仅支持 Chrome 86+ / Edge 86+ 浏览器</li>
+                  <li>所有数据仅存储在您的本地浏览器中，不会上传至服务器</li>
+                  <li>文件句柄权限可能因浏览器更新而失效，届时需重新授权</li>
+                  <li>此功能为独立工具，不收集任何个人信息</li>
+                </ul>
+              </div>
+              <div className="flex gap-3 justify-end">
+                <button onClick={() => setShowBetaModal(false)} className="btn-secondary text-sm">暂不使用</button>
+                <button onClick={handleBetaAgree} className="btn-primary text-sm">同意并进入</button>
+              </div>
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

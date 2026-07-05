@@ -1,3 +1,4 @@
+import PdfManagerPage from './pages/PdfManagerPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout'
 import ErrorBoundary from './components/ErrorBoundary'
@@ -16,6 +17,7 @@ export default function App() {
             <Route path="/convert" element={<ConvertPage />} />
             <Route path="/history" element={<HistoryPage />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/pdf-manager" element={<PdfManagerPage />} />
           </Routes>
         </Layout>
       </BrowserRouter>

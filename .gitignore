@@ -28,6 +28,9 @@ CLAUDE.md
 
 # Dev/test artifacts
 csl-test.html
+
+# Kami generated docs (local printing only)
+*yinyizhuan-one-pager*
 endnote-parser.ts
 build_log.txt
 deploy_log.txt

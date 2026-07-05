@@ -6,6 +6,7 @@
     }
   },
   "rewrites": [
+    { "source": "/pdf-manager/(.*)", "destination": "/pdf-manager/index.html" },
     { "source": "/(.*)", "destination": "/index.html" }
   ],
   "headers": [
