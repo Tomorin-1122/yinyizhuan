@@ -17,8 +17,8 @@ module.exports = async function handler(request, response) {
   setCorsPost(response, origin);
   if (handleOptions(request, response)) return;
 
-  // history-analyze 需要 API Key
-  if (!checkApiKey(request, response)) return;
+  // history-analyze 纯统计分析，无敏感操作，保持公开
+  // if (!checkApiKey(request, response)) return;
 
   try {
     const { records } = request.body;
