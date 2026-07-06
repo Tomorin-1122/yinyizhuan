@@ -1,21 +1,15 @@
 const { parseCitationText } = require('../lib/parser');
 const { checkApiKey } = require('../lib/auth');
 const { rateLimitMiddleware } = require('../lib/rate-limit');
+const { setCorsPost, handleOptions } = require('../lib/cors');
 
+const MAX_TEXT_LENGTH = 5000;
 const checkLimit = rateLimitMiddleware({ max: 60, windowMs: 60_000 });
 
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
-}
-
 module.exports = async function handler(request, response) {
-  setCorsHeaders(response);
-
-  if (request.method === 'OPTIONS') {
-    return response.status(200).end();
-  }
+  const origin = request.headers['origin'] || '';
+  setCorsPost(response, origin);
+  if (handleOptions(request, response)) return;
 
   if (!checkApiKey(request, response)) return;
   if (!checkLimit(request, response)) return;
@@ -36,6 +30,14 @@ module.exports = async function handler(request, response) {
         success: false,
         error: 'Invalid input',
         message: 'Text field is required and must be a string'
+      });
+    }
+
+    if (text.length > MAX_TEXT_LENGTH) {
+      return response.status(400).json({
+        success: false,
+        error: 'Input too long',
+        message: `Text must be ${MAX_TEXT_LENGTH} characters or less`
       });
     }
 

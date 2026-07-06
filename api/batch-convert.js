@@ -2,23 +2,17 @@ const { parseCitationText } = require('../lib/parser');
 const { formatCitation } = require('../lib/formatters');
 const { checkApiKey } = require('../lib/auth');
 const { rateLimitMiddleware } = require('../lib/rate-limit');
+const { setCorsPost, handleOptions } = require('../lib/cors');
 
 const VALID_FORMATS = ['lsyj', 'gbt7714', 'apa'];
 const MAX_BATCH_SIZE = 50;
+const MAX_ITEM_LENGTH = 5000;
 const checkLimit = rateLimitMiddleware({ max: 10, windowMs: 60_000 });
 
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
-}
-
 module.exports = async function handler(request, response) {
-  setCorsHeaders(response);
-
-  if (request.method === 'OPTIONS') {
-    return response.status(200).end();
-  }
+  const origin = request.headers['origin'] || '';
+  setCorsPost(response, origin);
+  if (handleOptions(request, response)) return;
 
   if (!checkApiKey(request, response)) return;
   if (!checkLimit(request, response)) return;
@@ -57,6 +51,13 @@ module.exports = async function handler(request, response) {
           success: false,
           error: 'Invalid item',
           message: `Item ${i}: text field is required and must be a string`
+        });
+      }
+      if (item.text.length > MAX_ITEM_LENGTH) {
+        return response.status(400).json({
+          success: false,
+          error: 'Item too long',
+          message: `Item ${i}: text must be ${MAX_ITEM_LENGTH} characters or less`
         });
       }
       if (item.format && !VALID_FORMATS.includes(item.format)) {

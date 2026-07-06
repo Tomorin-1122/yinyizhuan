@@ -86,22 +86,19 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
 }
 
 // ============================================================
-// ISBN 抓取：Google Books API
+// ISBN 抓取：通过自建 API 代理（Google Books API Key 不暴露到前端）
 // ============================================================
 
-const GOOGLE_BOOKS_API_KEY = import.meta.env.VITE_GOOGLE_BOOKS_API_KEY || ''
-
 /**
- * 通过 ISBN 获取图书元数据 (Google Books API)
+ * 通过 ISBN 获取图书元数据 (代理 API)
  */
 async function fetchFromGoogleBooks(isbn: string): Promise<FetchResult> {
-  const keyParam = GOOGLE_BOOKS_API_KEY ? `&key=${GOOGLE_BOOKS_API_KEY}` : ''
-  const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${encodeURIComponent(isbn)}${keyParam}`
+  const proxyUrl = `/api/google-books?q=isbn:${encodeURIComponent(isbn)}`
   try {
-    const res = await fetch(url)
-    if (!res.ok) throw new Error(`Google Books API 返回 ${res.status}`)
+    const res = await fetch(proxyUrl)
+    if (!res.ok) throw new Error(`代理 API 返回 ${res.status}`)
     const json = await res.json()
-    if (!json.items || json.items.length === 0) {
+    if (!json.success || !json.data?.items?.length) {
       return { success: false, error: '' }
     }
 

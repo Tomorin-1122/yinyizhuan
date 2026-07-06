@@ -1,10 +1,6 @@
 const { checkApiKey } = require('../lib/auth');
 
-function setCorsHeaders(res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, X-API-Key');
-}
+const { setCorsPost, handleOptions } = require('../lib/cors');
 
 // 类型英文 → 中文映射
 const TYPE_NAMES = {
@@ -17,14 +13,12 @@ const FORMAT_NAMES = { lsyj: '《历史研究》', gbt7714: 'GB/T 7714', apa: 'A
 const LANG_NAMES = { zh: '中文', en: '英文', ja: '日文' };
 
 module.exports = async function handler(request, response) {
-  setCorsHeaders(response);
+  const origin = request.headers['origin'] || '';
+  setCorsPost(response, origin);
+  if (handleOptions(request, response)) return;
 
-  if (request.method === 'OPTIONS') {
-    return response.status(200).end();
-  }
-
-  // history-analyze 不需要 API Key（纯统计分析，无敏感操作）
-  // if (!checkApiKey(request, response)) return;
+  // history-analyze 需要 API Key
+  if (!checkApiKey(request, response)) return;
 
   try {
     const { records } = request.body;
