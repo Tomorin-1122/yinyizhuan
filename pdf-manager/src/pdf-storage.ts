@@ -11,7 +11,7 @@
  */
 
 const DB_NAME = 'yinyizhuan_pdf_manager'
-const DB_VERSION = 1
+const DB_VERSION = 2
 
 export interface RootFolder {
   id: string
@@ -50,6 +50,7 @@ function openDB(): Promise<IDBDatabase> {
       if (!db.objectStoreNames.contains('record-links')) {
         db.createObjectStore('record-links', { keyPath: 'recordId' })
       }
+
     }
     req.onsuccess = () => resolve(req.result)
     req.onerror = () => reject(req.error)
@@ -137,15 +138,36 @@ export async function saveAllFiles(files: StoredFile[]): Promise<void> {
 
 export async function saveFilesForRoot(files: StoredFile[], rootFolderId: string): Promise<void> {
   const db = await openDB()
-  // Delete old files for this root, then insert new ones
+  // Update in-place: preserve IDs by matching relativePath within this root
   const all = await getAllFiles()
-  const remaining = all.filter(f => f.rootFolderId !== rootFolderId)
-  const updated = [...remaining, ...files]
+  // Index new files by relativePath for fast lookup
+  const newByPath: Record<string, StoredFile> = {}
+  for (const f of files) { newByPath[f.relativePath] = f }
+  // Build result: keep files from other roots + update existing files in this root
+  const result: StoredFile[] = []
+  const seenPaths = new Set<string>()
+  for (const old of all) {
+    if (old.rootFolderId !== rootFolderId) {
+      result.push(old)  // other root, keep as-is
+    } else if (newByPath[old.relativePath]) {
+      // File exists in new scan: preserve ID, update rest
+      const n = newByPath[old.relativePath]
+      result.push({ ...n, id: old.id })
+      seenPaths.add(old.relativePath)
+    }
+    // else: file was deleted, omit it
+  }
+  // Add truly new files (not matched by relativePath in existing data)
+  for (const f of files) {
+    if (!seenPaths.has(f.relativePath)) {
+      result.push(f)  // new file gets its (already set) ID
+    }
+  }
   return new Promise((resolve, reject) => {
     const tx = db.transaction('file-handles', 'readwrite')
     const store = tx.objectStore('file-handles')
     store.clear()
-    for (const f of updated) {
+    for (const f of result) {
       store.put(f)
     }
     tx.oncomplete = () => resolve()
@@ -266,7 +288,8 @@ export function abortScan() {
 export async function scanRootFolder(
   rootHandle: FileSystemDirectoryHandle,
   rootFolderId: string,
-  onProgress?: (count: number, fileName: string) => void
+  onProgress?: (count: number, fileName: string) => void,
+  existingIdMap?: Record<string, string>  // relativePath → existing id to preserve links
 ): Promise<StoredFile[]> {
   abortScan()
   scanAbortController = new AbortController()
@@ -287,7 +310,7 @@ export async function scanRootFolder(
           const file = await fileHandle.getFile()
           const fullPath = parentPath ? `${parentPath}/${entry.name}` : entry.name
           results.push({
-            id: crypto.randomUUID(),
+            id: existingIdMap?.[fullPath] || crypto.randomUUID(),
             relativePath: fullPath,
             fileName: entry.name,
             size: file.size,

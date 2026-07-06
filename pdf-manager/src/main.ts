@@ -25,6 +25,9 @@ declare global {
     __reauthorizeRoot: (rootId: string) => Promise<void>;
     __exportData: () => void;
     __importData: () => void;
+    __editNote: (recordId: string) => void;
+    __saveNote: (recordId: string, text: string) => Promise<void>;
+    __editNoteCancel: (recordId: string) => void;
   }
 }
 
@@ -67,6 +70,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   try { const raw = localStorage.getItem('yinyizhuan_history'); if (raw) state.records = JSON.parse(raw).sort((a: any, b: any) => b.timestamp - a.timestamp) } catch {}
   state.ready = true; render()
 })
+
+function countValidLinks(): string {
+  var fileIds = new Set(state.storedFiles.map(function(f) { return f.id }))
+  var count = 0
+  for (var li = 0; li < state.links.length; li++) { if (fileIds.has(state.links[li].fileId)) count++ }
+  return '' + count
+}
 
 function getFileExt(n: string): string { const m = n.match(/\.([^.]+)$/); const e = m?.[1]?.toLowerCase() || ''; return ['pdf','docx','epub','md','caj'].includes(e) ? e : 'pdf' }
 
@@ -154,7 +164,7 @@ function mainHTML(): string {
     var p = state.storedFiles[i].relativePath.split('/')
     if (p.length > 1 && !folderSet[p[0]]) { folderSet[p[0]] = true; folderOpts += '<option value="' + escHtml(p[0]) + '"' + (state.folderFilter === p[0] ? ' selected' : '') + '>' + escHtml(p[0]) + '</option>' }
   }
-  return '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px"><div><h1 style="font-family:Noto Serif SC,serif;font-weight:700;font-size:28px;color:var(--ink-950);margin:0">文献管理</h1><p style="font-size:13px;color:var(--text-muted);margin-top:4px">共 ' + state.storedFiles.length + ' 个文件 · ' + state.links.length + ' 条关联</p></div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-ghost" onclick="window.__exportData()" style="border:1px solid var(--border)">导出数据</button><button class="btn btn-sm btn-ghost" onclick="window.__importData()" style="border:1px solid var(--border)">导入数据</button></div></div><div class="top-bar fade-in"><div class="top-search"><div class="filter-select"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span>' + (state.folderFilter || '所有文件夹') + '</span><select onchange="window.__onFilterChange(this.value)"><option value="">所有文件夹</option>' + folderOpts + '</select></div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="搜索文件名..." value="' + escHtml(state.searchQuery) + '" oninput="window.__onSearch(this.value)" id="mainSearch"></div><div class="file-count">' + nodes.length + ' / ' + total + ' 个文件</div></div><div class="three-col">' + treeHTML() + centerHTML(nodes) + rightHTML() + '</div>'
+  return '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px"><div><h1 style="font-family:Noto Serif SC,serif;font-weight:700;font-size:28px;color:var(--ink-950);margin:0">文献管理</h1><p style="font-size:13px;color:var(--text-muted);margin-top:4px">共 ' + state.storedFiles.length + ' 个文件 · ' + countValidLinks() + ' 条关联</p></div><div style="display:flex;gap:6px"><button class="btn btn-sm btn-ghost" onclick="window.__exportData()" style="border:1px solid var(--border)">导出数据</button><button class="btn btn-sm btn-ghost" onclick="window.__importData()" style="border:1px solid var(--border)">导入数据</button></div></div><div class="top-bar fade-in"><div class="filter-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg><span>' + (state.folderFilter || '所有文件夹') + '</span><select onchange="window.__onFilterChange(this.value)"><option value="">所有文件夹</option>' + folderOpts + '</select></div><div class="search-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="text" placeholder="搜索文件名..." value="' + escHtml(state.searchQuery) + '" oninput="window.__onSearch(this.value)" id="mainSearch"></div><div class="file-count">' + nodes.length + ' / ' + total + ' 个文件</div></div><div class="three-col">' + treeHTML() + centerHTML(nodes) + rightHTML() + '</div>'
 }
 
 function treeHTML(): string {
@@ -242,7 +252,15 @@ function rightHTML(): string {
     h += '<div class="detail-section"><div class="section-title">关联记录</div>'
     for (var i = 0; i < linkedRecs.length; i++) {
       var r = linkedRecs[i].record
-      h += '<div class="record-card linked"><div class="row1"><span class="type-tag">' + (r.citation.type || '?') + '</span><span style="font-size:11px;color:var(--text-secondary)">' + r.targetFormat + '</span></div><div class="result-text">' + escHtml(r.result) + '</div><div class="actions"><button class="btn btn-xs btn-ghost" onclick="window.__copyCitation(\'' + escHtml(r.result) + '\',this)" style="display:inline-flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button><button class="btn btn-xs btn-ghost" onclick="window.__unlinkRecord(\'' + fn.id + '\',\'' + r.id + '\')" style="color:var(--ink-400)">取消关联</button></div></div>'
+      h += '<div class="record-card linked"><div class="row1"><span class="type-tag">' + (r.citation.type || '?') + '</span><span style="font-size:11px;color:var(--text-secondary)">' + r.targetFormat + '</span></div><div class="result-text">' + escHtml(r.result) + '</div>'
+      h += '<div class="note-area" id="note-' + r.id + '">'
+      if (r.note) {
+        h += '<div class="note-display" onclick="window.__editNote(\'' + r.id + '\')"><span class="note-label">备注</span><span class="note-text">' + escHtml(r.note) + '</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px;flex-shrink:0;color:var(--ink-400)"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>'
+      } else {
+        h += '<div class="note-add" onclick="window.__editNote(\'' + r.id + '\')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:12px;height:12px"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg><span>添加备注</span></div>'
+      }
+      h += '</div>'
+      h += '<div class="actions"><button class="btn btn-xs btn-ghost" onclick="window.__copyCitation(\'' + escHtml(r.result) + '\',this)" style="display:inline-flex;align-items:center;gap:4px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>复制</button><button class="btn btn-xs btn-ghost" onclick="window.__unlinkRecord(\'' + fn.id + '\',\'' + r.id + '\')" style="color:var(--ink-400)">取消关联</button></div></div>'
     }
     h += '</div>'
   }
@@ -270,9 +288,19 @@ function rightHTML(): string {
 window.__selectFolder = function(id) { state.activeFolder = id; state.selectedFileId = ''; state.searchQuery = ''; document.getElementById('mainView')!.innerHTML = mainHTML() }
 window.__selectFile = function(id) { state.selectedFileId = id; var nodes = getFilteredNodes(); var c = document.querySelector('.col-center'), r = document.getElementById('rightCol'); if (c) c.outerHTML = centerHTML(nodes); if (r) r.outerHTML = rightHTML() }
 window.__onSearch = function(q) { state.searchQuery = q; refreshList() }
-window.__onFilterChange = function(val) { state.folderFilter = val; refreshList(); var s = document.querySelector('.filter-select span'); if (s) s.textContent = val || '所有文件夹' }
+window.__onFilterChange = function(val) { state.folderFilter = val; refreshList(); var s = document.querySelector('.filter-box span'); if (s) s.textContent = val || '所有文件夹' }
 window.__openFile = async function(id) { var sf = state.storedFiles.find(function(f) { return f.id === id }); if (!sf) return; try { var f = await sf.handle.getFile(); var m: Record<string,string> = { pdf: 'application/pdf', docx: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', epub: 'application/epub+zip', md: 'text/markdown', caj: 'application/octet-stream' }; var ext = (sf.fileName.match(/\.([^.]+)$/) || [,''])[1].toLowerCase(); var blob = new Blob([f], { type: m[ext] || 'application/pdf' }); window.open(URL.createObjectURL(blob), '_blank') } catch { showToast('文件可能已被移动或删除，建议从索引中移除'); setTimeout(function() { window.__confirmRemove(id) }, 2000) } }
-window.__confirmLink = async function(fid, rid) { if (state.links.some(function(l) { return l.recordId === rid })) { showToast('该记录已关联'); return }; await saveRecordLink({ recordId: rid, fileId: fid, linkedAt: Date.now() }); state.links = await getAllRecordLinks(); showToast('已关联'); refreshDetail() }
+window.__confirmLink = async function(fid, rid) {
+  var existing = null; for (var li = 0; li < state.links.length; li++) { if (state.links[li].recordId === rid) { existing = state.links[li]; break } }
+  if (existing) {
+    // Check if the existing link's fileId is still valid
+    var fileStillExists = state.storedFiles.some(function(f) { return f.id === existing.fileId })
+    if (fileStillExists) { showToast('该记录已关联'); return }
+    // Orphaned link — remove it and re-link with current file
+    await deleteRecordLink(rid)
+  }
+  await saveRecordLink({ recordId: rid, fileId: fid, linkedAt: Date.now() }); state.links = await getAllRecordLinks(); showToast('已关联'); refreshDetail()
+}
 window.__unlinkRecord = async function(fid, rid) { await deleteRecordLink(rid); state.links = await getAllRecordLinks(); showToast('已取消关联'); refreshDetail() }
 window.__manualLink = async function(fid, rid) { await window.__confirmLink(fid, rid) }
 window.__copyCitation = function(text, btn) { navigator.clipboard.writeText(text).then(function() { var orig = btn.innerHTML; btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px"><polyline points="20 6 9 17 4 12"/></svg> 已复制'; btn.style.color = 'var(--green)'; setTimeout(function() { btn.innerHTML = orig; btn.style.color = '' }, 1500) }).catch(function() { showToast('已复制') }) }
@@ -292,7 +320,7 @@ window.__doRemove = async function(id) {
 }
 window.__pickFolder = async function() { await pickRootFolder() }
 window.__filterRecords = function(q) { var list = document.getElementById('recordList'); if (!list) return; list.querySelectorAll('.record-list-item').forEach(function(item) { item.style.display = !q || (item.textContent || '').toLowerCase().includes(q.toLowerCase()) ? '' : 'none' }) }
-window.__copyPath = function(id) { var sf = state.storedFiles.find(function(f) { return f.id === id }); if (!sf) return; navigator.clipboard.writeText(sf.relativePath).then(function() { showToast('已复制路径: ' + sf.relativePath) }).catch(function() { showToast('复制失败') }) }
+window.__copyPath = function(id) { var sf = state.storedFiles.find(function(f) { return f.id === id }); if (!sf) return; var rootName = ''; for (var ri = 0; ri < state.rootFolders.length; ri++) { if (state.rootFolders[ri].id === sf.rootFolderId) { rootName = state.rootFolders[ri].name; break } }; var fullPath = rootName ? rootName + '/' + sf.relativePath : sf.relativePath; navigator.clipboard.writeText(fullPath).then(function() { showToast('已复制路径: ' + fullPath) }).catch(function() { showToast('复制失败') }) }
 window.__showToast = function(msg) { showToast(msg) }
 window.__setStatusFilter = function(val) { state.statusFilter = val; var nodes = getFilteredNodes(); var c = document.querySelector('.col-center'); if (c) c.outerHTML = centerHTML(nodes) }
 window.__toggleRootExpand = function(id) { if (state.expandedRoots.has(id)) state.expandedRoots.delete(id); else state.expandedRoots.add(id); var t = document.querySelector('.col-tree'); if (t) t.outerHTML = treeHTML() }
@@ -340,6 +368,39 @@ window.__importData = function() {
   input.click()
 }
 
+// ─── Note editing ───
+
+window.__editNote = function(recordId: string) {
+  var area = document.getElementById('note-' + recordId)
+  if (!area) return
+  var rec = null; for (var ri = 0; ri < state.records.length; ri++) { if (state.records[ri].id === recordId) { rec = state.records[ri]; break } }
+  area.innerHTML = '<div class="note-editor"><textarea id="noteInput-' + recordId + '" class="note-textarea" placeholder="输入备注…">' + (rec ? escHtml(rec.note || '') : '') + '</textarea><div class="note-editor-actions"><button class="btn btn-xs" onclick="window.__saveNote(\'' + recordId + '\',document.getElementById(\'noteInput-' + recordId + '\').value)">保存</button><button class="btn btn-xs btn-ghost" onclick="window.__editNoteCancel(\'' + recordId + '\')">取消</button></div></div>'
+}
+window.__saveNote = async function(recordId: string, text: string) {
+  try {
+    var raw = localStorage.getItem('yinyizhuan_history')
+    if (!raw) { showToast('无法读取历史记录'); return }
+    var records = JSON.parse(raw)
+    var found = false
+    for (var ri = 0; ri < records.length; ri++) {
+      if (records[ri].id === recordId) {
+        if (text) { records[ri].note = text } else { delete records[ri].note }
+        found = true; break
+      }
+    }
+    if (!found) { showToast('未找到记录'); return }
+    localStorage.setItem('yinyizhuan_history', JSON.stringify(records))
+    for (var ri = 0; ri < state.records.length; ri++) {
+      if (state.records[ri].id === recordId) {
+        if (text) { state.records[ri].note = text } else { delete state.records[ri].note }
+        break
+      }
+    }
+    showToast('备注已保存'); refreshDetail()
+  } catch (e: any) { showToast('保存失败: ' + e.message) }
+}
+window.__editNoteCancel = function() { refreshDetail() }
+
 // ─── File System ───
 
 async function pickRootFolder() {
@@ -355,12 +416,48 @@ async function scanRoot(root: RootFolder) {
   state.scanning = true; showScanningOverlay()
   try {
     var ok = await verifyPermission(root.handle); if (!ok) { showToast('未获得权限'); state.scanning = false; hideScanningOverlay(); return }
-    var files = await scanRootFolder(root.handle, root.id, function(c) { updateScanningProgress(c) })
+    // Build existingIdMap from IDB so re-scanned files reuse old IDs
+    var allStored = await getAllFiles()
+    var existingIdMap: Record<string, string> = {}
+    for (var si = 0; si < allStored.length; si++) {
+      var sf = allStored[si]
+      if (sf.rootFolderId === root.id) existingIdMap[sf.relativePath] = sf.id
+    }
+    var files = await scanRootFolder(root.handle, root.id, function(c) { updateScanningProgress(c) }, existingIdMap)
     // Detect deleted files
-    var oldIds = new Set(state.storedFiles.filter(function(f) { return f.rootFolderId === root.id }).map(function(f) { return f.id }))
+    var oldIds = new Set(allStored.filter(function(f) { return f.rootFolderId === root.id }).map(function(f) { return f.id }))
     var newIds = new Set(files.map(function(f) { return f.id }))
     for (var oldId of oldIds) { if (!newIds.has(oldId)) { for (var li = 0; li < state.links.length; li++) { if (state.links[li].fileId === oldId) await deleteRecordLink(state.links[li].recordId) } } }
     await saveFilesForRoot(files, root.id); state.storedFiles = await getAllFiles(); state.links = await getAllRecordLinks()
+    // Recover orphaned links: match record keywords with parsed filenames
+    var validFileIds = new Set(state.storedFiles.map(function(f) { return f.id }))
+    var recovered = 0
+    for (var li = 0; li < state.links.length; li++) {
+      var link = state.links[li]
+      if (validFileIds.has(link.fileId)) continue
+      // Orphaned — find the record and try to match with a file
+      var rec = null; for (var ri = 0; ri < state.records.length; ri++) { if (state.records[ri].id === link.recordId) { rec = state.records[ri]; break } }
+      if (!rec) continue
+      var searchText = (rec.result + ' ' + rec.citation.title + ' ' + rec.rawInput + ' ' + (rec.citation.authors || []).map(function(a) { return a.name }).join(' ')).toLowerCase()
+      var best: { file: StoredFile; score: number } | null = null
+      for (var si = 0; si < state.storedFiles.length; si++) {
+        var sf = state.storedFiles[si]
+        if (validFileIds.has(sf.id)) continue  // skip already-valid files (not needed but safe)
+        // Match filename keywords against record
+        var fname = sf.fileName.replace(/\.(pdf|docx|epub|md|caj)$/i, '')
+        var keywords = fname.split(/[_\-\s（）()【\]\[\]]+/).filter(function(k) { return k.length > 1 }).map(function(k) { return k.toLowerCase() })
+        var score = 0
+        for (var k = 0; k < keywords.length; k++) { if (searchText.indexOf(keywords[k]) > -1) score++ }
+        if (score > 0 && (!best || score > best.score)) { best = { file: sf, score: score } }
+      }
+      if (best && best.score >= 1) {
+        await deleteRecordLink(link.recordId)
+        await saveRecordLink({ recordId: link.recordId, fileId: best.file.id, linkedAt: link.linkedAt })
+        validFileIds.add(best.file.id)
+        recovered++
+      }
+    }
+    if (recovered > 0) { state.links = await getAllRecordLinks(); showToast('已自动恢复 ' + recovered + ' 条关联') }
     // Match pending links from import
     var pendingRaw = localStorage.getItem('yinyizhuan_pdf_pending_links')
     if (pendingRaw) {
