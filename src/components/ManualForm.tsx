@@ -73,9 +73,9 @@ export default function ManualForm({
   const showBookFields = ['book', 'diary', 'classic'].includes(c.type)
   const showChapterFields = c.type === 'chapter'
   
-  // 判断是否是方志丛书
+  // 判断是否是方志丛书（自动识别系列 或 手动标记）
   const isFangzhi = c.type === 'ancient' && c.ancientSubType === 'classic' && 
-    ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
+    (c.isGazetteer || ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || ''))
   
   // 版本字段使用自由文本输入的丛书（方志 + 四库全书系列）
   const isFreeEditVersion = isFangzhi || (
@@ -170,11 +170,32 @@ export default function ManualForm({
       )}
 
       {/* Ancient book search — when classic is selected */}
-      {c.type === 'ancient' && c.ancientSubType === 'classic' && (
+      {c.type === 'ancient' && c.ancientSubType === 'classic' && (<>
         <AncientBookSearch
           onSelect={(book) => {
             // 自动填充表单
             updateField('title', book.title)
+
+            // 方志丛书检测：有 province 字段即自动标记
+            if (book.province) {
+              updateField('isGazetteer', true)
+            }
+            
+            // 从书名提取年号（供方志格式使用：存入 dynasty，勾选"地方志格式"后自动显示）
+            // 匹配 (年号) 书名 或 年号书名 格式
+            let eraFromTitle: string | null = null
+            const bracketMatch = book.fullTitle?.match(/^[（(](嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启|泰昌|宣德|正统)[）)]/)
+            if (bracketMatch) {
+              eraFromTitle = bracketMatch[1]
+            } else {
+              const directMatch = book.fullTitle?.match(/^(嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启|泰昌|宣德|正统)/)
+              if (directMatch) {
+                eraFromTitle = directMatch[1]
+              }
+            }
+            if (eraFromTitle) {
+              updateField('dynasty', eraFromTitle)
+            }
             
             // 设置作者和朝代 - 使用 updateField 更新整个 authors 数组
             // 注意：方志丛书默认不标作者，明清方志用年号+题名
@@ -262,7 +283,20 @@ export default function ManualForm({
             }
           }}
         />
-      )}
+        {/* 地方志格式手动标记 */}
+        <div className="flex items-center gap-2 mt-3">
+          <label className="flex items-center gap-2 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={c.isGazetteer || false}
+              onChange={e => updateField('isGazetteer', e.target.checked)}
+              className="rounded border-ink-300 text-accent-600 focus:ring-accent-500 w-4 h-4"
+            />
+            <span className="text-sm font-medium text-ink-700">按地方志格式输出</span>
+            <span className="text-xs text-ink-400">（年号冠题名前，默认不标作者）</span>
+          </label>
+        </div>
+      </>)}
 
       {/* Authors - 方志丛书只显示年号，不显示作者 */}
       {isFangzhi ? (

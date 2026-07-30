@@ -38,6 +38,13 @@ SERIES_CONFIG = {
         'publisher': '成文出版社',
         'publishPlace': '台北',
         'publishYear': '1985'
+    },
+    'siku-cunmu': {
+        'name': '四库全书存目丛书',
+        'url': 'http://csid.zju.edu.cn/doclib/sub?id=8a8fbda74ca27288014ca2735b1a017e&type=0',
+        'publisher': '齐鲁书社',
+        'publishPlace': '济南',
+        'publishYear': '1997'
     }
 }
 
@@ -111,21 +118,24 @@ def chinese_to_arabic(chinese_str):
     return result if result > 0 else 0
 
 def extract_authors(author_str):
-    """解析责任者"""
+    """解析责任者（支持更全面的角色后缀）"""
     authors = []
     parts = re.split(r'[，、]', author_str)
+    
+    ROLE = r'(撰|编|辑|注|疏|述|纂|修|著|评|校|订|考|选|补|删|解|释|批|音义|章句|集解|笺注|校注|批点|补注|解诂|笺|注译|辑评|汇考|集注|集释|集评|校释|校证|校订|补释|注说|译注|点校|标点|增补|删补|重订|编注|辑注|纂注|音注|笺注|校勘|正误|考证|汇纂|辑校|辑佚|增订|注释|补编|重编|重辑|重校|重订|重纂|重刻|重刊|增辑|增编|辑录)'
     
     for part in parts:
         part = part.strip()
         if not part:
             continue
         
-        match = re.match(r'\((.+?)\)(.+?)(?:撰|编|辑|注|疏|述|纂|修|著)', part)
+        match = re.match(r'\(([^)]+)\)(.+?)' + ROLE, part)
         if match:
-            dynasty = match.group(1)
+            dynasty = match.group(1).strip()
             name = match.group(2).strip()
-            role = re.search(r'(撰|编|辑|注|疏|述|纂|修|著)', part)
-            role = role.group(1) if role else '撰'
+            role = match.group(3)
+            name = re.sub(r'\(.*?\)', '', name).strip()
+            name = name.replace('囗', '□')
             authors.append({
                 'name': name,
                 'dynasty': dynasty,
@@ -157,19 +167,24 @@ def extract_category(volumes_str):
 
 def extract_era(title, version=''):
     """从书名或版本中提取年号"""
-    # 优先从书名中提取
-    era_pattern = r'^(嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启)'
-    match = re.search(era_pattern, title)
-    if match:
-        return match.group(1)
+    # 年号列表（明清为主，兼顾元明主要年号）
+    REIGN = r'(嘉靖|万历|正德|弘治|隆庆|康熙|雍正|乾隆|嘉庆|道光|咸丰|同治|光绪|宣统|民国|永乐|洪武|天顺|成化|崇祯|顺治|景泰|天启|泰昌|宣德|正统|景泰|天顺)'
     
-    # 从版本中提取（如"民国年间抄本"、"清光绪二十一年刊本"、"明嘉靖二十九年刊本"）
+    # 1. 优先匹配 (年号) 书名 格式
+    m = re.match(r'^[（(]' + REIGN + r'[）)]', title)
+    if m:
+        return m.group(1)
+    
+    # 2. 匹配 年号书名 格式（年号直接开头）
+    m = re.match(r'^' + REIGN, title)
+    if m:
+        return m.group(1)
+    
+    # 3. 从版本中提取（如"民国年间抄本"、"清光绪二十一年刊本"、"明嘉靖二十九年刊本"）
     if version:
-        # 匹配"民国"或"清"+"年号"或"明"+"年号"模式
-        version_era_match = re.search(r'(民国|清(光绪|宣统|同治|咸丰|道光|嘉庆|乾隆|雍正|康熙)|明(嘉靖|万历|正德|弘治|隆庆|天启|崇祯))', version)
-        if version_era_match:
-            era = version_era_match.group(1)
-            # 如果是"清+年号"或"明+年号"模式，只返回年号部分
+        m = re.search(r'(民国|清(?:光绪|宣统|同治|咸丰|道光|嘉庆|乾隆|雍正|康熙)|明(?:嘉靖|万历|正德|弘治|隆庆|天启|崇祯|宣德|正统|景泰|天顺|成化))', version)
+        if m:
+            era = m.group(1)
             if era.startswith('清') or era.startswith('明'):
                 return era[1:]
             return era
@@ -217,8 +232,9 @@ def transform_record(record, config):
         # 提取编号
         number = extract_number_from_volumes(record['volumes'])
     
-    # 提取年号（优先从书名，其次从版本）
-    era = extract_era(title, record.get('version', ''))
+    # 提取年号（仅对方志丛书提取，其他丛书不依赖年号识别方志）
+    FANGZHI_SERIES = ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编']
+    era = extract_era(title, record.get('version', '')) if config['name'] in FANGZHI_SERIES else None
     
     volume_match = re.search(r'^(.+?)([一二三四五六七八九十百千]+)卷', title)
     if volume_match:

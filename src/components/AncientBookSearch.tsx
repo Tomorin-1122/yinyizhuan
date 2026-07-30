@@ -148,7 +148,7 @@ export default function AncientBookSearch({ onSelect }: AncientBookSearchProps) 
   return (
     <div ref={searchRef} className="relative mb-3">
       <label className="block text-sm font-medium text-ink-800 mb-1">
-        🔍 搜索常用基本典籍
+        搜索常用基本典籍
         {loading && !dataLoaded && (
           <span className="text-xs text-ink-400 ml-2">（加载中...）</span>
         )}

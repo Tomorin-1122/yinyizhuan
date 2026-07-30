@@ -545,8 +545,8 @@ function formatAncientGazetteer(c: Citation): string {
 function formatAncientClassic(c: Citation): string {
   const parts: string[] = []
   
-  // 判断是否是方志丛书
-  const isFangzhi = ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
+  // 判断是否是方志丛书（自动识别方志丛书系列 或 手动标记）
+  const isFangzhi = c.isGazetteer || ['中国方志丛书', '天一阁藏明代方志选刊', '天一阁藏明代方志选刊续编'].includes(c.seriesName || '')
   
   if (isFangzhi) {
     // 方志格式：年号《题名》卷次《篇名》

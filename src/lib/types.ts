@@ -52,6 +52,9 @@ export interface Citation {
   /** 修纂年代（地方志用，如"万历"、"民国"） */
   compileEra?: string;
 
+  /** 手动标记为地方志格式（用于非方志丛书中的方志条目） */
+  isGazetteer?: boolean;
+
   /** 年代（古籍用，如"明"、"清"，输出时加方括号） */
   dynasty?: string;
 
