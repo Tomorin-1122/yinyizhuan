@@ -1,6 +1,5 @@
 const { parseCitationText } = require('../lib/parser');
 const { formatCitation } = require('../lib/formatters');
-const { checkApiKey } = require('../lib/auth');
 const { rateLimitMiddleware } = require('../lib/rate-limit');
 const { setCorsPost, handleOptions } = require('../lib/cors');
 
@@ -14,7 +13,6 @@ module.exports = async function handler(request, response) {
   setCorsPost(response, origin);
   if (handleOptions(request, response)) return;
 
-  if (!checkApiKey(request, response)) return;
   if (!checkLimit(request, response)) return;
 
   if (request.method !== 'POST') {
@@ -95,7 +93,7 @@ module.exports = async function handler(request, response) {
           index,
           success: false,
           original: item.text,
-          error: error instanceof Error ? error.message : 'Unknown error'
+          error: '转换失败，请检查输入格式'
         };
       }
     });

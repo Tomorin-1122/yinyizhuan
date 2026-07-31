@@ -2,7 +2,7 @@
  * 通过 DOI / ISBN 自动抓取文献元数据
  * 使用免费公开 API：
  *   - DOI: Crossref
- *   - ISBN: Google Books → Open Library（降级 fallback）
+ *   - ISBN: Open Library
  * 
  * 所有 API 均支持 CORS，可直接从浏览器前端调用，无需后端代理。
  */
@@ -86,46 +86,7 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
 }
 
 // ============================================================
-// ISBN 抓取：通过自建 API 代理（Google Books API Key 不暴露到前端）
-// ============================================================
-
-/**
- * 通过 ISBN 获取图书元数据 (代理 API)
- */
-async function fetchFromGoogleBooks(isbn: string): Promise<FetchResult> {
-  const proxyUrl = `/api/google-books?q=isbn:${encodeURIComponent(isbn)}`
-  try {
-    const res = await fetch(proxyUrl)
-    if (!res.ok) throw new Error(`代理 API 返回 ${res.status}`)
-    const json = await res.json()
-    if (!json.success || !json.data?.items?.length) {
-      return { success: false, error: '' }
-    }
-
-    // 严谨校验：查找包含目标 ISBN 的条目
-    const targetIsbn = isbn.replace(/[-\s]/g, '')
-    const book = json.items.find((item: any) => {
-      const identifiers = item.volumeInfo?.industryIdentifiers || []
-      return identifiers.some((id: any) => id.identifier.replace(/[-\s]/g, '') === targetIsbn)
-    })
-
-    if (!book) {
-      // 没搜到匹配的 ISBN，返回失败以便 fallback 到其他源
-      return { success: false, error: '' }
-    }
-
-    const info = book.volumeInfo
-    return parseBookInfo(info, 'Google Books')
-  } catch (e: any) {
-    if (e.message?.includes('Failed to fetch')) {
-      return { success: false, error: '网络异常' }
-    }
-    return { success: false, error: '' } // 让 fallback 继续
-  }
-}
-
-// ============================================================
-// ISBN 抓取：Open Library API（Google Books 无结果时的降级方案）
+// ISBN 抓取：Open Library API
 // ============================================================
 
 /**
@@ -172,76 +133,16 @@ async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
   }
 }
 
-// ============================================================
-// 通用：解析图书信息并映射到表单字段
-// ============================================================
-
-function parseBookInfo(info: any, sourceName: string): FetchResult {
-  // 解析作者（如果作者列表为空，则置为空数组，避免误填）
-  const authors: Author[] = (info.authors || []).map((name: string) => ({ name }))
-
-  // 校验标题（防止搜到乱码结果）
-  const fullTitle = info.title || ''
-  if (!fullTitle || fullTitle.length < 1) {
-    return { success: false, error: '获取到的标题无效' }
-  }
-
-  // 判断语言：根据标题是否包含中文字符
-  const hasChinese = /[\u4e00-\u9fa5]/.test(fullTitle)
-  const language: 'zh' | 'en' = hasChinese ? 'zh' : 'en'
-
-  // 尝试从日期中提取年份
-  const pubDate = info.publishedDate || ''
-  const year = pubDate ? pubDate.substring(0, 4) : ''
-
-  // 尝试从副标题中提取信息
-  const subtitle = info.subtitle || ''
-
-  return {
-    success: true,
-    data: {
-      title: fullTitle,
-      authors: authors.length > 0 ? authors : [{ name: '' }],
-      publisher: info.publisher || '',
-      publishPlace: '', // 公开 API 一般不提供出版地
-      publishYear: year,
-      url: info.previewLink || info.canonicalVolumeLink || info.infoLink || '',
-      language,
-      notes: subtitle ? `副标题：${subtitle}` : undefined,
-    },
-    source: sourceName,
-  }
-}
-
 /**
- * 通过 ISBN 获取图书元数据（并行请求提升韧性）
- * 逻辑：同时请求 Google Books 和 Open Library，优先使用数据更全的 Google
+ * 通过 ISBN 获取图书元数据（Open Library）
  */
 export async function fetchByISBN(isbn: string): Promise<FetchResult> {
-  const fetchPromises = [
-    fetchFromGoogleBooks(isbn),
-    fetchFromOpenLibrary(isbn)
-  ]
-
-  const results = await Promise.allSettled(fetchPromises)
-
-  // 第一优先级：Google Books 的成功结果
-  if (results[0].status === 'fulfilled' && results[0].value.success) {
-    return results[0].value
-  }
-
-  // 第二优先级：Open Library 的成功结果
-  if (results[1].status === 'fulfilled' && results[1].value.success) {
-    return results[1].value
-  }
-
-  // 第三优先级：如果都失败，提取第一个非空的错误信息
-  const gbError = results[0].status === 'fulfilled' ? results[0].value.error : ''
-  const olError = results[1].status === 'fulfilled' ? results[1].value.error : ''
+  const result = await fetchFromOpenLibrary(isbn)
+  if (result.success) return result
 
   return {
     success: false,
-    error: gbError || olError || '未找到该 ISBN 对应的图书（已尝试多个数据库）',
+    error: result.error || '未找到该 ISBN 对应的图书',
   }
 }
 

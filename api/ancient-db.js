@@ -32,17 +32,33 @@ module.exports = async function handler(request, response) {
       return handleSearch({ query: { q, limit } }, response);
     }
 
-    // 默认返回数据库统计
+    // 默认返回数据库统计（动态聚合，避免硬编码过时）
     const { loadDatabase } = require('../lib/ancient-db');
     const db = loadDatabase();
-    
+
+    // 按丛书聚合统计
+    const seriesCount = {};
+    const publisherCount = {};
+    const publishYears = new Set();
+    for (const r of db) {
+      const s = r.series || '未知丛书';
+      seriesCount[s] = (seriesCount[s] || 0) + 1;
+      if (r.publisher) publisherCount[r.publisher] = (publisherCount[r.publisher] || 0) + 1;
+      if (r.publishYear && typeof r.publishYear === 'string') {
+        for (const y of r.publishYear.match(/\d{4}/g) || []) publishYears.add(y);
+      }
+    }
+    const topSeries = Object.entries(seriesCount).sort((a, b) => b[1] - a[1]);
+    const topPublishers = Object.entries(publisherCount).sort((a, b) => b[1] - a[1]).slice(0, 5);
+    const yearRange = [...publishYears].sort();
+
     return response.status(200).json({
       success: true,
       data: {
         total: db.length,
-        series: '景印文渊阁四库全书',
-        publisher: '台湾商务印书馆',
-        publishYears: '1983-1986',
+        series: topSeries.map(([name, count]) => ({ name, count })),
+        topPublishers: topPublishers.map(([name, count]) => ({ name, count })),
+        publishYearRange: yearRange.length > 0 ? [yearRange[0], yearRange[yearRange.length - 1]] : [],
         categories: {
           '经': db.filter(r => r.category === '经').length,
           '史': db.filter(r => r.category === '史').length,

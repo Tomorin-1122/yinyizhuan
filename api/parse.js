@@ -1,5 +1,4 @@
 const { parseCitationText } = require('../lib/parser');
-const { checkApiKey } = require('../lib/auth');
 const { rateLimitMiddleware } = require('../lib/rate-limit');
 const { setCorsPost, handleOptions } = require('../lib/cors');
 
@@ -11,7 +10,6 @@ module.exports = async function handler(request, response) {
   setCorsPost(response, origin);
   if (handleOptions(request, response)) return;
 
-  if (!checkApiKey(request, response)) return;
   if (!checkLimit(request, response)) return;
 
   if (request.method !== 'POST') {
