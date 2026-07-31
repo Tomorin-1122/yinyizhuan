@@ -1,0 +1,34 @@
+name: CI
+
+# 触发时机：推送到 main 或有人提交 PR 时自动运行
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  check:
+    name: Lint + Test + Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: 安装依赖
+        run: npm ci
+
+      - name: 代码规范检查 (lint)
+        run: npm run lint
+
+      - name: 单元测试 (test)
+        run: npm run test
+
+      - name: 生产构建 (build)
+        run: npm run build
