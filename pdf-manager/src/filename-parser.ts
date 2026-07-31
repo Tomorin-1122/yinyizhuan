@@ -36,7 +36,7 @@ function cleanFileName(name: string): string {
 function patternAuthorDashTitleYear(name: string): ParseResult | null {
   // 匹配: 作者 - 标题 (年份) 或 作者 - 标题（年份）
   // 注意中文破折号、英文连字符都匹配
-  const m = name.match(/^(.+?)\s*[–—-]\s*(.+?)\s*[\(（]\s*(\d{4})\s*[\)）]\s*$/)
+  const m = name.match(/^(.+?)\s*[–—-]\s*(.+?)\s*[(（]\s*(\d{4})\s*[)）]\s*$/)
   if (!m) return null
   return {
     authors: [m[1].trim()],
@@ -63,7 +63,7 @@ function patternAuthorYearTitle(name: string): ParseResult | null {
   const authors = parts.slice(0, yearIdx).join(' ')
   const title = parts.slice(yearIdx + 1).join(' ')
   // 去掉标题中的括号残留
-  const cleanTitle = title.replace(/[\(\)\[\]【】（）/]/g, '').trim()
+  const cleanTitle = title.replace(/[()[\]【】（）/]/g, '').trim()
 
   return {
     authors: [authors],

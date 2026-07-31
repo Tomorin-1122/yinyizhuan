@@ -7,7 +7,7 @@
  * 所有 API 均支持 CORS，可直接从浏览器前端调用，无需后端代理。
  */
 
-import { Citation, Author } from './types'
+import { Citation, Author, CitationType } from './types'
 
 interface FetchResult {
   success: boolean
@@ -37,7 +37,7 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
     const item = json.message
     if (!item) return { success: false, error: '未找到该 DOI 对应的文献' }
 
-    const authors: Author[] = (item.author || []).map((a: any) => ({
+    const authors: Author[] = (item.author || []).map((a: { given?: string; family?: string; name?: string }) => ({
       name: [a.given, a.family].filter(Boolean).join(' ') || a.name || '',
     }))
 
@@ -46,7 +46,7 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
     const year = issued ? String(issued[0]) : ''
 
     // 智能判断文献类型
-    let inferredType: string | undefined
+    let inferredType: CitationType | undefined
     if (containerTitle) {
       inferredType = 'journal' // 有期刊名 → 期刊文章
     } else if (item['event-name']) {
@@ -73,15 +73,15 @@ export async function fetchByDOI(doi: string): Promise<FetchResult> {
         pages: item.page || '',
         url: item.URL || '',
         language,
-        ...(inferredType && { type: inferredType as any }),
+        ...(inferredType && { type: inferredType }),
       },
       source: 'Crossref',
     }
-  } catch (e: any) {
-    if (e.message?.includes('Failed to fetch')) {
+  } catch (e: unknown) {
+    if ((e as Error)?.message?.includes('Failed to fetch')) {
       return { success: false, error: '网络异常，请检查网络连接后重试' }
     }
-    return { success: false, error: e.message || '获取失败' }
+    return { success: false, error: (e as Error)?.message || '获取失败' }
   }
 }
 
@@ -104,7 +104,7 @@ async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
     if (!book) return { success: false, error: '' }
 
     // 解析作者
-    const authors: Author[] = (book.authors || []).map((a: any) => ({
+    const authors: Author[] = (book.authors || []).map((a: string | { name?: string; personal_name?: string }) => ({
       name: typeof a === 'string' ? a : (a.name || a.personal_name || ''),
     }))
 
@@ -114,7 +114,7 @@ async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
     const year = yearMatch ? yearMatch[1] : ''
 
     // 解析出版社（publishers 是数组）
-    const publisher = (book.publishers || []).map((p: any) => p.name || p).join(', ') || ''
+    const publisher = (book.publishers || []).map((p: { name?: string }) => p.name || p).join(', ') || ''
 
     return {
       success: true,
@@ -128,8 +128,8 @@ async function fetchFromOpenLibrary(isbn: string): Promise<FetchResult> {
       },
       source: 'Open Library',
     }
-  } catch (e: any) {
-    return { success: false, error: '' }
+  } catch (e: unknown) {
+    return { success: false, error: (e as Error)?.message || '' }
   }
 }
 

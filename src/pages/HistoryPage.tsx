@@ -301,7 +301,21 @@ export default function HistoryPage() {
   const [editingGroupId, setEditingGroupId] = useState<string | null>(null)
   const [editingGroupName, setEditingGroupName] = useState('')
   const [editingGroupDesc, setEditingGroupDesc] = useState('')
-  const [analyzeResult, setAnalyzeResult] = useState<any>(null)
+interface AnalyzeResultData {
+  _ts?: number
+  total?: number
+  uniqueAuthors?: number
+  topFormats?: [string, number][]
+  topTypes?: [string, number][]
+  topAuthors?: { name: string; count: number }[]
+  topDays?: [string, number][]
+  byMonth?: Record<string, number>
+  byFormat?: Record<string, number>
+  byType?: Record<string, number>
+  byLanguage?: Record<string, number>
+}
+
+const [analyzeResult, setAnalyzeResult] = useState<AnalyzeResultData | null>(null)
   const [analyzeLoading, setAnalyzeLoading] = useState(false)
   
   // 搜索相关状态
@@ -440,7 +454,7 @@ export default function HistoryPage() {
   const toggleSelect = (id: string) => {
     setSelected(prev => {
       const s = new Set(prev)
-      s.has(id) ? s.delete(id) : s.add(id)
+      if (s.has(id)) s.delete(id); else s.add(id)
       return s
     })
   }
@@ -942,7 +956,7 @@ export default function HistoryPage() {
           </div>
 
           {/* 最多作者 */}
-          {analyzeResult.topAuthors?.length > 0 && (
+          {analyzeResult.topAuthors && analyzeResult.topAuthors.length > 0 && (
             <div className="mb-3">
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">引用最多作者</div>
               <div className="flex flex-wrap gap-2">
@@ -958,7 +972,7 @@ export default function HistoryPage() {
           )}
 
           {/* 月度分布 */}
-          {Object.keys(analyzeResult.byMonth || {}).length > 0 && (
+          {analyzeResult.byMonth && Object.keys(analyzeResult.byMonth).length > 0 && (
             <div className="mb-3">
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">月份分布</div>
               <div className="flex flex-wrap gap-2">
@@ -974,7 +988,7 @@ export default function HistoryPage() {
           )}
 
           {/* 最忙碌日期 */}
-          {analyzeResult.topDays?.length > 0 && (
+          {analyzeResult.topDays && analyzeResult.topDays.length > 0 && (
             <div className="mb-3">
               <div className="font-display font-bold text-sm text-ink-700 dark:text-gray-300 mb-1">最忙碌日期</div>
               <div className="flex flex-wrap gap-2">

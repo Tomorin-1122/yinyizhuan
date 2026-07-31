@@ -11,7 +11,7 @@ export default function PdfManagerPage() {
         if (iframe && iframe.contentDocument && iframe.contentDocument.body) {
           clearInterval(checkReady)
         }
-      } catch {}
+      } catch { /* PDF 管理器未就绪时忽略 */ }
     }, 500)
     return () => clearInterval(checkReady)
   }, [])

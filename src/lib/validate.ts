@@ -7,6 +7,7 @@ export interface FieldError {
 
 export function validateCitation(_c: Citation): FieldError[] {
   // 不再阻止转换，所有验证改为提醒
+  void _c
   return []
 }
 

@@ -64,7 +64,7 @@ function getDailyRecord(): DailyRecord {
       const rec: DailyRecord = JSON.parse(raw)
       if (rec.date === todayStr()) return rec
     }
-  } catch (_) {}
+  } catch { /* 解析失败时回退默认值 */ }
   return { date: todayStr(), count: 0 }
 }
 
@@ -107,7 +107,7 @@ function getIsbnDailyRecord(): { date: string; count: number } {
       const rec = JSON.parse(raw)
       if (rec.date === todayStr()) return rec
     }
-  } catch (_) {}
+  } catch { /* 解析失败时回退默认值 */ }
   return { date: todayStr(), count: 0 }
 }
 

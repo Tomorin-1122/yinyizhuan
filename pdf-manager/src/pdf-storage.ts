@@ -331,8 +331,9 @@ export async function scanRootFolder(
 
   try {
     await walk(rootHandle, '')
-  } catch (e: any) {
-    if (e.name === 'AbortError') {
+  } catch (e) {
+    const err = e as { name?: string }
+    if (err.name === 'AbortError') {
       // 用户取消了扫描，partial results 也可用
     } else {
       throw e

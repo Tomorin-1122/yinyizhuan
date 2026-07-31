@@ -59,7 +59,7 @@ function parseDoubanBook(text: string): Partial<Citation> | null {
   if (!/\n/.test(text)) {
     const keywords = ['作者', '出版社', '出版年', 'ISBN', '译者', '副标题', '丛书', '定价', '装帧'];
     for (const kw of keywords) {
-      normalized = normalized.replace(new RegExp(`[ 　]+${kw}[:：]`, 'g'), `\n${kw}：`);
+      normalized = normalized.replace(new RegExp(`[ \u3000]+${kw}[:：]`, 'g'), `\n${kw}：`);
     }
     normalized = normalized.trim();
   }
@@ -85,7 +85,7 @@ function parseDoubanBook(text: string): Partial<Citation> | null {
   const authorField = fields['作者'] || fields['作  者'] || '';
   if (authorField) {
     // 去除括号内的国籍/朝代注释，如 (美) 或 [美]
-    const cleanAuthor = authorField.replace(/^[\[(（【][^)\]）】]+[\]）】)]\s*/, '').trim();
+    const cleanAuthor = authorField.replace(/^[[(（【][^)\]）】]+[\]）】)]\s*/, '').trim();
     result.authors = cleanAuthor.split(/[,，、；;]/).map(n => ({ name: n.trim() })).filter(a => a.name);
   }
 
@@ -165,7 +165,7 @@ function parseDoubanBook(text: string): Partial<Citation> | null {
 
 // ─── GB/T 7714 格式解析 ─────────────────────────────────────────────
 function parseGBT7714Style(text: string): Partial<Citation> | null {
-  const withSeq = /^[\[【]?\d+[\]】]?\s*(.+)$/.exec(text);
+  const withSeq = /^[[【]?\d+[\]】]?\s*(.+)$/.exec(text);
   const body = withSeq ? withSeq[1].trim() : text;
 
   const typeTagMatch = /\[(J|M|D|N|C|EB\/OL|G|R|A|Z|S|P)\]/i.exec(body);
@@ -187,7 +187,7 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
     title = beforeTag.trim();
   }
 
-  authorsStr = authorsStr.replace(/^[\[【]?\d+[\]】]\s*/, '').trim();
+  authorsStr = authorsStr.replace(/^[[【]?\d+[\]】]\s*/, '').trim();
 
   const authors = authorsStr
     ? authorsStr.split(/[,，、;；]+/).map(a => ({ name: a.trim() })).filter(a => a.name)
@@ -205,7 +205,7 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
       result.thesisType = '学位论文';
     }
     // 地点:学校,年份
-    const instMatch = /^([^,，:\：]+)[:\：]([^,，]+)/.exec(afterTag);
+    const instMatch = /^([^,，:：]+)[:：]([^,，]+)/.exec(afterTag);
     if (instMatch) {
       result.publishPlace = instMatch[1].trim();
       result.institution = instMatch[2].trim();
@@ -281,7 +281,7 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
     const pageMatch = /[:：]\s*(\d[\d\-—~]*)/.exec(pubPart)
     if (pageMatch) result.pages = pageMatch[1]
   } else if (type === 'journal') {
-    const journalMatch = /^([^,，]+)[,，]\s*(\d{4})[,，]?\s*(?:第?(\d+)卷)?[,，]?\s*[(\（]?(?:第?(\d+)[期号]?)[)\）]?\s*[:\：]\s*(\d[\d\-—~]*)/.exec(afterTag);
+    const journalMatch = /^([^,，]+)[,，]\s*(\d{4})[,，]?\s*(?:第?(\d+)卷)?[,，]?\s*[(（]?(?:第?(\d+)[期号]?)[)）]?\s*[:：]\s*(\d[\d\-—~]*)/.exec(afterTag);
     if (journalMatch) {
       result.journalName = journalMatch[1].replace(/^[.\s]+/, '').trim();
       result.publishYear = journalMatch[2];
@@ -293,27 +293,27 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
       if (nameMatch) result.journalName = nameMatch[1].trim();
       const yearMatch = /(\d{4})/.exec(afterTag);
       if (yearMatch) result.publishYear = yearMatch[1];
-      const issueMatch = /[(\（](\d+)[)\）]/.exec(afterTag);
+      const issueMatch = /[(（](\d+)[)）]/.exec(afterTag);
       if (issueMatch) result.issue = issueMatch[1];
-      const pageMatch = /[:\：]\s*(\d[\d\-—~]*)/.exec(afterTag);
+      const pageMatch = /[:：]\s*(\d[\d\-—~]*)/.exec(afterTag);
       if (pageMatch) result.pages = pageMatch[1];
     }
   } else if (type === 'newspaper') {
     const nameMatch = /^([^,，]+)/.exec(afterTag);
     if (nameMatch) result.newspaperName = nameMatch[1].trim();
-    const dateMatch = /(\d{4}[-\/年]\d{1,2}[-\/月]\d{1,2}日?)/.exec(afterTag);
+    const dateMatch = /(\d{4}[-/年]\d{1,2}[-/月]\d{1,2}日?)/.exec(afterTag);
     if (dateMatch) result.publishDate = dateMatch[1];
-    const sectionMatch = /[(\（](\w+)[)\）]/.exec(afterTag);
+    const sectionMatch = /[(（](\w+)[)）]/.exec(afterTag);
     if (sectionMatch) result.pageSection = sectionMatch[1];
   } else if (type === 'electronic') {
     const urlMatch = /(https?:\/\/[^\s,，。]+)/.exec(afterTag);
     if (urlMatch) result.url = urlMatch[1];
-    const dateMatch = /\[(\d{4}[-\/]\d{1,2}[-\/]\d{1,2})\]/.exec(afterTag);
+    const dateMatch = /\[(\d{4}[-/]\d{1,2}[-/]\d{1,2})\]/.exec(afterTag);
     if (dateMatch) result.accessDate = dateMatch[1];
     const yearMatch = /(\d{4})/.exec(afterTag);
     if (yearMatch) result.publishYear = yearMatch[1];
   } else {
-    const bookMatch = /^([^:\：,，]+)[:\：]([^,，]+)[,，]\s*(\d{4})\s*[:\：]?\s*(\d[\d\-—~]*)?/.exec(afterTag);
+    const bookMatch = /^([^:：,，]+)[:：]([^,，]+)[,，]\s*(\d{4})\s*[:：]?\s*(\d[\d\-—~]*)?/.exec(afterTag);
     if (bookMatch) {
       result.publishPlace = bookMatch[1].trim();
       result.publisher = bookMatch[2].trim();
@@ -322,7 +322,7 @@ function parseGBT7714Style(text: string): Partial<Citation> | null {
     } else {
       const yearMatch = /(\d{4})/.exec(afterTag);
       if (yearMatch) result.publishYear = yearMatch[1];
-      const pubMatch = /^([^:\：]+)[:\：]([^,，]+)/.exec(afterTag);
+      const pubMatch = /^([^:：]+)[:：]([^,，]+)/.exec(afterTag);
       if (pubMatch) {
         result.publishPlace = pubMatch[1].trim();
         result.publisher = pubMatch[2].trim();

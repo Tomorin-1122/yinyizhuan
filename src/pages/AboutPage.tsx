@@ -107,7 +107,7 @@ export default function AboutPage() {
     try {
       const req = indexedDB.deleteDatabase('yinyizhuan_pdf_manager')
       await new Promise((resolve, reject) => { req.onsuccess = resolve; req.onerror = reject })
-    } catch {}
+    } catch { /* IndexedDB 删除失败时忽略，继续退出内测 */ }
     localStorage.removeItem('yyz_pdf_beta')
     setShowBetaModal(false); window.location.reload()
   }

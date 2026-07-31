@@ -58,7 +58,7 @@ function postProcessAncient(c: Citation, raw: string) {
   // 馆藏：含"图书馆/博物院/博物馆/档案馆" + 末尾"藏"的段落
   for (let i = segs.length - 1; i >= 0; i--) {
     if (/图书馆|博物院|博物馆|档案馆|文献馆|资料馆/.test(segs[i]) && /藏$/.test(segs[i])) {
-      c.archiveLocation = segs[i].replace(/[""「」\[\]]/g, '')
+      c.archiveLocation = segs[i].replace(/[""「」[]]/g, '')
       segs.splice(i, 1)
       break
     }

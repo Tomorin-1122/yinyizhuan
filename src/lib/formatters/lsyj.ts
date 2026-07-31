@@ -552,7 +552,7 @@ function formatAncientClassic(c: Citation): string {
     // 方志格式：年号《题名》卷次《篇名》
     // 注意：书名可能已包含年号（如"正德瑞州府志"），需要去除
     let title = c.title
-    let era = c.dynasty || ''  // 年号（嘉靖、万历、民国等）
+    const era = c.dynasty || ''  // 年号（嘉靖、万历、民国等）
     
     // 如果书名以年号开头，去除书名中的年号
     if (era && title.startsWith(era)) {
