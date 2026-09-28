@@ -10,11 +10,11 @@ export default function AccessQuotaDisplay() {
     return (
       <>
         <div>
-          <span className="text-ink-400 dark:text-gray-500">免费试用剩余</span>
+          <span className="text-ink-400 dark:text-gray-500">今日免费剩余</span>
           <span className={`ml-2 font-mono font-bold text-lg ${trialRemaining <= 3 ? 'text-vermilion-600' : 'text-ink-950 dark:text-gray-100'}`}>
             {trialRemaining}
           </span>
-          <span className="text-ink-400 dark:text-gray-500"> / 10</span>
+          <span className="text-ink-400 dark:text-gray-500"> / 20</span>
         </div>
         <div>
           <span className="text-ink-400 dark:text-gray-500">自动抓取剩余</span>

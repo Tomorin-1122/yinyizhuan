@@ -40,7 +40,7 @@ export default function InviteModal({ open, onClose, onSuccess, onToast }: Invit
             <IconX className="w-4 h-4" />
           </button>
         </div>
-        <p className="text-ink-500 text-sm mb-6">你已用完 10 次免费试用，输入邀请码后每日可转换 100 次</p>
+        <p className="text-ink-500 text-sm mb-6">你已用完今日 20 次免费额度，输入邀请码后每日可转换 100 次</p>
         <div className={shaking ? 'animate-[shake_0.4s_ease]' : ''}>
           <input
             type="text"

@@ -5,7 +5,7 @@ const UNLOCK_KEY = 'yyz_unlocked'
 const DAILY_KEY = 'yyz_daily'
 const TRIAL_KEY = 'yyz_trial'
 const ISBN_DAILY_KEY = 'yyz_isbn_daily'
-const TRIAL_LIMIT = 10
+const TRIAL_LIMIT = 20
 const DAILY_LIMIT = 100
 const ISBN_DAILY_LIMIT = 10  // ISBN/DOI 自动抓取每日限额
 
@@ -28,9 +28,16 @@ export async function unlock(code: string): Promise<boolean> {
   return false
 }
 
-// 试用次数（累计，不重置）
+// 试用次数（未解锁用户每日 20 次，零点重置）
 export function getTrialCount(): number {
-  return parseInt(localStorage.getItem(TRIAL_KEY) || '0', 10)
+  try {
+    const raw = localStorage.getItem(TRIAL_KEY)
+    if (raw) {
+      const rec: DailyRecord = JSON.parse(raw)
+      if (rec.date === todayStr()) return rec.count
+    }
+  } catch { /* 旧版纯数字计数视为已过期，重新起算 */ }
+  return 0
 }
 
 export function getTrialRemaining(): number {
@@ -42,8 +49,8 @@ export function isTrialExhausted(): boolean {
 }
 
 function recordTrial(): void {
-  const count = getTrialCount() + 1
-  localStorage.setItem(TRIAL_KEY, String(count))
+  const rec = { date: todayStr(), count: getTrialCount() + 1 }
+  localStorage.setItem(TRIAL_KEY, JSON.stringify(rec))
 }
 
 // 每日次数（解锁后生效）
