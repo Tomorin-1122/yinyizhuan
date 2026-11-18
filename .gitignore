@@ -53,7 +53,20 @@ CSL-Chinese-IR-CSSCI-Journals/
 # Product strategy deliverables (local only)
 deliverables/
 
-# ����/��������
-���ݷ�������.md
-�����������.md
+# 需求/分析报告
+数据分析报告.md
+需求分析报告.md
 user-research-report.md
+
+# 分丛书原始数据（合并中间产物，运行时不用，本地留档）
+lib/siku-quanshu.json
+lib/xuxu-siku.json
+lib/zhongguo-fangzhi.json
+lib/tianyi-fangzhi.json
+lib/tianyi-fangzhi-xubian.json
+lib/siku-cunmu.json
+
+# 竞品与内部文档（本地 only）
+竞品动态更新_*.md
+Tauri桌面版需求文档.md
+古籍数据加入流程.md

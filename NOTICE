@@ -1,0 +1,13 @@
+引易转 (YinYiZhuan)
+Copyright (c) 2026 Tomorin-1122
+
+本仓库采用分层许可：
+
+- 源代码（`src/`、`api/`、`lib/` 下的 `.ts` / `.js` 文件）：MIT 许可，全文见 LICENSE
+- 古籍目录数据（`lib/*.json`、`public/ancient-books.json`）：非商业使用，全文见 DATA-LICENSE.md
+
+第三方内容与来源：
+
+- 古籍书目数据整理自浙江大学大型文献库（csid.zju.edu.cn）各丛书子目页面
+- 各丛书之书名、编者、出版者、出版年等权利归各出版社及编者所有
+- 本仓库不包含《历史研究》杂志社版式规范与引文注释规定的原文；相关格式规则以代码实现形式存在

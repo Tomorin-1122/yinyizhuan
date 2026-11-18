@@ -2,9 +2,12 @@
   "name": "yinyizhuan",
   "private": true,
   "version": "0.0.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/sync-ancient-data.mjs",
     "dev": "vite",
+    "prebuild": "node scripts/sync-ancient-data.mjs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
